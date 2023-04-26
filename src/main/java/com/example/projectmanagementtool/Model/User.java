@@ -1,4 +1,10 @@
 package com.example.projectmanagementtool.Model;
 
-public class Object {
+public class User {
+    String name;
+
+
+
 }
+
+
