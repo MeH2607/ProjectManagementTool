@@ -7,16 +7,26 @@ public class Subproject implements Component{
     String name;
     String description;
     User owner;
-    double allocatedTime;
     LocalDate deadline;
 
     List<User> subprojectMembers;
+    List<Task> taskList;
 
     public void addMember(User newUser){
         subprojectMembers.add(newUser);
     }
 
-    public List<User> sub
+    public void addTask(Task newTask){
+        taskList.add(newTask);
+    }
+
+    public List<User> getSubprojectMembers(){
+        return subprojectMembers;
+    }
+
+    public List<Task> getTasks(){
+        return taskList;
+    }
 
     @Override
     public String getName() {
@@ -29,17 +39,21 @@ public class Subproject implements Component{
     }
 
     @Override
-    public User owner() {
+    public User getOwner() {
         return owner;
     }
 
-    @Override
-    public double allocatedTime() {
+    public double getAllocatedTime() {
+        double allocatedTime = 0;
+        // Itererating subprojects and adding together their Allocated time
+        for (Task task : taskList) {
+            allocatedTime = allocatedTime + task.getAllocatedTime();
+        }
         return allocatedTime;
     }
 
     @Override
-    public LocalDate deadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 }

@@ -6,8 +6,13 @@ public class Task implements Component{
     String name;
     String description;
     User owner;
-    double allocatedTime;
     LocalDate deadline;
+
+    double allocatedTime;
+
+    public double getAllocatedTime() {
+        return allocatedTime;
+    }
 
     @Override
     public String getName() {
@@ -20,17 +25,12 @@ public class Task implements Component{
     }
 
     @Override
-    public User owner() {
+    public User getOwner() {
         return owner;
     }
 
     @Override
-    public double allocatedTime() {
-        return allocatedTime;
-    }
-
-    @Override
-    public LocalDate deadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 }

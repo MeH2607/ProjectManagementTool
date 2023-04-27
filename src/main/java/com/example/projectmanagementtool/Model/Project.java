@@ -8,7 +8,6 @@ public class Project implements Component{
     String name;
     String description;
     User owner;
-    double allocatedTime;
     LocalDate deadline;
 
     List<Subproject> subprojectList; // The project contains all its subprojects in this list
@@ -45,17 +44,22 @@ public class Project implements Component{
     }
 
     @Override
-    public User owner() {
+    public User getOwner() {
         return owner;
     }
 
     @Override
-    public double allocatedTime() {
+    public double getAllocatedTime() {
+        double allocatedTime = 0;
+        // Itererating subprojects and adding together their Allocated time
+        for (Subproject subproject : subprojectList) {
+            allocatedTime = allocatedTime + subproject.getAllocatedTime();
+        }
         return allocatedTime;
     }
 
     @Override
-    public LocalDate deadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 }
