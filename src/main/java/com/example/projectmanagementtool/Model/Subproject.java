@@ -43,6 +43,7 @@ public class Subproject implements Component{
         return owner;
     }
 
+    @Override
     public double getAllocatedTime() {
         double allocatedTime = 0;
         // Itererating subprojects and adding together their Allocated time

@@ -10,6 +10,7 @@ public class Task implements Component{
 
     double allocatedTime;
 
+    @Override
     public double getAllocatedTime() {
         return allocatedTime;
     }

@@ -20,6 +20,7 @@ public class Project implements Component{
         return subprojectList;
     }
 
+
     public List<User> getProjectMembers() {
         // Finds 'projectmembers' by iterating all members in all subprojects
         List <User> projectMembers = new ArrayList<User>();
