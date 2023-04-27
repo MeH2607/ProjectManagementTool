@@ -1,24 +1,24 @@
-USE superhero;
+INSERT INTO Users (Name, Role)
+VALUES ("John Smith", "Project Manager"),
+       ("Sarah Lee", "Developer"),
+       ("Michael Johnson", "Designer"),
+       ("Emily Davis", "QA Analyst"),
+       ("Tom Wilson", "Developer");
 
-INSERT into city (name) values ('New York');
-INSERT into city (name) values ('Gotham city');
-INSERT into city (name) values ('Metropolis');
+INSERT INTO Projects (Name, Description, AllocatedTime, OwnerID, ProjectMembers, Deadline)
+VALUES ("E-commerce Website", "Building an online store for a clothing brand", 100, 1, "1,2,3,4,5", "2023-10-31"),
+       ("Mobile App", "Creating a social media app for iOS and Android", 120, 1, "1,2,3,4", "2023-08-31"),
+       ("Web App", "Developing a project management tool for web", 80, 2, "2,3,4", "2023-12-31");
 
+INSERT INTO SubProjects (Name, Description, AllocatedTime, OwnerID, SubProjectMembers, Deadline, ProjectID)
+VALUES ("Design Phase", "Creating wireframes and mockups for the website", 20, 1, "1,3", "2023-06-30", 1),
+       ("Backend Development", "Setting up the server and database for the app", 30, 2, "2,4", "2023-08-31", 2),
+       ("Testing Phase", "Performing QA tests on the web app", 15, 3, "2,3,4", "2023-12-01", 3);
 
-INSERT into superpower (name) values ('Spind');
-INSERT into superpower (name) values ('Superstyrke');
-INSERT into superpower (name) values ('Millioner');
-INSERT into superpower (name) values ('Magi');
-
-INSERT into superhero (hero_name, real_name, creation_year, city_id)
-values('Spider-man', 'Peter Parker', 1962, 1);
-INSERT into superhero (hero_name, real_name, creation_year, city_id)
-values('Batman', 'Bruce Wayne', 1939, 2);
-INSERT into superhero (hero_name, real_name, creation_year, city_id)
-values('Doctor Strange', 'Dr Stephen Strange', 1963, 1);
-
-INSERT into superhero_powers values (1,1,'high');
-INSERT into superhero_powers values (1,3,'low');
-INSERT into superhero_powers values (2,2,'high');
-INSERT into superhero_powers values (3,4,'high');
-commit;
+INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID)
+VALUES ("Homepage Design", "Creating the design for the website's homepage", 5, 3, "2023-06-10", 1),
+       ("Shopping Cart Functionality", "Implementing the shopping cart feature for the website", 10, 2, "2023-08-15",
+        1),
+       ("User Authentication", "Creating the login and signup functionality for the mobile app", 15, 1, "2023-08-31",
+        2),
+       ("Bug Fixing", "Fixing bugs in the web app's user interface", 5, 3, "2023-11-30", 3);

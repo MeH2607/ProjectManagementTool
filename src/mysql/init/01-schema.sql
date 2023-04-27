@@ -1,42 +1,49 @@
-DROP DATABASE IF EXISTS superhero;
-CREATE DATABASE IF NOT EXISTS superhero DEFAULT CHARACTER SET UTF8MB4;
-USE superhero;
+DROP DATABASE IF EXISTS PMT_DB;
+CREATE DATABASE PMT_DB;
+USE PMT_DB;
 
-DROP TABLE if exists city;
-DROP TABLE if exists superpower;
-DROP TABLE if exists superhero;
-DROP TABLE if exists superhero_powers;
-
-CREATE TABLE city (
-                      city_id INTEGER NOT NULL AUTO_INCREMENT,
-                      name VARCHAR(50) NOT NULL,
-                      PRIMARY KEY (city_id),
-                      UNIQUE INDEX (name)
+CREATE TABLE Users
+(
+    ID   INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    Name VARCHAR(255) NOT NULL,
+    Role VARCHAR(255)
 );
 
-CREATE TABLE superpower (
-                            power_id INTEGER NOT NULL AUTO_INCREMENT,
-                            name VARCHAR(50) NOT NULL,
-                            PRIMARY KEY (power_id),
-                            UNIQUE INDEX (name)
+CREATE TABLE Projects
+(
+    ID             INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    Name           VARCHAR(255) NOT NULL,
+    Description    VARCHAR(255),
+    AllocatedTime  INT,
+    OwnerID        INT,
+    ProjectMembers VARCHAR(255),
+    Deadline       DATE,
+    FOREIGN KEY (OwnerID) REFERENCES Users (ID)
 );
 
-CREATE TABLE superhero (
-                           hero_id INTEGER NOT NULL AUTO_INCREMENT,
-                           hero_name VARCHAR(50) NOT NULL,
-                           real_name VARCHAR(50) NOT NULL,
-                           creation_year INT,
-                           city_id INTEGER,
-                           PRIMARY KEY (hero_id),
-                           FOREIGN KEY (city_id) REFERENCES city(city_id),
-                           UNIQUE INDEX (hero_name)
+CREATE TABLE SubProjects
+(
+    ID                INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    Name              VARCHAR(255) NOT NULL,
+    Description       TEXT,
+    AllocatedTime     INT,
+    OwnerID           INT,
+    SubProjectMembers VARCHAR(255),
+    Deadline          DATE,
+    ProjectID         INT,
+    FOREIGN KEY (ProjectID) REFERENCES Projects (ID),
+    FOREIGN KEY (OwnerID) REFERENCES Users (ID)
 );
 
-CREATE TABLE superhero_powers (
-                                  hero_id INTEGER NOT NULL,
-                                  power_id INTEGER NOT NULL,
-                                  LEVEL ENUM ('low', 'medium', 'high'),
-                                  PRIMARY KEY (hero_id, power_id),
-                                  FOREIGN KEY (hero_id) REFERENCES superhero(hero_id),
-                                  FOREIGN KEY (power_id) REFERENCES superpower(power_id)
+CREATE TABLE Tasks
+(
+    ID            INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    Name          VARCHAR(255) NOT NULL,
+    Description   TEXT,
+    AllocatedTime INT,
+    OwnerID       INT,
+    Deadline      DATE,
+    SubprojectID  INT,
+    FOREIGN KEY (SubprojectID) REFERENCES SubProjects (ID),
+    FOREIGN KEY (OwnerID) REFERENCES Users (ID)
 );
