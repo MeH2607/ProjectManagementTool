@@ -1,11 +1,13 @@
 package com.example.projectmanagementtool.Model;
 
+import java.time.LocalDate;
+
 public class Task implements Component{
     String name;
     String description;
-    String owner;
+    User owner;
     double allocatedTime;
-    double deadline;
+    LocalDate deadline;
 
     @Override
     public String getName() {
@@ -18,7 +20,7 @@ public class Task implements Component{
     }
 
     @Override
-    public String owner() {
+    public User owner() {
         return owner;
     }
 
@@ -28,7 +30,7 @@ public class Task implements Component{
     }
 
     @Override
-    public double deadline() {
+    public LocalDate deadline() {
         return deadline;
     }
 }

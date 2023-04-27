@@ -1,26 +1,33 @@
 package com.example.projectmanagementtool.Model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Project implements Component{
     String name;
     String description;
-    String owner;
+    User owner;
     double allocatedTime;
-    double deadline;
-    List<Subproject> subprojectList;
-    List<String> members;
+    LocalDate deadline;
 
-    public void addMember(String nameAdd){
-        members.add(nameAdd);
-    }
+    List<Subproject> subprojectList; // A project contains all its subprojects in this list
 
     public List<Subproject> getSubprojectList() {
         return subprojectList;
     }
 
-    public List<String> getMembers() {
-        return members;
+    public List<User> getProjectMembers() {
+        // Finds 'projectmembers' by iterating all members in all subprojects
+        List <User> projectMembers = new ArrayList<User>();
+        // Itererating subprojects
+        for (Subproject subproject : subprojectList) {
+            // Itererating all users in all subprojects and adding to projectmembers
+            for (User user : subproject.subprojectMembers) {
+                projectMembers.add(user);
+            }
+        }
+        return projectMembers;
     }
 
     @Override
@@ -34,7 +41,7 @@ public class Project implements Component{
     }
 
     @Override
-    public String owner() {
+    public User owner() {
         return owner;
     }
 
@@ -44,7 +51,7 @@ public class Project implements Component{
     }
 
     @Override
-    public double deadline() {
+    public LocalDate deadline() {
         return deadline;
     }
 }

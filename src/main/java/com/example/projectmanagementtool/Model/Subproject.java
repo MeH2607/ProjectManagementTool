@@ -1,11 +1,20 @@
 package com.example.projectmanagementtool.Model;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class Subproject implements Component{
     String name;
     String description;
-    String owner;
+    User owner;
     double allocatedTime;
-    double deadline;
+    LocalDate deadline;
+
+    List<User> subprojectMembers;
+
+    public void addMember(User userAdd){
+        subprojectMembers.add(userAdd);
+    }
 
     @Override
     public String getName() {
@@ -18,7 +27,7 @@ public class Subproject implements Component{
     }
 
     @Override
-    public String owner() {
+    public User owner() {
         return owner;
     }
 
@@ -28,7 +37,7 @@ public class Subproject implements Component{
     }
 
     @Override
-    public double deadline() {
+    public LocalDate deadline() {
         return deadline;
     }
 }
