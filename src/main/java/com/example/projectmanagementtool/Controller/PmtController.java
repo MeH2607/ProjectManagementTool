@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("PRT")
-public class PrtController {
+@RequestMapping("PMT")
+public class PmtController {
 
 @GetMapping("")
 public String index(){
