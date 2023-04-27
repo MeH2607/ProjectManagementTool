@@ -14,7 +14,7 @@ RUN set -ex; \
      rm -rf /src; \
      rm -rf /pom.xml;
 
-COPY src/mysql/init/* /docker-entrypoint-initdb.d/
+#COPY src/mysql/init/* /docker-entrypoint-initdb.d/
 
 EXPOSE $PORT
 #$MYSQL_PORT
@@ -27,7 +27,7 @@ CMD set -eux; \
 # docker build  -t projectmanagementtool .
 
 # Run like this:
-# docker run -it --rm --name superhero5 --pid=host -p 8080:8080 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root projectmanagementtool
+# docker run -it --rm --name projectmanagementtool --pid=host -p 8080:8080 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root projectmanagementtool
 #
 #   - `docker run`: This command is used to run a container from an image.
 #   - `-it`: This switch allocates a pseudo-TTY and opens an interactive terminal within the container.
