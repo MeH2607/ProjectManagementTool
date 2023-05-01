@@ -1,4 +1,5 @@
 package com.example.projectmanagementtool.Controller;
+import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Service.PMTService;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,17 @@ public class PmtController {
         model.addAttribute("list", list);
 
         return "index";
+    }
+    @GetMapping("subprojects")
+    public String subProjectOverview(Model model, HttpSession session) {
+        Task task = new Task();
+        Project project = new Project();
+        model.addAttribute("task", task);
+        model.addAttribute("project", project);
+        List<Task> list = pmtService.getAllTasks();
+        model.addAttribute("list", list);
+
+        return "subprojects";
     }
 }
 
