@@ -1,6 +1,7 @@
 package com.example.projectmanagementtool.Model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Subproject implements Component{
@@ -9,18 +10,17 @@ public class Subproject implements Component{
     User owner;
     LocalDate deadline;
 
-    List<User> subprojectMembers;
     List<Task> taskList;
 
-    public void addMember(User newUser){
-        subprojectMembers.add(newUser);
-    }
 
     public void addTask(Task newTask){
         taskList.add(newTask);
     }
 
+    // getProjectMembers should iterate the subprojects tasks by each call
     public List<User> getSubprojectMembers(){
+        List <User> subprojectMembers = new ArrayList<>();
+        // TODO iterate all tasks in this subproject and add the members to the list before returning it
         return subprojectMembers;
     }
 

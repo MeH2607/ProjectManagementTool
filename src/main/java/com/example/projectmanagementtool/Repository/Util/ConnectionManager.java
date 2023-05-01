@@ -30,7 +30,6 @@ public class ConnectionManager {
         PASSWORD = password;
     }
 
-    // TODO grocery plus exception?
     public static Connection getConnection() {
         System.out.println(URL + USER + PASSWORD);
         try {

@@ -22,10 +22,10 @@ public class PMTRepository {
 
     // Create a method that fetches all subtasks from the database
 
+    // simply gets the task-table from db
     public List<Task> getAllTasks() {
         List<Task> taskList = new ArrayList();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = ConnectionManager.getConnection();
             String SQL = "SELECT * FROM Tasks";
             Statement stmt = conn.createStatement();
@@ -43,8 +43,6 @@ public class PMTRepository {
             return taskList;
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
 
     }
