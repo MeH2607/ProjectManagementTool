@@ -27,7 +27,7 @@ public class Project implements Component{
         // Itererating subprojects
         for (Subproject subproject : subprojectList) {
             // Itererating all users in all subprojects and adding to projectmembers
-            for (User user : subproject.subprojectMembers) {
+            for (User user : subproject.getSubprojectMembers()) {
                 projectMembers.add(user);
             }
         }
