@@ -22,6 +22,7 @@ public class PMTRepository {
 
     // Create a method that fetches all subtasks from the database
 
+    // simply gets the task-table from db
     public List<Task> getAllTasks() {
         List<Task> taskList = new ArrayList();
         try {

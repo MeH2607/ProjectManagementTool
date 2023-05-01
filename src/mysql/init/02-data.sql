@@ -1,3 +1,5 @@
+USE pmt_db;
+
 INSERT INTO Users (Name, Role)
 VALUES ("John Smith", "Project Manager"),
        ("Sarah Lee", "Developer"),
