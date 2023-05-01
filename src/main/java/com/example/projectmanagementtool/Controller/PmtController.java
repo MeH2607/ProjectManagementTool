@@ -54,6 +54,13 @@ public class PmtController {
 
         return "createUserForm";
     }
+
+    @PostMapping("createUser")
+    public String createUserSuccess(@ModelAttribute("user") User user){
+        pmtService.createUser(user);
+        System.out.println(user.getName() + " has been created");
+        return "redirect:/";
+    }
 }
 
 
