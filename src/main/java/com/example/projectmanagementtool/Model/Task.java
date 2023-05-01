@@ -46,4 +46,15 @@ public class Task implements Component{
     public LocalDate getDeadline() {
         return deadline;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", owner=" + owner +
+                ", deadline=" + deadline +
+                ", allocatedTime=" + allocatedTime +
+                '}';
+    }
 }
