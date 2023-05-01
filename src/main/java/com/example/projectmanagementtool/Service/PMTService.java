@@ -14,7 +14,9 @@ public class PMTService {
     public PMTService(ApplicationContext context, @Value("${pmt.repository}") String impl) {
         pmtRepository = (PMTRepository) context.getBean(impl);
     }
-    public List<Task> getAllTasks() {
-        return pmtRepository.getAllTasks();
+
+    public List<Task> getTasksFromSubproject(int subprojectID) {
+        return pmtRepository.getTasksFromSubproject(subprojectID);
     }
+
 }
