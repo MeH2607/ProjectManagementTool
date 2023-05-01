@@ -1,6 +1,5 @@
 package com.example.projectmanagementtool.Controller;
 import com.example.projectmanagementtool.Model.Project;
-import com.example.projectmanagementtool.Model.SubprojectTasksDTO;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Service.PMTService;
 import jakarta.servlet.http.HttpSession;
@@ -25,8 +24,6 @@ public class PmtController {
     public String index(Model model, HttpSession session) {
         Task task = new Task();
         model.addAttribute("task", task);
-        List<Task> list = pmtService.getAllTasks();
-        model.addAttribute("list", list);
 
         return "index";
     }
@@ -47,7 +44,7 @@ public class PmtController {
 
         // Here we need to retrieve all tasks from a specific Subprojects from the DB
 
-        List<Task> subprojectTasks = PMTService.getTasksFromSubproject(subprojectID);
+        List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
 
         model.addAttribute("tasks", subprojectTasks);
 
