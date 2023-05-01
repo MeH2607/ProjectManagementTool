@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,10 +44,15 @@ public class PmtController {
         return "subprojects";
     }
 
-    @PostMapping("createUser")
-    public String createUser(@ModelAttribute("user") User user) {
-        pmtService.createUser(user);
-        return "redirect:/index";
+    @GetMapping("createUser")
+    public String createUser(Model model){
+
+        model.addAttribute("user",new User());
+
+        List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
+        model.addAttribute("roles", roles);
+
+        return "createUserForm";
     }
 }
 

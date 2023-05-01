@@ -7,8 +7,9 @@
 </head>
 <body>
 
+<div align="center">
 <h1>Create new user</h1>
-<form action="#" method="post">
+<form action="#" method="post" th:object="${user}">
     <div>
         <label>Username</label>
         <input type="text" name="name" required>
@@ -16,11 +17,11 @@
 
     <div>
         <label>User role</label>
-    <select id="roles"th:field="*{roles}" multiple="multiple">
-        <option value="ROLE_USER">Projektleder</option>
-        <option value="ROLE_ADMIN">Programmør</option>
-        <option value="ROLE_ADMIN">Web udvikler</option>
+    <select id="role" th:field="*{role}" multiple="multiple">
+    <option th:each="role : ${roles}" th:value="${role}" th:text="${role}">
+    </select>
+    </div>
 </form>
-
+</div>
 </body>
 </html>
