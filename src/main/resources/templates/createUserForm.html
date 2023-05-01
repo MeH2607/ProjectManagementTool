@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new user</title>
+</head>
+<body>
+
+<h1>Create new user</h1>
+<form action="#" method="post">
+    <div>
+        <label>Username</label>
+        <input type="text" name="name" required>
+    </div>
+
+    <div>
+        <label>User role</label>
+    <select id="roles"th:field="*{roles}" multiple="multiple">
+        <option value="ROLE_USER">Projektleder</option>
+        <option value="ROLE_ADMIN">Programmør</option>
+        <option value="ROLE_ADMIN">Web udvikler</option>
+</form>
+
+</body>
+</html>

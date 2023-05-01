@@ -1,13 +1,11 @@
 package com.example.projectmanagementtool.Repository;
 
 import com.example.projectmanagementtool.Model.Task;
+import com.example.projectmanagementtool.Model.User;
 import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +36,26 @@ public class PMTRepository {
                 int OwnerID = rs.getInt("OwnerID");
                 String Deadline = rs.getString("Deadline");
                 int SubprojectID = rs.getInt("SubprojectID");
-                taskList.add(new Task(name, description, allocatedTime, OwnerID, Deadline, SubprojectID));
+                taskList.add(new Task(name, description, allocatedTime, new User(420, "null", "null"), Deadline, SubprojectID));
             }
             return taskList;
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
+
+    public void createUser(User user){
+        try {
+            Connection conn = ConnectionManager.getConnection();
+        String SQL = "Insert into Users (Name, Role) values (?,?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+          ps.setString(1, user.getName());
+          ps.setString(2, user.getRole());
+            ps.executeUpdate();
+        }   catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
+
+
 }
