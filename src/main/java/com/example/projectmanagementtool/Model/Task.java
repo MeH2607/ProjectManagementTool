@@ -10,6 +10,18 @@ public class Task implements Component{
 
     double allocatedTime;
 
+    public Task(String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID) {
+        this.name = name;
+        this.description = description;
+        this.allocatedTime = allocatedTime;
+        this.owner = new User(ownerID);
+        this.deadline = LocalDate.parse(deadline);
+    }
+
+    public Task() {
+
+    }
+
     @Override
     public double getAllocatedTime() {
         return allocatedTime;

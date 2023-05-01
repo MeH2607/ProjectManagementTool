@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <style>
+        .card {
+            background-color: rgba(191, 216, 196, 0.36);
+            max-width: 250px;
+            min-height: 350px;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        .container {
+            max-width: 1500px; /* Change this value to adjust the width */
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+        }
+    </style>
 </head>
 <body>
-Hello World!
+<div class="container">
+    <div class="row">
+        <div th:each="task : ${list}">
+            <div class="card border-info mb-3" align="center">
+                <div class="card-body">
+                    <h5 class="text-center my-3 pb-3" th:text="${task.name}"></h5>
+                    <p class="card-text" align="center" th:text="${task.description}"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Allocated time: <span th:text="${task.allocatedTime}"></span></li>
+                    <li class="list-group-item">Deadline: <span th:text="${task.deadline}"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
