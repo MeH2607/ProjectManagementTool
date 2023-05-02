@@ -8,6 +8,7 @@ public class Project implements Component{
     String name;
     String description;
     User owner;
+
     LocalDate deadline;
 
     List<Subproject> subprojectList; // The project contains all its subprojects in this list
@@ -33,6 +34,7 @@ public class Project implements Component{
         }
         return projectMembers;
     }
+
 
 
     @Override
@@ -67,5 +69,21 @@ public class Project implements Component{
 
     public void setSubprojectList(List<Subproject> subprojectList) {
         this.subprojectList = subprojectList;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
     }
 }

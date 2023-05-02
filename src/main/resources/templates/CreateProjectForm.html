@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Project</title>
@@ -21,8 +22,10 @@
 
         <div>
             <label>Owner</label>
+
             <select id="owner" th:field="*{owner}">
-                <option th:each="user : ${userList}" th:value="${user}" th:text="${user.name}"></option>
+                <option value="" disabled selected>Select owner</option>
+                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}">
             </select>
         </div>
 

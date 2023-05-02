@@ -64,9 +64,10 @@ public class PmtController {
 
     @GetMapping("createProject")
     public String createProject(Model model){
+
         Project project = new Project();
 
-        model.addAttribute("project",new Project());
+        model.addAttribute("project", project);
 
         List<User> userList = pmtService.getAllUsers();
 
