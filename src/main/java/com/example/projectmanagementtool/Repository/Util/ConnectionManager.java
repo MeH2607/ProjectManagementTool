@@ -31,7 +31,6 @@ public class ConnectionManager {
     }
 
     public static Connection getConnection() {
-        System.out.println(URL + USER + PASSWORD);
         try {
             if (conn == null) conn = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {

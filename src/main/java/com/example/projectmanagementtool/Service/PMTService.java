@@ -1,5 +1,6 @@
 package com.example.projectmanagementtool.Service;
 
+import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Repository.PMTRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,15 @@ public class PMTService {
     public PMTService(ApplicationContext context, @Value("${pmt.repository}") String impl) {
         pmtRepository = (PMTRepository) context.getBean(impl);
     }
+    public List<Task> getTasksFromSubproject(int subprojectID) {
+        return pmtRepository.getTasksFromSubproject(subprojectID);
+    }
+
+    public List<Subproject> getSubProjects (int projectID) {
+        return pmtRepository.getSubProjects(projectID);
+    }
+    public List<Task> getAllTasks() {
+        return pmtRepository.getAllTasks();
 
     public List<Task> getTasksFromSubproject(int subprojectID) {
         return pmtRepository.getTasksFromSubproject(subprojectID);

@@ -10,8 +10,8 @@
     <style>
         .card {
             background-color: rgba(191, 216, 196, 0.36);
-            max-width: 250px;
-            min-height: 350px;
+            min-width: 1000px;
+            min-height: 150px;
             margin-top: 20px;
             margin-right: 20px;
         }
@@ -28,26 +28,40 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">[[${project.name}]]</a></li>
+        <li class="breadcrumb-item"><a href="#">project name</a></li>
         <li class="breadcrumb-item active" aria-current="page">Subprojects Overview</li>
     </ol>
 </nav>
 
 <div class="container">
     <div class="row">
-        <div th:each="task : ${list}">
-            <div class="card border-info mb-3" align="center">
+        <div th:each="subproject : ${subprojects}">
+            <div class="card border-info mb-3" align="left">
                 <div class="card-body">
-                    <h5 class="text-center my-3 pb-3" th:text="${task.name}"></h5>
-                    <p class="card-text" align="center" th:text="${task.description}"></p>
+                    <h5 class="text-center my-3 pb-3" th:text="${subproject.name}"></h5>
+                    <p class="card-text" align="center" th:text="${subproject.description}"></p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Allocated time: <span th:text="${task.allocatedTime}"></span></li>
-                    <li class="list-group-item">Deadline: <span th:text="${task.deadline}"></span></li>
+                    <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
+                    <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
+
                 </ul>
+                <li class="list-group-item">Tasks:
+                    <ul>
+                        <li th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
+                                <span th:switch="${task.status}">
+                                    <span th:case="'Done'" class="badge badge-success mr-1">DONE</span>
+                                    <span th:case="'Doing'" class="badge badge-warning mr-1">DOING</span>
+                                    <span th:case="'TODO'" class="badge badge-danger mr-1">TODO</span>
+                                </span>
+                            <span th:text="${task.description}"></span><br>
+                        </li>
+                    </ul>
+                </li>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

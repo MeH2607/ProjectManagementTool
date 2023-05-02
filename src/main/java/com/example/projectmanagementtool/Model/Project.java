@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project implements Component{
-    String name;
-    String description;
-    User owner;
-    LocalDate deadline;
+    private String name;
+    private String description;
+    private User owner;
+    private LocalDate deadline;
 
-    List<Subproject> subprojectList; // The project contains all its subprojects in this list
+    private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
     public void addSubproject(Subproject newSubproject){
         subprojectList.add(newSubproject);
@@ -62,5 +62,16 @@ public class Project implements Component{
     @Override
     public LocalDate getDeadline() {
         return deadline;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", owner=" + owner +
+                ", deadline=" + deadline +
+                ", subprojectList=" + subprojectList +
+                '}';
     }
 }
