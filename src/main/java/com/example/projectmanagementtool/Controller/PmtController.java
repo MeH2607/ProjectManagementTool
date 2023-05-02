@@ -38,7 +38,6 @@ public class PmtController {
         model.addAttribute("tasks", tasks);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("project", project);
-        System.out.println(tasks);
 
         List<Task> list = pmtService.getTasksFromSubproject(projectID);
 

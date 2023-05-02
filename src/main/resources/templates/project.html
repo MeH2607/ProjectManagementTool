@@ -10,11 +10,12 @@
     <style>
         .card {
             background-color: rgba(191, 216, 196, 0.36);
-            min-width: 250px;
+            min-width: 1000px;
             min-height: 150px;
             margin-top: 20px;
             margin-right: 20px;
         }
+
         .container {
             max-width: 1500px; /* Change this value to adjust the width */
         }
@@ -22,14 +23,17 @@
         body {
             font-family: 'Titillium Web', sans-serif;
         }
+        .badge {
+            font-size: 100%;
+
+        }
     </style>
 </head>
 <body>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">[[${project.name}]]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Subprojects Overview</li>
+        <li class="breadcrumb-item active" aria-current="page"><a>[[${project.name}]]</a></li>
     </ol>
 </nav>
 
@@ -45,19 +49,15 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
                     <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
-                </ul>
-                <li class="list-group-item">Tasks:
-                    <ul>
-                        <li th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
+                    <li class="list-group-item">Tasks:
+                    <li class="list-group-item" th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
                                 <span th:switch="${task.status}">
-                                    <span th:case="'Done'" class="badge badge-success mr-1">DONE</span>
-                                    <span th:case="'Doing'" class="badge badge-warning mr-1">DOING</span>
-                                    <span th:case="'TODO'" class="badge badge-danger mr-1">TODO</span>
+                                    <span th:case="'Done'"  class="alert alert-success" role="alert">[[${task.description}]]</span>
+                                    <span th:case="'Doing'" class="alert alert-warning" role="alert">[[${task.description}]]</span>
+                                    <span th:case="'TODO'" class="alert alert-danger" role="alert">[[${task.description}]]</span>
                                 </span>
-                            <span th:text="${task.description}"></span><br>
-                        </li>
-                    </ul>
-                </li>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
