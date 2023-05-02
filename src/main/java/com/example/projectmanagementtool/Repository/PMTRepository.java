@@ -98,16 +98,7 @@ public class PMTRepository {
                 int ProjectID = rs.getInt("ProjectID");
                 subproject = new Subproject(id, name, description, allocatedTime, OwnerID, Deadline, ProjectID);
 
-            }
-
-            return subproject;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
-
     }
-
-    //Retrieves all tasks from a specific subproject (by its ID), and returns them as a list
     public List<Task> getTasksFromSubproject(int findSubprojectID) {
 
         List<Task> taskList = new ArrayList();
@@ -137,5 +128,58 @@ public class PMTRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
+    }
+
+    // Create a method that fetches all subprojects from the database for a specific project
+
+    public List<Subproject> getSubProjects(int projectSearchID) {
+        List<Subproject> subprojectList = new ArrayList<>();
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ProjectID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, projectSearchID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                String description = rs.getString("Description");
+                double allocatedTime = rs.getDouble("AllocatedTime");
+                int OwnerID = rs.getInt("OwnerID");
+                String Deadline = rs.getString("Deadline");
+                int ProjectID = rs.getInt("ProjectID");
+                subprojectList.add(new Subproject(id, name, description, allocatedTime, OwnerID, Deadline, ProjectID));
+
+            }
+            System.out.println(subprojectList);
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+        return subprojectList;
+    }
+
+
+    public Project getProjectFromID(int projectID) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "SELECT * FROM pmt_db.projects WHERE ID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, projectID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                String description = rs.getString("Description");
+                int OwnerID = rs.getInt("OwnerID");
+                String Deadline = rs.getString("Deadline");
+                return new Project(id, name, description, OwnerID, Deadline);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+        return null;
     }
 }

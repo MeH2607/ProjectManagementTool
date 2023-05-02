@@ -12,6 +12,16 @@ public class Subproject implements Component{
     private double allocatedTime;
     private LocalDate deadline;
 
+    public Subproject(int id, String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.allocatedTime = allocatedTime;
+        this.ownerID = ownerID;
+        this.deadline = LocalDate.parse(deadline);
+        this.projectID = subprojectID;
+    }
+
     public int getId() {
         return id;
     }
@@ -54,15 +64,6 @@ public class Subproject implements Component{
 
     private int projectID;
 
-    public Subproject(int id, String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.allocatedTime = allocatedTime;
-        this.ownerID = ownerID;
-        this.deadline = LocalDate.parse(deadline);
-        this.projectID = subprojectID;
-    }
 
     public Subproject() {
     }
