@@ -1,4 +1,5 @@
 package com.example.projectmanagementtool.Controller;
+import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Service.PMTService;
@@ -31,10 +32,12 @@ public class PmtController {
     public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
 
         List<Task> tasks = pmtService.getAllTasks();
-        List<Subproject> subprojects = pmtService.getSubProjectsFromProject(projectID);
+        List<Subproject> subprojects = pmtService.getSubProjects(projectID);
+        Project project = pmtService.getProjectFromID(projectID);
 
         model.addAttribute("tasks", tasks);
         model.addAttribute("subprojects", subprojects);
+        model.addAttribute("project", project);
 
         List<Task> list = pmtService.getTasksFromSubproject(projectID);
 
