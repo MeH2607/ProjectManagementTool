@@ -61,6 +61,24 @@ public class PmtController {
         System.out.println(user.getName() + " has been created");
         return "redirect:/";
     }
+
+    @GetMapping("createProject")
+    public String createProject(Model model){
+
+        model.addAttribute("project",new Project());
+
+        List<User> userList = pmtService.getAllUsers();
+        model.addAttribute("userList", userList);
+
+        return "createProjectForm";
+    }
+
+    @PostMapping("createProject")
+    public String createProjectSuccess(@ModelAttribute("project") Project project){
+        pmtService.createProject(project);
+        System.out.println(project.getName() + " has been created");
+        return "redirect:/";
+    }
 }
 
 

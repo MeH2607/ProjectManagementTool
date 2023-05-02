@@ -1,11 +1,13 @@
 package com.example.projectmanagementtool.Repository;
 
+import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Model.User;
 import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,45 @@ public class PMTRepository {
         }
     }
 
+    public User getUserFromID(int id) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "SELECT * FROM Users WHERE ID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String name = rs.getString("Name");
+                String role = rs.getString("Role");
+                return new User(id, name, role);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+        return null;
+    }
+
+    public List<User> getAllUsers(){
+        try{
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "SELECT * FROM Users";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+            List<User> userList = new ArrayList();
+            while (rs.next()){
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                String role = rs.getString("Role");
+                userList.add(new User(id, name, role));
+            }
+            return userList;
+        }
+        catch (SQLException e){
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
+
     public void createUser(User user){
         try {
             Connection conn = ConnectionManager.getConnection();
@@ -57,5 +98,23 @@ public class PMTRepository {
         }
     }
 
+
+
+    public void createProject(Project project){
+        try{
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "Insert into projects(name,Description,AllocatedTime,OwnerID,Deadline) values (?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, project.getName());
+            ps.setString(2, project.getDescription());
+            ps.setDouble(3, project.getAllocatedTime());
+            ps.setInt(4, project.getOwner().getId());
+            ps.setString(5, project.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
 
 }
