@@ -1,5 +1,6 @@
 package com.example.projectmanagementtool.Repository;
 
+import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
@@ -98,6 +99,11 @@ public class PMTRepository {
                 int ProjectID = rs.getInt("ProjectID");
                 subproject = new Subproject(id, name, description, allocatedTime, OwnerID, Deadline, ProjectID);
 
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+        return subproject;
     }
     public List<Task> getTasksFromSubproject(int findSubprojectID) {
 
@@ -130,35 +136,6 @@ public class PMTRepository {
         }
     }
 
-    // Create a method that fetches all subprojects from the database for a specific project
-
-    public List<Subproject> getSubProjects(int projectSearchID) {
-        List<Subproject> subprojectList = new ArrayList<>();
-        try {
-            Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ProjectID = ?";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setInt(1, projectSearchID);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("ID");
-                String name = rs.getString("Name");
-                String description = rs.getString("Description");
-                double allocatedTime = rs.getDouble("AllocatedTime");
-                int OwnerID = rs.getInt("OwnerID");
-                String Deadline = rs.getString("Deadline");
-                int ProjectID = rs.getInt("ProjectID");
-                subprojectList.add(new Subproject(id, name, description, allocatedTime, OwnerID, Deadline, ProjectID));
-
-            }
-            System.out.println(subprojectList);
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
-        return subprojectList;
-    }
 
 
     public Project getProjectFromID(int projectID) {
