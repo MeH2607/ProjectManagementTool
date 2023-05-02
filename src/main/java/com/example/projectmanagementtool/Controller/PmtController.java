@@ -1,5 +1,6 @@
 package com.example.projectmanagementtool.Controller;
 import com.example.projectmanagementtool.Model.Project;
+import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Service.PMTService;
 import jakarta.servlet.http.HttpSession;
@@ -27,23 +28,23 @@ public class PmtController {
 
         return "index";
     }
-    @GetMapping("subprojects")
-    public String subProjectOverview(@PathVariable int subprojectID, Model model, HttpSession session) {
+    @GetMapping("project/{projectID}")
+    public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
 
-        Task task = new Task();
-        Project project = new Project();
-        model.addAttribute("task", task);
-        model.addAttribute("project", project);
-        List<Task> list = pmtService.getTasksFromSubproject(subprojectID);
-        model.addAttribute("list", list);
+        List<Task> tasks = pmtService.getAllTasks();
+        List<Subproject> subprojects = pmtService.getSubProjects(projectID);
+
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("subprojects", subprojects);
+
+        List<Task> list = pmtService.getTasksFromSubproject(projectID);
+
 
         return "subprojects";
     }
 
-    @GetMapping("subprojects/{subprojectID}")
+    @GetMapping("{subprojectID}")
     public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
-        // test sout
-        System.out.println(pmtService.getTasksFromSubproject(subprojectID));
 
         // Here we need to retrieve all tasks from a specific Subprojects from the DB
 

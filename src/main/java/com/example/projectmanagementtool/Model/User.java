@@ -5,6 +5,13 @@ public class User {
 
     public User(int ownerID) {
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 
 
