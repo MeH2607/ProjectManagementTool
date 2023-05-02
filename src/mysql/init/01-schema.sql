@@ -44,6 +44,7 @@ CREATE TABLE Tasks
     OwnerID       INT,
     Deadline      DATE,
     SubprojectID  INT,
+    Status VARCHAR(255),
     FOREIGN KEY (SubprojectID) REFERENCES SubProjects (ID),
     FOREIGN KEY (OwnerID) REFERENCES Users (ID)
 );

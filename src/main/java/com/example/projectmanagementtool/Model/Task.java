@@ -95,6 +95,7 @@ public class Task implements Component{
                 ", deadline=" + deadline +
                 ", allocatedTime=" + allocatedTime +
                 ", subprojectID=" + subprojectID +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
