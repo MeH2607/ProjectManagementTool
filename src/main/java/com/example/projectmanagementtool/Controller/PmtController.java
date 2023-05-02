@@ -64,10 +64,12 @@ public class PmtController {
 
     @GetMapping("createProject")
     public String createProject(Model model){
+        Project project = new Project();
 
         model.addAttribute("project",new Project());
 
         List<User> userList = pmtService.getAllUsers();
+
         model.addAttribute("userList", userList);
 
         return "createProjectForm";
@@ -75,8 +77,10 @@ public class PmtController {
 
     @PostMapping("createProject")
     public String createProjectSuccess(@ModelAttribute("project") Project project){
+
         pmtService.createProject(project);
         System.out.println(project.getName() + " has been created");
+
         return "redirect:/";
     }
 }

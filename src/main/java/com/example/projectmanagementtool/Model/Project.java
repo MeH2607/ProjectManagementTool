@@ -34,6 +34,7 @@ public class Project implements Component{
         return projectMembers;
     }
 
+
     @Override
     public String getName() {
         return name;
@@ -62,5 +63,9 @@ public class Project implements Component{
     @Override
     public LocalDate getDeadline() {
         return deadline;
+    }
+
+    public void setSubprojectList(List<Subproject> subprojectList) {
+        this.subprojectList = subprojectList;
     }
 }

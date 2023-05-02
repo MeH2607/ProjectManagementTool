@@ -17,7 +17,7 @@
 
     <div>
         <label>User role</label>
-    <select id="role" th:field="*{role}" multiple="multiple">
+    <select id="role" th:field="*{role}">
     <option th:each="role : ${roles}" th:value="${role}" th:text="${role}">
     </select>
 

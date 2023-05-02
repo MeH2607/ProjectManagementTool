@@ -8,7 +8,7 @@
 <div align="center">
 <h1>Create new project</h1>
 
-    <form action="#" method="post" th:object="&{project}">
+    <form action="#" method="post" th:object="${project}">
         <div>
             <label>Project name</label>
             <input type="text" name="name" required>
@@ -21,14 +21,18 @@
 
         <div>
             <label>Owner</label>
-            <select id="owner" th:field="*{user}" multiple="multiple">
-                <option th:each="user : ${userList}" th:value="${user}" th:text="${user}">
+            <select id="owner" th:field="*{owner}">
+                <option th:each="user : ${userList}" th:value="${user}" th:text="${user.name}"></option>
+            </select>
         </div>
 
         <div>
             <label>Project deadline</label>
             <input type="date" name="deadline" required>
         </div>
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
 
     </form>
 </div>
