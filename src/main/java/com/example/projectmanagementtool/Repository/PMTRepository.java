@@ -1,5 +1,6 @@
 package com.example.projectmanagementtool.Repository;
 
+import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
@@ -47,7 +48,6 @@ public class PMTRepository {
 
     }
     public List<Task> getTasksFromSubproject(int findSubprojectID) {
-
         List<Task> taskList = new ArrayList();
         try {
             Connection conn = ConnectionManager.getConnection();
@@ -108,4 +108,25 @@ public class PMTRepository {
     }
 
 
+    public Project getProjectFromID(int projectID) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "SELECT * FROM pmt_db.projects WHERE ID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, projectID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                String description = rs.getString("Description");
+                int OwnerID = rs.getInt("OwnerID");
+                String Deadline = rs.getString("Deadline");
+                return new Project(id, name, description, OwnerID, Deadline);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+        return null;
+    }
 }

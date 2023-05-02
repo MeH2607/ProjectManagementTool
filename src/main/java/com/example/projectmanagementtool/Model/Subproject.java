@@ -11,7 +11,16 @@ public class Subproject implements Component{
     private int ownerID;
     private double allocatedTime;
     private LocalDate deadline;
-    private List<Task> taskList;
+
+    public Subproject(int id, String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.allocatedTime = allocatedTime;
+        this.ownerID = ownerID;
+        this.deadline = LocalDate.parse(deadline);
+        this.projectID = subprojectID;
+    }
 
     public int getId() {
         return id;
@@ -45,14 +54,6 @@ public class Subproject implements Component{
         this.deadline = deadline;
     }
 
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
-    }
-
     public int getProjectID() {
         return projectID;
     }
@@ -63,25 +64,8 @@ public class Subproject implements Component{
 
     private int projectID;
 
-    public Subproject(int id, String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.allocatedTime = allocatedTime;
-        this.ownerID = ownerID;
-        this.deadline = LocalDate.parse(deadline);
-        this.projectID = subprojectID;
-    }
 
     public Subproject() {
-    }
-
-
-
-
-
-    public void addTask(Task newTask){
-        taskList.add(newTask);
     }
 
     // getProjectMembers should iterate the subprojects tasks by each call
@@ -89,10 +73,6 @@ public class Subproject implements Component{
         List <User> subprojectMembers = new ArrayList<>();
         // TODO iterate all tasks in this subproject and add the members to the list before returning it
         return subprojectMembers;
-    }
-
-    public List<Task> getTasks(){
-        return taskList;
     }
 
     @Override
@@ -109,8 +89,6 @@ public class Subproject implements Component{
         return null;
     }
 
-
-
     @Override
     public double getAllocatedTime() {
         return allocatedTime;
@@ -120,7 +98,6 @@ public class Subproject implements Component{
     public LocalDate getDeadline() {
         return deadline;
     }
-
     @Override
     public String toString() {
         return "Subproject{" +

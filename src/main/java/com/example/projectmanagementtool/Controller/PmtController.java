@@ -33,25 +33,24 @@ public class PmtController {
 
         List<Task> tasks = pmtService.getAllTasks();
         List<Subproject> subprojects = pmtService.getSubProjects(projectID);
+        Project project = pmtService.getProjectFromID(projectID);
+        System.out.println(project);
 
         model.addAttribute("tasks", tasks);
         model.addAttribute("subprojects", subprojects);
+        model.addAttribute("project", project);
 
         List<Task> list = pmtService.getTasksFromSubproject(projectID);
 
-
-        return "subprojects";
+        return "project";
     }
 
     @GetMapping("{subprojectID}")
     public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
 
         // Here we need to retrieve all tasks from a specific Subprojects from the DB
-
         List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
-
         model.addAttribute("tasks", subprojectTasks);
-
 
         return "taskoverview";
     }
