@@ -67,6 +67,8 @@ public class PmtController {
 
         Project project = new Project();
 
+        project.setOwner(new User());
+
         model.addAttribute("project", project);
 
         List<User> userList = pmtService.getAllUsers();

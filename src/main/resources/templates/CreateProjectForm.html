@@ -23,10 +23,15 @@
         <div>
             <label>Owner</label>
 
-            <select id="owner" th:field="*{owner}">
+           <!-- <select id="owner"  th:field="*{owner}">
                 <option value="" disabled selected>Select owner</option>
-                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}">
+                <option th:each="user : ${userList}" th:value="${user}" th:text="${user.name}">
+            </select> -->
+            <select name="owner" required>
+                <option value="" disabled selected>Select owner</option>
+                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}" th:selected="${user.id == project.owner.id}" > </option>
             </select>
+
         </div>
 
         <div>
