@@ -1,5 +1,4 @@
 package com.example.projectmanagementtool.Controller;
-import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Service.PMTService;
@@ -32,28 +31,33 @@ public class PmtController {
     public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
 
         List<Task> tasks = pmtService.getAllTasks();
-        List<Subproject> subprojects = pmtService.getSubProjects(projectID);
+        List<Subproject> subprojects = pmtService.getSubProjectsFromProject(projectID);
 
         model.addAttribute("tasks", tasks);
         model.addAttribute("subprojects", subprojects);
 
         List<Task> list = pmtService.getTasksFromSubproject(projectID);
 
-
-        return "subprojects";
+        return "project";
     }
 
-    @GetMapping("{subprojectID}")
+
+    @GetMapping("subproject/{subprojectID}")
     public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
 
-        // Here we need to retrieve all tasks from a specific Subprojects from the DB
+        // List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
 
+        // Retrieving the subproject itself
+        Subproject subproject = pmtService.getSubProject(subprojectID);
+
+        // Retrieving all tasks from the specific Subprojects from the DB
         List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
 
         model.addAttribute("tasks", subprojectTasks);
+        model.addAttribute("subproject", subproject);
 
 
-        return "taskoverview";
+        return "subproject";
     }
 }
 

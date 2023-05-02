@@ -19,11 +19,14 @@ public class PMTService {
         return pmtRepository.getTasksFromSubproject(subprojectID);
     }
 
-    public List<Subproject> getSubProjects (int projectID) {
+    public List<Subproject> getSubProjectsFromProject(int projectID) {
         return pmtRepository.getSubProjects(projectID);
     }
     public List<Task> getAllTasks() {
         return pmtRepository.getAllTasks();
     }
 
+    public Subproject getSubProject(int subprojectID) {
+        return pmtRepository.getSubproject(subprojectID);
+    }
 }

@@ -11,7 +11,6 @@ public class Subproject implements Component{
     private int ownerID;
     private double allocatedTime;
     private LocalDate deadline;
-    private List<Task> taskList;
 
     public int getId() {
         return id;
@@ -45,14 +44,6 @@ public class Subproject implements Component{
         this.deadline = deadline;
     }
 
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
-    }
-
     public int getProjectID() {
         return projectID;
     }
@@ -77,22 +68,11 @@ public class Subproject implements Component{
     }
 
 
-
-
-
-    public void addTask(Task newTask){
-        taskList.add(newTask);
-    }
-
     // getProjectMembers should iterate the subprojects tasks by each call
     public List<User> getSubprojectMembers(){
         List <User> subprojectMembers = new ArrayList<>();
         // TODO iterate all tasks in this subproject and add the members to the list before returning it
         return subprojectMembers;
-    }
-
-    public List<Task> getTasks(){
-        return taskList;
     }
 
     @Override
@@ -108,8 +88,6 @@ public class Subproject implements Component{
     public User getOwner() {
         return null;
     }
-
-
 
     @Override
     public double getAllocatedTime() {
