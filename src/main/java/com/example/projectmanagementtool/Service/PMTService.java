@@ -24,9 +24,6 @@ public class PMTService {
     }
     public List<Task> getAllTasks() {
         return pmtRepository.getAllTasks();
-
-    public List<Task> getTasksFromSubproject(int subprojectID) {
-        return pmtRepository.getTasksFromSubproject(subprojectID);
     }
 
 }
