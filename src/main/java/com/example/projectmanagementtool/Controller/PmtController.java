@@ -38,7 +38,6 @@ public class PmtController {
         model.addAttribute("tasks", tasks);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("project", project);
-        System.out.println(tasks);
 
         List<Task> list = pmtService.getTasksFromSubproject(projectID);
 
@@ -55,9 +54,9 @@ public class PmtController {
         Subproject subproject = pmtService.getSubProject(subprojectID);
 
         // Retrieving all tasks from the specific Subprojects from the DB
-        List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
+        List<Task> tasks = pmtService.getTasksFromSubproject(subprojectID);
 
-        model.addAttribute("tasks", subprojectTasks);
+        model.addAttribute("tasks", tasks);
         model.addAttribute("subproject", subproject);
 
 

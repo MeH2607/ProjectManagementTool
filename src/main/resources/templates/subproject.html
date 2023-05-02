@@ -35,7 +35,6 @@
 
 <div class="container">
   <div class="row">
-    <div th:each="subproject : ${subprojects}">
       <div class="card border-info mb-3" align="left">
         <div class="card-body">
           <h5 class="text-center my-3 pb-3" th:text="${subproject.name}"></h5>
@@ -49,17 +48,17 @@
         <li class="list-group-item">Tasks:
           <ul>
             <li th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
-                                <span th:switch="${task.status}">
-                                    <span th:case="'Done'" class="badge badge-success mr-1">DONE</span>
-                                    <span th:case="'Doing'" class="badge badge-warning mr-1">DOING</span>
-                                    <span th:case="'TODO'" class="badge badge-danger mr-1">TODO</span>
-                                </span>
+                        <span th:switch="${task.status}">
+                            <span th:case="'Done'" class="badge badge-success mr-1">DONE</span>
+                            <span th:case="'Doing'" class="badge badge-warning mr-1">DOING</span>
+                            <span th:case="'TODO'" class="badge badge-danger mr-1">TODO</span>
+                        </span>
               <span th:text="${task.description}"></span><br>
             </li>
           </ul>
         </li>
       </div>
-    </div>
+
   </div>
 </div>
 
