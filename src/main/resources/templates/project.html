@@ -9,19 +9,20 @@
           crossorigin="anonymous">
     <style>
         .card {
-            background-color: rgba(191, 216, 196, 0.36);
+            background-color: rgba(252, 251, 251, 0.81);
             min-width: 1000px;
             min-height: 150px;
             margin-top: 20px;
             margin-right: 20px;
+            margin-left: 25%;
         }
-
         .container {
             max-width: 1500px; /* Change this value to adjust the width */
         }
 
         body {
             font-family: 'Titillium Web', sans-serif;
+            background-color: rgba(0, 0, 0, 0.80);
         }
 
         .badge {
@@ -37,15 +38,13 @@
         <li class="breadcrumb-item active" aria-current="page"><a>[[${project.name}]]</a></li>
     </ol>
 </nav>
-
-
 <div class="container">
     <div class="row">
         <div th:each="subproject : ${subprojects}">
-            <div class="card border-info mb-3" align="left">
+            <div class="card mb-3" align="left">
                 <div class="card-body">
-                    <a href="#" class="btn btn-info float-right" th:href="@{'/subproject/' + ${subproject.id}}">Show full overview</a>
-                    <h3 class="text-center" th:text="${subproject.name}"></h3>
+                    <a href="#" class="btn float-right" th:href="@{'/subproject/' + ${subproject.id}}">Show full overview</a>
+                    <h3 class="text-center float-middle" th:text="${subproject.name}"></h3>
                 </div>
                 <div class="card-body">
                 <ul class="list-group list-group-flush">
@@ -56,16 +55,22 @@
                 </ul>
                 </div>
                 <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
-                        <span th:switch="${task.status}">
-                            <span th:case="'Done'" class="alert alert-success" role="alert">[[${task.name}]] </span>
-                            <span th:case="'Doing'" class="alert alert-warning" role="alert">[[${task.name}]]. DEADLINE: [[${task.deadline}]]</span>
-                            <span th:case="'TODO'" class="alert alert-danger" role="alert">[[${task.name}]]. DEADLINE: [[${task.deadline}]]</span>
-                        </span>
-                    </li>
-                </ul>
+                    <table class="table table-bordered" align="center">
+                        <tr>
+                            <th>Task name</th>
+                            <th>Allocated time</th>
+                            <th>Deadline</th>
+                            <th>Owner</th>
+                        <tr th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}"
+                            th:class="${(task.status == 'Done') ? 'table-success' : ((task.status == 'Doing') ? 'table-warning' : 'table-danger')}">
+                            <td th:text="${task.name}"></td>
+                            <td th:text="${task.allocatedTime}"></td>
+                            <td th:text="${task.deadline}"></td>
+                            <td th:text="${task.owner}"></td>
+                        </tr>
+                    </table>
                 </div>
+
             </div>
         </div>
     </div>
