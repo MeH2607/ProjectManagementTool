@@ -53,11 +53,15 @@ public class PmtController {
         // Retrieving the subproject itself
         Subproject subproject = pmtService.getSubProject(subprojectID);
 
+        // Retrieving the project that the subproject belongs to
+        Project project = pmtService.getProjectFromID(subproject.getProjectID());
+
         // Retrieving all tasks from the specific Subprojects from the DB
         List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
 
         model.addAttribute("tasks", subprojectTasks);
         model.addAttribute("subproject", subproject);
+        model.addAttribute("project", project);
 
 
         return "subproject";

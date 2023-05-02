@@ -23,6 +23,7 @@
         body {
             font-family: 'Titillium Web', sans-serif;
         }
+
         .badge {
             font-size: 100%;
 
@@ -43,21 +44,28 @@
         <div th:each="subproject : ${subprojects}">
             <div class="card border-info mb-3" align="left">
                 <div class="card-body">
-                    <h5 class="text-center my-3 pb-3" th:text="${subproject.name}"></h5>
-                    <p class="card-text" align="center" th:text="${subproject.description}"></p>
+                    <a href="#" class="btn btn-info float-right" th:href="@{'/subproject/' + ${subproject.id}}">Show full overview</a>
+                    <h3 class="text-center" th:text="${subproject.name}"></h3>
                 </div>
+                <div class="card-body">
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Description: <span th:text="${subproject.description}"></span></li>
+                    <li class="list-group-item">Owner: <span th:text="${subproject.owner}"></span></li>
                     <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
                     <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
-                    <li class="list-group-item">Tasks:
+                </ul>
+                </div>
+                <div class="card-body">
+                <ul class="list-group list-group-flush">
                     <li class="list-group-item" th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
-                                <span th:switch="${task.status}">
-                                    <span th:case="'Done'"  class="alert alert-success" role="alert">[[${task.description}]]</span>
-                                    <span th:case="'Doing'" class="alert alert-warning" role="alert">[[${task.description}]]</span>
-                                    <span th:case="'TODO'" class="alert alert-danger" role="alert">[[${task.description}]]</span>
-                                </span>
+                        <span th:switch="${task.status}">
+                            <span th:case="'Done'" class="alert alert-success" role="alert">[[${task.name}]] </span>
+                            <span th:case="'Doing'" class="alert alert-warning" role="alert">[[${task.name}]]. DEADLINE: [[${task.deadline}]]</span>
+                            <span th:case="'TODO'" class="alert alert-danger" role="alert">[[${task.name}]]. DEADLINE: [[${task.deadline}]]</span>
+                        </span>
                     </li>
                 </ul>
+                </div>
             </div>
         </div>
     </div>
