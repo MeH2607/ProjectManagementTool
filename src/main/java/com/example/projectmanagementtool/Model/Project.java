@@ -9,6 +9,8 @@ public class Project implements Component{
     String description;
     User owner;
 
+    int ownerID;
+
     LocalDate deadline;
 
     List<Subproject> subprojectList; // The project contains all its subprojects in this list
@@ -85,5 +87,13 @@ public class Project implements Component{
 
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
+    }
+
+    public int getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
     }
 }

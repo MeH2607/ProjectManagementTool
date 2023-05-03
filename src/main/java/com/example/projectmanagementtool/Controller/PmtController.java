@@ -75,12 +75,14 @@ public class PmtController {
 
         model.addAttribute("userList", userList);
 
+
         return "createProjectForm";
     }
 
     @PostMapping("createProject")
     public String createProjectSuccess(@ModelAttribute("project") Project project){
 
+        project.setOwner(pmtService.getUserFromID(project.getOwnerID()));
         pmtService.createProject(project);
         System.out.println(project.getName() + " has been created");
 
