@@ -4,18 +4,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project implements Component{
+public class Project implements Component {
     String name;
     String description;
     User owner;
 
-    int ownerID;
+    int ownerID; //Bruges til at få et id fra owner når man vælger en owner fra html formen,
+                // da Thymeleaf har svært ved at arbejde med composite attributer.
 
     LocalDate deadline;
 
     List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
-    public void addSubproject(Subproject newSubproject){
+    public void addSubproject(Subproject newSubproject) {
         subprojectList.add(newSubproject);
     }
 
@@ -26,7 +27,7 @@ public class Project implements Component{
 
     public List<User> getProjectMembers() {
         // Finds 'projectmembers' by iterating all members in all subprojects
-        List <User> projectMembers = new ArrayList<User>();
+        List<User> projectMembers = new ArrayList<User>();
         // Itererating subprojects
         for (Subproject subproject : subprojectList) {
             // Itererating all users in all subprojects and adding to projectmembers
@@ -36,7 +37,6 @@ public class Project implements Component{
         }
         return projectMembers;
     }
-
 
 
     @Override
