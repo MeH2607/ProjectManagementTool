@@ -1,67 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-  <style>
-    .card {
-      background-color: rgba(191, 216, 196, 0.36);
-      min-width: 1000px;
-      min-height: 150px;
-      margin-top: 20px;
-      margin-right: 20px;
-    }
-    .container {
-      max-width: 1500px; /* Change this value to adjust the width */
-    }
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <style>
+        .card {
+            background-color: rgba(252, 251, 251, 0.81);
+            min-width: 1000px;
+            min-height: 150px;
+            margin-top: 20px;
+            margin-right: 20px;
+            margin-left: 25%;
+        }
 
-    body {
-      font-family: 'Titillium Web', sans-serif;
-    }
-  </style>
+        .card2 {
+            background-color: rgba(252, 251, 251, 0.81);
+            width: 300px;
+            margin-top: 20px;
+            margin-right: 20px;
+            margin-left: 25%;
+        }
+
+        .container {
+            max-width: 1500px; /* Change this value to adjust the width */
+            margin: auto;
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+            background-color: rgba(0, 0, 0, 0.80);
+        }
+
+        .badge {
+            font-size: 100%;
+
+        }
+    </style>
 </head>
 <body>
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a th:href="@{'/project/' + ${subproject.projectID}}">[[${project.name}]]</a></li>
-
-    <li class="breadcrumb-item active" aria-current="page">Subprojects Overview</li>
-  </ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a th:href="@{'/project/' + ${subproject.projectID}}">[[${project.name}]]</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a> [[${subproject.name}]] </a></li>
+    </ol>
 </nav>
 
+<!-- SUBPROJECT MAIN -->
 <div class="container">
-  <div class="row">
-      <div class="card border-info mb-3" align="left">
-        <div class="card-body">
-          <h5 class="text-center my-3 pb-3" th:text="${subproject.name}"></h5>
-          <p class="card-text" align="center" th:text="${subproject.description}"></p>
+    <div class="row">
+        <div class="card mb-3" align="left">
+            <div class="card-body">
+                <a href="#" class="btn float-right" th:href="@{'/subproject/' + ${subproject.id}}">Show full overview</a>
+                <h3 class="text-center float-middle" th:text="${subproject.name}"></h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span th:text="${subproject.description}"></span></li>
+                    <li class="list-group-item">Subproject Manager: <span th:text="${subproject.owner}"></span></li>
+                    <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
+                    <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
+                </ul>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
-          <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
-
-        </ul>
-        <li class="list-group-item">Tasks:
-          <ul>
-            <li th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
-                        <span th:switch="${task.status}">
-                            <span th:case="'Done'" class="badge badge-success mr-1">DONE</span>
-                            <span th:case="'Doing'" class="badge badge-warning mr-1">DOING</span>
-                            <span th:case="'TODO'" class="badge badge-danger mr-1">TODO</span>
-                        </span>
-              <span th:text="${task.description}"></span><br>
-            </li>
-          </ul>
-        </li>
-      </div>
-
-  </div>
+    </div>
 </div>
+
+<!-- TO DO TASKS -->
+<div class="container">
+    <div class="row">
+        <div th:href="${subproject}">
+            <div class="card2 mb-3" align="left">
+
+                <div class="card-body">
+                    <h3 class="text-center float-middle">TO DO</h3>
+                </div>
+
+                <div class="card-body">
+                    <tr th:each="task : ${todo}">
+                    <div class="list-group list-group-flush">
+                        <li class="list-group-item" align="center">[[${task.name}]]</li>
+                        <li class="list-group-item" align="center">[[${task.owner}]]</li>
+                        <br>
+                    </div>
+                    </tr>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 </body>
 </html>
