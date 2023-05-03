@@ -19,7 +19,7 @@
 
         .card2 {
             background-color: rgba(252, 251, 251, 0.81);
-            width: 400px;
+            width: 430px;
             margin-top: 20px;
             margin-right: 20px;
             margin-left: 25%;
@@ -60,7 +60,7 @@
     <div class="row">
         <div class="card mb-3" align="left">
             <div class="card-body">
-                <a href="#" class="btn float-right" th:href="@{'/subproject/' + ${subproject.id}}">Show full overview</a>
+                <a href="#" class="btn float-right">Create task</a>
                 <h3 class="text-center float-middle" th:text="${subproject.name}"></h3>
             </div>
             <div class="card-body">
@@ -86,7 +86,9 @@
                 <div class="card-body">
                     <tr th:each="task : ${todo}">
                     <div class="list-group list-group-flush">
-                        <li class="list-group-item" align="center">[[${task.name}]]</li>
+
+                        <!-- TODO her skal linkes til task description på en eller anden måde-->
+                        <li class="list-group-item" align="center" th:href="${task.description}">[[${task.name}]]</li>
                         <li class="list-group-item" align="center">[[${task.owner}]]</li>
                         <br>
                     </div>
