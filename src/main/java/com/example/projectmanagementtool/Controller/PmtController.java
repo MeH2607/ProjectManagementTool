@@ -30,7 +30,7 @@ public class PmtController {
         List<Task> list = pmtService.getAllTasks();
         model.addAttribute("list", list);
 
-        return "index";
+        return "homepage";
     }
     @GetMapping("subprojects")
     public String subProjectOverview(Model model, HttpSession session) {
