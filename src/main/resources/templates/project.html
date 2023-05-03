@@ -13,9 +13,11 @@
             min-width: 1000px;
             min-height: 150px;
             margin-top: 20px;
-            margin-right: 20px;
             margin-left: 25%;
+            margin-right: 20px;
+
         }
+
         .container {
             max-width: 1500px; /* Change this value to adjust the width */
         }
@@ -25,55 +27,52 @@
             background-color: rgba(0, 0, 0, 0.80);
         }
 
-        .badge {
-            font-size: 100%;
-
-        }
     </style>
 </head>
 <body>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/allprojects">All projects</a></li>
         <li class="breadcrumb-item active" aria-current="page"><a>[[${project.name}]]</a></li>
     </ol>
 </nav>
 <div class="container">
     <div class="row">
         <div th:each="subproject : ${subprojects}">
-            <div class="card mb-3" align="left">
-                <div class="card-body">
-                    <a href="#" class="btn float-right" th:href="@{'/subproject/' + ${subproject.id}}">Show full overview</a>
-                    <h3 class="text-center float-middle" th:text="${subproject.name}"></h3>
+            <div class="card mb-3">
+                <h3 class="card-header" align="center" th:text="${subproject.name}"></h3>
+                <div class="card-body" style="background-color: white">
+                    <p class="card-text" th:text="${subproject.description}"></p>
+                    <br>
                 </div>
-                <div class="card-body">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Description: <span th:text="${subproject.description}"></span></li>
                     <li class="list-group-item">Owner: <span th:text="${subproject.owner}"></span></li>
                     <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
                     <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
                 </ul>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered" align="center">
-                        <tr>
-                            <th>Task name</th>
-                            <th>Allocated time</th>
-                            <th>Deadline</th>
-                            <th>Owner</th>
-                        <tr th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}"
-                            th:class="${(task.status == 'Done') ? 'table-success' : ((task.status == 'Doing') ? 'table-warning' : 'table-danger')}">
-                            <td th:text="${task.name}"></td>
-                            <td th:text="${task.allocatedTime}"></td>
-                            <td th:text="${task.deadline}"></td>
-                            <td th:text="${task.owner}"></td>
-                        </tr>
-                    </table>
-                </div>
-
+                <br>
+                <table class="table table-bordered" align="center">
+                    <tr style="background-color: white">
+                        <th>Task name</th>
+                        <th>Allocated time</th>
+                        <th>Deadline</th>
+                        <th>Owner</th>
+                    <tr th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}"
+                        th:class="${(task.status == 'Done') ? 'table-success' : ((task.status == 'Doing') ? 'table-warning' : 'table-danger')}">
+                        <td th:text="${task.name}"></td>
+                        <td th:text="${task.allocatedTime}"></td>
+                        <td th:text="${task.deadline}"></td>
+                        <td th:text="${task.owner}"></td>
+                    </tr>
+                </table>
+                <a class="btn btn-info btm-lg" th:href="@{'/subproject/' + ${subproject.id}}">Show full subproject</a>
             </div>
+
+
         </div>
     </div>
+</div>
 </div>
 
 </body>

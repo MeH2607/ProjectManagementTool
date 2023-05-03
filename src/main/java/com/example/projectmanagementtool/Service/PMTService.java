@@ -33,4 +33,8 @@ public class PMTService {
     public Subproject getSubProject(int subprojectID) {
         return pmtRepository.getSubproject(subprojectID);
     }
+
+    public List<Project> getAllProjects() {
+        return pmtRepository.getAllProjects();
+    }
 }

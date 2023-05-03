@@ -5,19 +5,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project implements Component{
+    private int id;
     private String name;
     private String description;
+    private int allocatedTime;
     private User owner;
     private LocalDate deadline;
 
     private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
-    public Project(int id, String name, String description, int ownerID, String deadline) {
+    public Project(int id, String name, String description, int allocatedTime, int ownerID, String deadline) {
+        this.id = id;
         this.name = name;
         this.description = description;
+        this.allocatedTime = allocatedTime;
         this.owner = new User(ownerID);
         this.deadline = LocalDate.parse(deadline);
         this.subprojectList = new ArrayList<Subproject>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setAllocatedTime(int allocatedTime) {
+        this.allocatedTime = allocatedTime;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setSubprojectList(List<Subproject> subprojectList) {
+        this.subprojectList = subprojectList;
     }
 
     public void addSubproject(Subproject newSubproject){
