@@ -14,12 +14,12 @@
             min-height: 150px;
             margin-top: 20px;
             margin-right: 20px;
-            margin-left: 25%;
+            margin-left: 20%;
         }
 
         .card2 {
             background-color: rgba(252, 251, 251, 0.81);
-            width: 300px;
+            width: 400px;
             margin-top: 20px;
             margin-right: 20px;
             margin-left: 25%;
@@ -27,7 +27,12 @@
 
         .container {
             max-width: 1500px; /* Change this value to adjust the width */
-            margin: auto;
+            text-align: center;
+        }
+
+        .row {
+            align-content: center;
+
         }
 
         body {
@@ -68,10 +73,8 @@
             </div>
         </div>
     </div>
-</div>
 
 <!-- TO DO TASKS -->
-<div class="container">
     <div class="row">
         <div th:href="${subproject}">
             <div class="card2 mb-3" align="left">
@@ -93,7 +96,53 @@
 
             </div>
         </div>
+
+    <!-- DOING -->
+        <div th:href="${subproject}">
+            <div class="card2 mb-3" align="left">
+
+                <div class="card-body">
+                    <h3 class="text-center float-middle">DOING</h3>
+                </div>
+
+                <div class="card-body">
+                    <tr th:each="task : ${doing}">
+                        <div class="list-group list-group-flush">
+                            <li class="list-group-item" align="center">[[${task.name}]]</li>
+                            <li class="list-group-item" align="center">[[${task.owner}]]</li>
+                            <br>
+                        </div>
+                    </tr>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    <!-- DONE -->
+    <div th:href="${subproject}">
+        <div class="card2 mb-3" align="left">
+
+            <div class="card-body">
+                <h3 class="text-center float-middle">DONE</h3>
+            </div>
+
+            <div class="card-body">
+                <tr th:each="task : ${done}">
+                    <div class="list-group list-group-flush">
+                        <li class="list-group-item" align="center">[[${task.name}]]</li>
+                        <li class="list-group-item" align="center">[[${task.owner}]]</li>
+                        <br>
+                    </div>
+                </tr>
+            </div>
+
+
+        </div>
     </div>
+</div>
+
 </div>
 
 
