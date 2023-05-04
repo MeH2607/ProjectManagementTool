@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+  <style>
+    .card {
+      background-color: rgba(252, 251, 251, 0.81);
+      width: 450px;
+      min-height: 350px;
+      margin-top: 20px;
+      margin-left: 10%;
+      margin-right: 20px;
+    }
+    .container {
+      max-width: 1500px; /* Change this value to adjust the width */
+    }
+
+    body {
+      font-family: 'Titillium Web', sans-serif;
+      background-color: rgba(0, 0, 0, 0.80);
+    }
+
+  </style>
+</head>
+<body>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a>All projects</a></li>
+  </ol>
+</nav>
+<div class="container">
+  <div class="row">
+    <div th:each="project : ${projects}">
+      <div class="card mb-3" >
+        <h3 class="card-header" align="center" th:text="${project.name}"></h3>
+        <div class="card-body" style="background-color: white" >
+          <p class="card-text" th:text="${project.description}"></p>
+        </div>
+        <ul class="list-group list-group-flush" style="background-color: rgba(252, 251, 251, 0.81)">
+          <li class="list-group-item">Allocated time: <span th:text="${project.allocatedTime}"></span></li>
+          <li class="list-group-item">Deadline: <span th:text="${project.deadline}"></span></li>
+          <li class= "list-group-item">Project owner: <span th:text="${project.owner}"></span></li>
+        </ul>
+        <a href="#" class="btn btn-info btn-sm" th:href="@{'/project/' + ${project.id}}">Show full project</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

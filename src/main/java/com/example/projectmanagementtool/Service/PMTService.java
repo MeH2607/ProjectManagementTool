@@ -45,6 +45,10 @@ public class PMTService {
         return pmtRepository.getSubproject(subprojectID);
     }
 
+    public List<Project> getAllProjects() {
+        return pmtRepository.getAllProjects();
+    }
+
     public void createUser(User user) {
         pmtRepository.createUser(user);
     }

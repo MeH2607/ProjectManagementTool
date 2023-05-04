@@ -21,6 +21,7 @@
 
     body {
       font-family: 'Titillium Web', sans-serif;
+      background-color: rgba(0, 0, 0, 0.80);
     }
   </style>
 </head>
@@ -29,7 +30,6 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
     <li class="breadcrumb-item"><a th:href="@{'/project/' + ${subproject.projectID}}">[[${project.name}]]</a></li>
-
     <li class="breadcrumb-item active" aria-current="page">Subprojects Overview</li>
   </ol>
 </nav>

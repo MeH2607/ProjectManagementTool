@@ -27,7 +27,8 @@ public class PmtController {
 
     @GetMapping("")
     public String index(Model model, HttpSession session) {
-        Task task = new Task();
+List<Task> task = pmtService.getAllTasks();
+
         model.addAttribute("task", task);
         List<Task> list = pmtService.getAllTasks();
         model.addAttribute("list", list);
@@ -50,10 +51,17 @@ public class PmtController {
         return "project";
     }
 
+    @GetMapping("allprojects")
+    public String allProjects(Model model, HttpSession session) {
+        List<Project> projects = pmtService.getAllProjects();
+        model.addAttribute("projects", projects);
+
+        return "allProjects";
+    }
+
 
     @GetMapping("subproject/{subprojectID}")
     public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
-
         // List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
 
         // Retrieving the subproject itself
