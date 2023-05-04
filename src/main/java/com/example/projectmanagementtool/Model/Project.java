@@ -9,6 +9,8 @@ public class Project implements Component{
     private String description;
     private User owner;
     private LocalDate deadline;
+    private int ownerID; //Bruges til at få et id fra owner når man vælger en owner fra html formen,
+    // da Thymeleaf har svært ved at arbejde
 
     private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
@@ -20,10 +22,10 @@ public class Project implements Component{
         this.subprojectList = new ArrayList<Subproject>();
     }
 
-    public void addSubproject(Subproject newSubproject){
+    public void addSubproject(Subproject newSubproject) {
         subprojectList.add(newSubproject);
     }
-    //dasdas
+
     public List<Subproject> getSubprojectList() {
         return subprojectList;
     }
@@ -31,7 +33,7 @@ public class Project implements Component{
 
     public List<User> getProjectMembers() {
         // Finds 'projectmembers' by iterating all members in all subprojects
-        List <User> projectMembers = new ArrayList<User>();
+        List<User> projectMembers = new ArrayList<User>();
         // Itererating subprojects
         for (Subproject subproject : subprojectList) {
             // Itererating all users in all subprojects and adding to projectmembers
@@ -41,6 +43,7 @@ public class Project implements Component{
         }
         return projectMembers;
     }
+
 
     @Override
     public String getName() {
@@ -70,6 +73,34 @@ public class Project implements Component{
     @Override
     public LocalDate getDeadline() {
         return deadline;
+    }
+
+    public void setSubprojectList(List<Subproject> subprojectList) {
+        this.subprojectList = subprojectList;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public int getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
     }
 
     @Override
