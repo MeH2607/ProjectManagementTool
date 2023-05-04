@@ -4,30 +4,14 @@
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <style>
-        .card {
-            background-color: rgba(252, 251, 251, 0.81);
-            min-width: 1000px;
-            min-height: 150px;
-            margin-top: 20px;
-            margin-left: 25%;
-            margin-right: 20px;
-        }
-        .container {
-            max-width: 1500px; /* Change this value to adjust the width */
-        }
 
-        body {
-            font-family: 'Titillium Web', sans-serif;
-            background-color: rgba(0, 0, 0, 0.80);
-        }
-
-    </style>
 </head>
 <body>
+<article data-theme="light">
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -35,23 +19,21 @@
         <li class="breadcrumb-item active" aria-current="page"><a>[[${project.name}]]</a></li>
     </ol>
 </nav>
-<div class="container">
-    <div class="row">
         <div th:each="subproject : ${subprojects}">
-            <div class="card mb-3">
-                <h3 class="card-header" align="center" th:text="${subproject.name}"></h3>
-                <div class="card-body" style="background-color: white">
+            <article>
+                <h3 th:text="${subproject.name}"></h3>
+                <div>
                     <p class="card-text" th:text="${subproject.description}"></p>
                     <br>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Owner: <span th:text="${subproject.owner}"></span></li>
-                    <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
-                    <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
+                    <li>Owner: <span th:text="${subproject.owner}"></span></li>
+                    <li>Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
+                    <li>Deadline: <span th:text="${subproject.deadline}"></span></li>
                 </ul>
                 <br>
-                <table class="table table-bordered" align="center">
-                    <tr style="background-color: white">
+                <table role="grid">
+                    <tr style=>
                         <th>Task name</th>
                         <th>Allocated time</th>
                         <th>Deadline</th>
@@ -65,13 +47,13 @@
                     </tr>
                 </table>
                 <a class="btn btn-info btm-lg" th:href="@{'/subproject/' + ${subproject.id}}">Show full subproject</a>
-            </div>
+            </article>
 
 
         </div>
     </div>
-</div>
-</div>
+
+</article>
 
 </body>
 </html>

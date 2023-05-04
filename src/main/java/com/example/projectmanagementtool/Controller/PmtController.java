@@ -23,7 +23,8 @@ public class PmtController {
 
     @GetMapping("")
     public String index(Model model, HttpSession session) {
-        Task task = new Task();
+List<Task> task = pmtService.getAllTasks();
+
         model.addAttribute("task", task);
 
         return "index";
