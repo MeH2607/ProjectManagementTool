@@ -8,7 +8,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <style>
-        .card {
+        .subproject-main {
             background-color: rgba(252, 251, 251, 0.81);
             min-width: 1000px;
             min-height: 150px;
@@ -17,12 +17,16 @@
             margin-left: 20%;
         }
 
-        .card2 {
+        .status-column {
             background-color: rgba(252, 251, 251, 0.81);
-            width: 430px;
+            width: 400px;
             margin-top: 20px;
             margin-right: 20px;
             margin-left: 25%;
+        }
+
+        .card-body {
+            font-size: 12px;
         }
 
         .container {
@@ -32,7 +36,6 @@
 
         .row {
             align-content: center;
-
         }
 
         body {
@@ -58,7 +61,7 @@
 <!-- SUBPROJECT MAIN -->
 <div class="container">
     <div class="row">
-        <div class="card mb-3" align="left">
+        <div class="subproject-main mb-3" align="left">
             <div class="card-body">
                 <a href="#" class="btn float-right">Create task</a>
                 <h3 class="text-center float-middle" th:text="${subproject.name}"></h3>
@@ -77,7 +80,7 @@
 <!-- TO DO TASKS -->
     <div class="row">
         <div th:href="${subproject}">
-            <div class="card2 mb-3" align="left">
+            <div class="status-column mb-3" align="left">
 
                 <div class="card-body">
                     <h3 class="text-center float-middle">TO DO</h3>
@@ -89,7 +92,9 @@
 
                         <!-- TODO her skal linkes til task description på en eller anden måde-->
                         <li class="list-group-item" align="center" th:href="${task.description}">[[${task.name}]]</li>
-                        <li class="list-group-item" align="center">[[${task.owner}]]</li>
+                        <li class="list-group-item" align="center">Owner: [[${task.owner}]]</li>
+                        <li class="list-group-item" align="center">Allocated time: [[${task.owner}]]</li>
+                        <li class="list-group-item" align="center">[[${task.description}]]</li>
                         <br>
                     </div>
                     </tr>
@@ -101,7 +106,7 @@
 
     <!-- DOING -->
         <div th:href="${subproject}">
-            <div class="card2 mb-3" align="left">
+            <div class="status-column mb-3" align="left">
 
                 <div class="card-body">
                     <h3 class="text-center float-middle">DOING</h3>
@@ -124,18 +129,34 @@
 
     <!-- DONE -->
     <div th:href="${subproject}">
-        <div class="card2 mb-3" align="left">
+        <div class="status-column mb-3" >
 
             <div class="card-body">
                 <h3 class="text-center float-middle">DONE</h3>
             </div>
 
-            <div class="card-body">
+            <div class="card-body" align="left">
                 <tr th:each="task : ${done}">
                     <div class="list-group list-group-flush">
-                        <li class="list-group-item" align="center">[[${task.name}]]</li>
-                        <li class="list-group-item" align="center">[[${task.owner}]]</li>
-                        <br>
+
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22287%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20287%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_187e6818623%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_187e6818623%22%3E%3Crect%20width%3D%22287%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.6875%22%20y%3D%2296.20000038146972%22%3E287x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">[[${task.name}]]</h5>
+                                <p class="card-text">[[${task.description}]]</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Owner: [[${task.owner}]]</li>
+                                <li class="list-group-item">Allocated time: [[${task.allocatedTime}]]</li>
+                                <li class="list-group-item">Deadline: [[${task.deadline}]]</li>
+                                <br>
+                            </ul>
+                            <div class="card-body">
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+
                     </div>
                 </tr>
             </div>
