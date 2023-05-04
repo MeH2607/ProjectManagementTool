@@ -1,68 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-  <style>
-    .card {
-      background-color: rgba(191, 216, 196, 0.36);
-      min-width: 1000px;
-      min-height: 150px;
-      margin-top: 20px;
-      margin-right: 20px;
-    }
-    .container {
-      max-width: 1500px; /* Change this value to adjust the width */
-    }
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <style>
+        .subproject-main {
+            background-color: rgba(252, 251, 251, 0.81);
+            min-width: 1000px;
+            min-height: 150px;
+            margin-top: 20px;
+            margin-right: 20px;
+            margin-left: 20%;
+        }
 
-    body {
-      font-family: 'Titillium Web', sans-serif;
-      background-color: rgba(0, 0, 0, 0.80);
-    }
-  </style>
+        .status-column {
+            background-color: rgba(252, 251, 251, 0.81);
+            width: 400px;
+            margin-top: 20px;
+            margin-right: 20px;
+            margin-left: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        .container p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+
+        .card-body {
+            font-size: 12px;
+        }
+
+        .container {
+            max-width: 1500px; /* Change this value to adjust the width */
+            text-align: center;
+        }
+
+        .row {
+            align-content: center;
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+            background-color: rgba(0, 0, 0, 0.80);
+        }
+
+        .badge {
+            font-size: 100%;
+
+        }
+    </style>
 </head>
 <body>
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a th:href="@{'/project/' + ${subproject.projectID}}">[[${project.name}]]</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Subprojects Overview</li>
-  </ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a th:href="@{'/project/' + ${subproject.projectID}}">[[${project.name}]]</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a> [[${subproject.name}]] </a></li>
+    </ol>
 </nav>
 
+<!-- SUBPROJECT MAIN -->
 <div class="container">
-  <div class="row">
-    <div th:each="subproject : ${subprojects}">
-      <div class="card border-info mb-3" align="left">
-        <div class="card-body">
-          <h5 class="text-center my-3 pb-3" th:text="${subproject.name}"></h5>
-          <p class="card-text" align="center" th:text="${subproject.description}"></p>
+    <div class="row">
+        <div class="subproject-main mb-3" align="left">
+            <div class="card-body">
+                <a href="#" class="btn float-right">Create task</a>
+                <h3 class="text-center float-middle" th:text="${subproject.name}"></h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span th:text="${subproject.description}"></span></li>
+                    <li class="list-group-item">Subproject Manager: <span th:text="${subproject.owner}"></span></li>
+                    <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
+                    <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
+                </ul>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
-          <li class="list-group-item">Deadline: <span th:text="${subproject.deadline}"></span></li>
-
-        </ul>
-        <li class="list-group-item">Tasks:
-          <ul>
-            <li th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
-                                <span th:switch="${task.status}">
-                                    <span th:case="'Done'" class="badge badge-success mr-1">DONE</span>
-                                    <span th:case="'Doing'" class="badge badge-warning mr-1">DOING</span>
-                                    <span th:case="'TODO'" class="badge badge-danger mr-1">TODO</span>
-                                </span>
-              <span th:text="${task.description}"></span><br>
-            </li>
-          </ul>
-        </li>
-      </div>
     </div>
-  </div>
+
+<!-- TO DO TASKS -->
+    <div class="row">
+        <div th:href="${subproject}">
+            <div class="status-column mb-3" >
+
+                <div class="card-body">
+                    <h3 class="text-center float-middle">To do</h3>
+                </div>
+
+                <div class="card-body" align="left">
+                    <tr th:each="task : ${todo}">
+                        <div class="list-group list-group-flush">
+
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22287%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20287%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_187e6818623%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_187e6818623%22%3E%3Crect%20width%3D%22287%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.6875%22%20y%3D%2296.20000038146972%22%3E287x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">[[${task.name}]]</h5>
+                                    <p class="card-text">[[${task.description}]]</p>
+                                    <p class="card-text">[[${task.owner}]]</p>
+                                    <p class="card-text">[[${task.allocatedTime}]]</p>
+                                    <p class="card-text">[[${task.deadline}]]</p>
+                                </div>
+
+                                <div class="card-body">
+                                    <a href="#" class="card-link">View task</a>
+                                    <a href="#" class="card-link">Another link</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </tr>
+                </div>
+
+            </div>
+        </div>
+
+    <!-- DOING -->
+        <div th:href="${subproject}">
+            <div class="status-column mb-3" >
+
+                <div class="card-body">
+                    <h3 class="text-center float-middle">Doing</h3>
+                </div>
+
+                <div class="card-body" align="left">
+                    <tr th:each="task : ${doing}">
+                        <div class="list-group list-group-flush">
+
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22287%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20287%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_187e6818623%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_187e6818623%22%3E%3Crect%20width%3D%22287%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.6875%22%20y%3D%2296.20000038146972%22%3E287x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">[[${task.name}]]</h5>
+                                    <p class="card-text">[[${task.description}]]</p>
+                                    <p class="card-text">[[${task.owner}]]</p>
+                                    <p class="card-text">[[${task.allocatedTime}]]</p>
+                                    <p class="card-text">[[${task.deadline}]]</p>
+                                </div>
+
+                                <div class="card-body">
+                                    <a href="#" class="card-link">View task</a>
+                                    <a href="#" class="card-link">Another link</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </tr>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    <!-- DONE -->
+        <div th:href="${subproject}">
+            <div class="status-column mb-3" >
+
+                <div class="card-body">
+                    <h3 class="text-center float-middle">Done</h3>
+                </div>
+
+                <div class="card-body" align="left">
+                    <tr th:each="task : ${done}">
+                        <div class="list-group list-group-flush">
+
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22287%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20287%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_187e6818623%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_187e6818623%22%3E%3Crect%20width%3D%22287%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.6875%22%20y%3D%2296.20000038146972%22%3E287x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">[[${task.name}]]</h5>
+                                    <p class="card-text">[[${task.description}]]</p>
+                                    <p class="card-text">[[${task.owner}]]</p>
+                                    <p class="card-text">[[${task.allocatedTime}]]</p>
+                                    <p class="card-text">[[${task.deadline}]]</p>
+                                </div>
+
+                                <div class="card-body">
+                                    <a href="#" class="card-link">View task</a>
+                                    <a href="#" class="card-link">Another link</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </tr>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
 
 </body>
 </html>

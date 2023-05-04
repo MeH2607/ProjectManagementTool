@@ -72,6 +72,7 @@ public class PMTRepository {
                 subprojectList.add(new Subproject(id, name, description, allocatedTime, OwnerID, Deadline, ProjectID));
 
             }
+            System.out.println(subprojectList);
 
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
@@ -81,14 +82,14 @@ public class PMTRepository {
 
 
     // Retrieves a specific subproject from DB, from a subprojectID
-    public Subproject getSubproject(int findSubprojectID) {
-
+    public Subproject getSubproject(int subprojectID) {
+        System.out.println(subprojectID);
         Subproject subproject = new Subproject();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ID = ?";
+            String SQL = "SELECT * FROM subprojects WHERE ID = ?";
             PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setInt(1, findSubprojectID);
+            ps.setInt(1, subprojectID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

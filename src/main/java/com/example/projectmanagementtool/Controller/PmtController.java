@@ -71,9 +71,24 @@ List<Task> task = pmtService.getAllTasks();
         Project project = pmtService.getProjectFromID(subproject.getProjectID());
 
         // Retrieving all tasks from the specific Subprojects from the DB
-        List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
+        List<Task> allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID);
 
-        model.addAttribute("tasks", subprojectTasks);
+        // Sort tasks into list for its status
+        List<Task> todo = new ArrayList<Task>();
+        List<Task> doing = new ArrayList<Task>();
+        List<Task> done = new ArrayList<Task>();
+
+        for (Task task : allTasksForSubproject) {
+            switch (task.getStatus().toLowerCase()) {
+                case "todo": todo.add(task); break;
+                case "doing": doing.add(task); break;
+                case "done": done.add(task); break;
+            }
+        }
+
+        model.addAttribute("todo", todo);
+        model.addAttribute("doing", doing);
+        model.addAttribute("done", done);
         model.addAttribute("subproject", subproject);
         model.addAttribute("project", project);
         List<Task> list = pmtService.getAllTasks();
