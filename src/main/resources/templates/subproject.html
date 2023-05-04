@@ -23,7 +23,17 @@
             margin-top: 20px;
             margin-right: 20px;
             margin-left: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+
+        .container p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
 
         .card-body {
             font-size: 12px;
@@ -86,21 +96,21 @@
                     <h3 class="text-center float-middle">TO DO</h3>
                 </div>
 
-                <div class="card-body">
-                    <tr th:each="task : ${todo}">
-                    <div class="list-group list-group-flush">
+                <div class="outer">
+                    <div class="card-body">
+                        <tr th:each="task : ${todo}">
+                        <div class="list-group list-group-flush">
 
-                        <!-- TODO her skal linkes til task description på en eller anden måde-->
-                        <li class="list-group-item" align="center" th:href="${task.description}">[[${task.name}]]</li>
-                        <li class="list-group-item" align="center">Owner: [[${task.owner}]]</li>
-                        <li class="list-group-item" align="center">Allocated time: [[${task.owner}]]</li>
-                        <li class="list-group-item" align="center">[[${task.description}]]</li>
-                        <br>
+                            <!-- TODO her skal linkes til task description på en eller anden måde-->
+                            <li class="list-group-item" align="center" th:href="${task.description}">[[${task.name}]]</li>
+                            <li class="list-group-item" align="center">Owner: [[${task.owner}]]</li>
+                            <li class="list-group-item" align="center">Allocated time: [[${task.owner}]]</li>
+                            <li class="list-group-item" align="center">[[${task.description}]]</li>
+                            <br>
+                        </div>
+                        </tr>
                     </div>
-                    </tr>
                 </div>
-
-
             </div>
         </div>
 
@@ -144,15 +154,13 @@
                             <div class="card-body">
                                 <h5 class="card-title">[[${task.name}]]</h5>
                                 <p class="card-text">[[${task.description}]]</p>
+                                <p class="card-text">[[${task.owner}]]</p>
+                                <p class="card-text">[[${task.allocatedTime}]]</p>
+                                <p class="card-text">[[${task.deadline}]]</p>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Owner: [[${task.owner}]]</li>
-                                <li class="list-group-item">Allocated time: [[${task.allocatedTime}]]</li>
-                                <li class="list-group-item">Deadline: [[${task.deadline}]]</li>
-                                <br>
-                            </ul>
+
                             <div class="card-body">
-                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">View task</a>
                                 <a href="#" class="card-link">Another link</a>
                             </div>
                         </div>
