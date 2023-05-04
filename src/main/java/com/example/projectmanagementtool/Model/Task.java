@@ -15,7 +15,7 @@ public class Task implements Component{
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
-        this.owner = new User(ownerID);
+        this.owner = new User();
         this.deadline = LocalDate.parse(deadline);
         this.subprojectID = subprojectID;
         this.status = status;

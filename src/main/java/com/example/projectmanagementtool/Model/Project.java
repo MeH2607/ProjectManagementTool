@@ -14,10 +14,14 @@ public class Project implements Component{
 
     private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
+    public Project() {
+        this.subprojectList = new ArrayList<Subproject>();
+    }
+
     public Project(int id, String name, String description, int ownerID, String deadline) {
         this.name = name;
         this.description = description;
-        this.owner = new User(ownerID);
+        this.owner = new User();
         this.deadline = LocalDate.parse(deadline);
         this.subprojectList = new ArrayList<Subproject>();
     }
