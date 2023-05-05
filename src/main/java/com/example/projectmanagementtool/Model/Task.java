@@ -1,6 +1,7 @@
 package com.example.projectmanagementtool.Model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Task implements Component{
     private String name;
@@ -20,6 +21,20 @@ public class Task implements Component{
         this.subprojectID = subprojectID;
         this.status = status;
     }
+
+    // Converts localDate into formatted string for the DB
+    public String getDeadlineAsString(){
+
+        // Creating a DateTimeFormatter object with the desired format for the DB
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        //Converting localdate to string
+        String deadlineAsString = deadline.format(formatter);
+
+        return deadlineAsString;
+    }
+
+
 
     public String getStatus() {
         return status;

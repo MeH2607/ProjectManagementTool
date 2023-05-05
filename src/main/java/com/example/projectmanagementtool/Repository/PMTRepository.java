@@ -9,6 +9,7 @@ import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,27 @@ public class PMTRepository {
         return subprojectList;
     }
 
+    // Adds new task to DB
+    public void addTaskToDB(Task task) throws pmtException {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, task.getName());
+            ps.setString(2, task.getDescription());
+            ps.setDouble(3, task.getAllocatedTime());
+            ps.setInt(4, task.getOwner().getId());
+            ps.setString(5, task.getDeadlineAsString());
+            ps.setDouble(6, task.getSubprojectID());
+            ps.setString(7, task.getStatus());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new pmtException(e.getMessage());
+        }
+    }
+
 
     // Retrieves a specific subproject from DB, from a subprojectID
     public Subproject getSubproject(int subprojectID) {
@@ -108,6 +130,8 @@ public class PMTRepository {
         }
         return subproject;
     }
+
+
     public List<Task> getTasksFromSubproject(int findSubprojectID) {
 
         List<Task> taskList = new ArrayList();
