@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 <head>
     <meta charset="UTF-8">
     <title>Create Project</title>
+    <style>
+
+        .card {
+            background-color: rgba(252, 251, 251, 0.81);
+            min-width: 1000px;
+            min-height: 150px;
+            max-width: 2000px;
+            margin-top: 20px;
+            margin-right: 20px;
+            margin-left: 25%;
+        }
+        container {
+            max-width: 1500px; /* Change this value to adjust the width */
+        }
+
+        html {
+            height: 100%; /* removes white space in the bottom of the page */
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+            background-color: rgba(0, 0, 0, 0.80);
+            height: 100%;
+            margin: 0;
+        }
+
+
+    </style>
 </head>
 <body>
-<div align="center">
-<h1>Create new project</h1>
 
+
+<div align="center" class="container" style= "padding-top: 5%;">
+
+    <div class="container" style="width: 70%; height: 100%;  background-color: rgba(213, 212, 212, 1)">
+        <h1>Create new project</h1>
     <form action="#" method="post" th:object="${project}">
         <div>
             <label>Project name</label>
@@ -23,10 +55,7 @@
         <div>
             <label>Owner</label>
 
-           <!-- <select id="owner"  th:field="*{owner}">
-                <option value="" disabled selected>Select owner</option>
-                <option th:each="user : ${userList}" th:value="${user}" th:text="${user.name}">
-            </select> -->
+
             <select name="ownerID" required>
                 <option value="" disabled selected>Select owner</option>
                 <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}"></option> <!-- th:selected="${user.id == project.owner.id}" -->
@@ -43,6 +72,7 @@
         <button type="reset">Reset</button>
 
     </form>
+</div>
 </div>
 </body>
 </html>
