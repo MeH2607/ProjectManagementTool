@@ -40,15 +40,16 @@ List<Task> task = pmtService.getAllTasks();
 
         List<Task> tasks = pmtService.getAllTasks();
         List<Subproject> subprojects = pmtService.getSubProjects(projectID);
+        List<Project> projects = pmtService.getAllProjects();
         Project project = pmtService.getProjectFromID(projectID);
+
 
         model.addAttribute("tasks", tasks);
         model.addAttribute("subprojects", subprojects);
+        model.addAttribute("projects", projects);
         model.addAttribute("project", project);
 
-        List<Task> list = pmtService.getTasksFromSubproject(projectID);
-
-        return "project";
+        return "projectPICO";
     }
 
     @GetMapping("allprojects")

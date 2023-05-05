@@ -1,0 +1,88 @@
+
+/* Global styles */
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 100%; /* Change this value to adjust the width */
+    padding: 20px;
+    margin: auto;
+}
+
+article {
+    display: inline-block;
+    min-width: 45%;
+    margin: 20px;
+    vertical-align: top;
+}
+
+details ul {
+    margin: 0;
+    padding: 0;
+}
+
+details {
+    margin-bottom: 3px; /* or adjust as needed */
+}
+
+section {
+    margin-bottom: 0;
+}
+
+.task-done {
+    background-color: rgb(170, 255, 148);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.task-doing {
+    background-color: rgb(255, 240, 153);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.task-not-started {
+    background-color: #ffb088;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.task-title {
+    margin-left: 10px;
+}
+
+.task-details {
+    padding: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    line-height: 1;
+}
+
+.task-description {
+    color: #555;
+    font-style: italic;
+    font-size: 17px;
+    margin-left: 15px;
+}
+
+.detail-text {
+    font-size: 15px;
+}
+
+.background {
+    background-color: rgb(17, 32, 51);
+    background-position: center;
+    background-size: cover;
+}
+
+.breadcrumb {
+    background-color: rgba(255, 255, 255, 0.89);
+    margin: 10px;
+    border-radius: 10px;
+    padding: 5px;
+}

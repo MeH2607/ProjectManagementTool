@@ -4,56 +4,83 @@
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 
 </head>
 <body>
-<article data-theme="light">
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="/allprojects">All projects</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><a>[[${project.name}]]</a></li>
-    </ol>
-</nav>
-        <div th:each="subproject : ${subprojects}">
-            <article>
-                <h3 th:text="${subproject.name}"></h3>
+<div class="background" data-theme="light">
+    <nav class="breadcrumb">
+        <ol>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li><a href="/allprojects">All projects</a></li>
+            <li role="list" dir="rtl">
+                <a href="#" aria-haspopup="listbox">[[${project.name}]]</a>
+                <ul role="listbox">
+                    <li th:each="project : ${projects}">
+                        <a th:href="@{/project/{projectID}(projectID=${project.id})}" th:text="${project.name}"></a>
+                    </li>
+                </ul>
+                </details>
+            </li>
+        </ol>
+    </nav>
+    <main class="container">
+
+
+        <h1 style="color: white; text-align: center" th:text="${project.name} "></h1>
+        <div class="grid">
+            <article th:each="subproject : ${subprojects}">
+                <header style="background: rgb(227,226,226); text-align: center ">
+                    <h2 th:text="${subproject.name}"></h2>
+                </header>
                 <div>
                     <p class="card-text" th:text="${subproject.description}"></p>
-                    <br>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li>Owner: <span th:text="${subproject.owner}"></span></li>
-                    <li>Allocated time: <span th:text="${subproject.allocatedTime}"></span></li>
-                    <li>Deadline: <span th:text="${subproject.deadline}"></span></li>
-                </ul>
-                <br>
-                <table role="grid">
-                    <tr style=>
-                        <th>Task name</th>
-                        <th>Allocated time</th>
-                        <th>Deadline</th>
-                        <th>Owner</th>
-                    <tr th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}"
-                        th:class="${(task.status == 'Done') ? 'table-success' : ((task.status == 'Doing') ? 'table-warning' : 'table-danger')}">
-                        <td th:text="${task.name}"></td>
-                        <td th:text="${task.allocatedTime}"></td>
-                        <td th:text="${task.deadline}"></td>
-                        <td th:text="${task.owner}"></td>
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>Owner:</td>
+                        <td><span th:text="${subproject.owner}"></span></td>
                     </tr>
+                    <tr>
+                        <td>Allocated time:</td>
+                        <td><span th:text="${subproject.allocatedTime}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Deadline:</td>
+                        <td><span th:text="${subproject.deadline}"></span></td>
+                    </tbody>
                 </table>
-                <a class="btn btn-info btm-lg" th:href="@{'/subproject/' + ${subproject.id}}">Show full subproject</a>
+
+
+                <tr th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}">
+                    <section id="accordions">
+                        <details closed
+                                 th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
+                            <summary th:text="${task.name}" class="task-title"></summary>
+                            <p class="task-description" th:text="${task.description}"></p>
+                            <ul class="task-details">
+                                <p><span class="detail-text"
+                                         th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
+                                <p><span class="detail-text" th:text="${'Owner: ' + task.owner}"></span></p>
+                            </ul>
+                        </details>
+                    </section>
+                </tr>
+
+                <br>
+                <a class="btn btn-link btn-block btn-sm" th:href="@{'/subproject/' + ${subproject.id}}">Show full
+                    details</a>
+
             </article>
-
-
         </div>
-    </div>
-
-</article>
-
+    </main>
+</div>
 </body>
 </html>

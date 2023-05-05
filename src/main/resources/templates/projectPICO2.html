@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Company example • Pico.css</title>
+  <meta
+          name="description"
+          content="A classic company or blog layout with a sidebar. Built with Pico CSS."
+  />
+  <link rel="shortcut icon" href="https://picocss.com/favicon.ico" />
+  <link rel="canonical" href="https://picocss.com/examples/company/" />
+
+
+  <!-- Pico.css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+
+  <!-- Custom styles for this example -->
+  <link rel="stylesheet" href="../static/style.css"/>
+
+
+</head>
+
+<body>
+<!-- Hero -->
+<div class="hero" data-theme="dark">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="/allprojects">All projects</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a>[[${project.name}]]</a></li>
+    </ol>
+  </nav>
+</div>
+<!-- ./ Hero -->
+
+<!-- Main -->
+<main class="container" data-theme="light">
+  <div class="grid" >
+    <section>
+      <hgroup>
+        <h2>Current subprojects</h2>
+        <h3> </h3>
+      </hgroup>
+      <div th:each="subproject : ${subprojects}" style="max-width: 800px">
+        <article>
+          <a class="btn btn-info btm-lg" style="float: right" th:href="@{'/subproject/' + ${subproject.id}}">Show full
+            details</a>
+          <h2 th:text="${subproject.name}"></h2>
+          <div>
+            <br>
+            <p class="card-text" th:text="${subproject.description}"></p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <p>Owner: <span th:text="${subproject.owner}"></span></p>
+            <p>Allocated time: <span th:text="${subproject.allocatedTime}"></span></p>
+            <p>Deadline: <span th:text="${subproject.deadline}"></span></p>
+          </ul>
+          <br>
+          <tr th:each="task : ${tasks}" th:if="${task.subprojectID == subproject.id}"
+          <section id="accordions">
+            <details closed
+                     th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
+              <summary th:text="${task.name}" class="task-title"></summary>
+              <p class="task-description" th:text="${task.description}"></p>
+              <ul class="task-details">
+                <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
+                <p><span class="detail-text" th:text="${'Owner: ' + task.owner}"></span></p>
+              </ul>
+
+            </details>
+          </section>
+          </tr>
+        </article>
+      </div>
+    </section>
+
+    <aside>
+      <a href="#" aria-label="Example" onclick="event.preventDefault()"
+      ><img src="img/maarten-deckers-T5nXYXCf50I-unsplash-1500x750.jpg" alt="Architecture"
+      /></a>
+      <p>
+        <a href="#" onclick="event.preventDefault()">Donec sit amet</a><br />
+        <small>Class aptent taciti sociosqu ad litora torquent per conubia nostra</small>
+      </p>
+      <a href="#" aria-label="Example" onclick="event.preventDefault()"
+      ><img src="img/daniel-von-appen-tb4heMa-ZRo-unsplash-1500-750.jpg" alt="Architecture"
+      /></a>
+      <p>
+        <a href="#" onclick="event.preventDefault()">Suspendisse potenti</a><br />
+        <small>Proin non condimentum tortor. Donec in feugiat sapien.</small>
+      </p>
+      <a href="#" aria-label="Example" onclick="event.preventDefault()"
+      ><img src="img/matthew-hamilton-Ru3Ap8TNcsk-unsplash-1500-750.jpg" alt="Architecture"
+      /></a>
+      <p>
+        <a href="#" onclick="event.preventDefault()">Nullam lobortis placerat aliquam</a><br />
+        <small
+        >Maecenas vitae nibh blandit dolor commodo egestas vel eget neque. Praesent semper
+          justo orci, vel imperdiet mi auctor in.</small
+        >
+      </p>
+    </aside>
+  </div>
+</main>
+<!-- ./ Main -->
+
+<!-- Subscribe -->
+<section aria-label="Subscribe example">
+  <div class="container">
+    <article>
+      <hgroup>
+        <h2>Subscribe</h2>
+        <h3>Litora torquent per conubia nostra</h3>
+      </hgroup>
+      <form class="grid">
+        <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                placeholder="First name"
+                aria-label="First name"
+                required
+        />
+        <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email address"
+                aria-label="Email address"
+                required
+        />
+        <button type="submit" onclick="event.preventDefault()">Subscribe</button>
+      </form>
+    </article>
+  </div>
+</section>
+<!-- ./ Subscribe -->
+
+<!-- Footer -->
+<footer class="container">
+  <small
+  >Built with <a href="https://picocss.com">Pico</a> •
+    <a href="https://github.com/picocss/examples/tree/master/v1-company/">Source code</a></small
+  >
+</footer>
+<!-- ./ Footer -->
+
+<!-- Minimal theme switcher -->
+<script src="js/minimal-theme-switcher.js"></script>
+</body>
+</html>
