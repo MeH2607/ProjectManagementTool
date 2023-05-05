@@ -1,4 +1,4 @@
-package com.example.projectmanagementtool.Repository;
+package com.example.projectmanagementtool.Service;
 
 public class pmtException extends Exception {
 

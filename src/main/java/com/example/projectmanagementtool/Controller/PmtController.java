@@ -4,6 +4,7 @@ import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Model.User;
 import com.example.projectmanagementtool.Service.PMTService;
+import com.example.projectmanagementtool.Service.pmtException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -142,6 +143,14 @@ List<Task> task = pmtService.getAllTasks();
 
         return "redirect:/";
     }
+
+    @PostMapping("create_task")
+    public String addGroceryToShoppinglist(@ModelAttribute("task") Task task) throws pmtException {
+        System.out.println(task);
+        pmtService.addTaskToDB(task);
+        return "redirect:/subproject/{subprojectID}"; // TODO tjek om denne redirecter rigtigt
+    }
+
 }
 
 
