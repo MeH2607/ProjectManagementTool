@@ -2,45 +2,18 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+<link rel="stylesheet" href="/static/FormCSS.css">
 <head>
     <meta charset="UTF-8">
     <title>Create Project</title>
-    <style>
-
-        container {
-            max-width: 1500px; /* Change this value to adjust the width */
-        }
-
-        html {
-            height: 100%; /* removes white space in the bottom of the page */
-        }
-
-        body {
-            font-family: 'Titillium Web', sans-serif;
-            background-color: rgba(0, 0, 0, 0.80);
-            height: auto;
-            width: 100%;
-            /*Makes sure the form stays center on every monitor*/
-           /* overflow: hidden;
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;*/
-
-            margin: 0;
-            height: 100vh;
-            display: grid;
-            place-items: center;
-        }
-    </style>
 </head>
 <body>
 
 
-<div align="center" class="container" style= "padding-top: 5%;">
 
-    <div style="width: 70%; height: 70%;  background-color: rgba(213, 212, 212, 1)">
-        <h1>Create new project</h1>
+
+    <div  id="formDivProject">
+        <h1 align="center">Create new project</h1>
     <form action="#" method="post" th:object="${project}">
         <div>
             <label>Project name</label>
@@ -58,21 +31,21 @@
 
             <select name="ownerID" required>
                 <option value="" disabled selected>Select owner</option>
-                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}"></option> <!-- th:selected="${user.id == project.owner.id}" -->
+                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}" required></option> <!-- th:selected="${user.id == project.owner.id}" -->
             </select>
 
         </div>
 
         <div>
             <label>Project deadline</label>
-            <input type="date" name="deadline" required>
+            <input type="date" name="deadline"align="center" required>
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" >Submit</button>
         <button type="reset">Reset</button>
 
     </form>
 </div>
-</div>
+
 </body>
 </html>
