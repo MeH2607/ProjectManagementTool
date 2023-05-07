@@ -3,6 +3,7 @@ import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Model.User;
+import com.example.projectmanagementtool.Repository.ProjectsComparators.ProjectNameComparator;
 import com.example.projectmanagementtool.Service.PMTService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -143,7 +146,15 @@ List<Task> task = pmtService.getAllTasks();
         return "redirect:/";
     }
 
+    @GetMapping("allprojects/sortByName")
+    public String sortAllProjectsByName(Model model, HttpSession session) {
+        List<Project> projects = pmtService.getAllProjectsByName();
 
+
+        model.addAttribute("projects", projects);
+
+        return "allProjects";
+    }
 }
 
 
