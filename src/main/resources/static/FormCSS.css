@@ -1,0 +1,50 @@
+
+container {
+    max-width: 1500px; /* Change this value to adjust the width */
+}
+
+html {
+    height: 100%; /* removes white space in the bottom of the page */
+}
+
+body {
+    font-family: 'Titillium Web', sans-serif;
+    background-color: rgba(0, 0, 0, 0.80);
+    height: auto;
+    width: 100%;
+    /*Makes sure the form stays center on every monitor*/
+    /* overflow: hidden;
+     position: absolute;
+     display: flex;
+     justify-content: center;
+     align-items: center;*/
+
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+
+
+#formDivProject{
+    width: 40%;
+    height: 75%;
+    background-color: rgba(213, 212, 212, 1);
+}
+
+#formDivUser{
+    width: 40%;
+    height: 50%;
+    background-color: rgba(213, 212, 212, 1);
+}
+
+label{
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+input, option, select{
+
+    background-color: white;
+}
