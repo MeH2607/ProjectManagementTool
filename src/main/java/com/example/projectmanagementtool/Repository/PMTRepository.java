@@ -191,8 +191,6 @@ public class PMTRepository {
         }
     }
 
-
-
     public void createProject(Project project){
         System.out.println("Repo " + project.getName() + " " + project.getOwner().getName());
 
@@ -212,9 +210,6 @@ public class PMTRepository {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
-
-
-
 
     public Project getProjectFromID(int projectID) {
         try {
