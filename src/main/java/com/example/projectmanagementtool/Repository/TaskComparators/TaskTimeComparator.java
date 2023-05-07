@@ -4,7 +4,7 @@ import com.example.projectmanagementtool.Model.Task;
 
 import java.util.Comparator;
 
-public class TimeComparator implements Comparator<Task> {
+public class TaskTimeComparator implements Comparator<Task> {
 
     public int compare(Task task1, Task task2){
        if(task1.getAllocatedTime() < task2.getAllocatedTime())

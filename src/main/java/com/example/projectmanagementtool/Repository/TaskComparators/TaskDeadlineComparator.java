@@ -4,9 +4,9 @@ import com.example.projectmanagementtool.Model.Task;
 
 import java.util.Comparator;
 
-public class OwnerComparator implements Comparator<Task> {
+public class TaskDeadlineComparator implements Comparator<Task> {
 
     public int compare(Task task1, Task task2){
-        return task1.getOwner().getName().compareTo(task2.getOwner().getName());
+        return task1.getDeadline().compareTo(task2.getDeadline());
     }
 }
