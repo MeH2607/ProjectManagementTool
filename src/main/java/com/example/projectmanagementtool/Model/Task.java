@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Task implements Component{
+    private int id;
     private String name;
     private String description;
     private User owner;
@@ -14,6 +15,17 @@ public class Task implements Component{
     private int ownerID;
 
     public Task(String name, String description, double allocatedTime, String deadline, int subprojectID, String status) {
+        this.name = name;
+        this.description = description;
+        this.allocatedTime = allocatedTime;
+        this.owner = new User();
+        this.deadline = LocalDate.parse(deadline);
+        this.subprojectID = subprojectID;
+        this.status = status;
+    }
+
+    public Task(int id, String name, String description, double allocatedTime, String deadline, int subprojectID, String status) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
@@ -35,6 +47,10 @@ public class Task implements Component{
         return deadlineAsString;
     }
 
+
+    public int getId() {
+        return id;
+    }
 
     public int getOwnerID(){
         return ownerID;

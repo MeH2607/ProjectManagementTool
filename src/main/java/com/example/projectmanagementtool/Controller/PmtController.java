@@ -8,11 +8,7 @@ import com.example.projectmanagementtool.Service.pmtException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,6 +156,17 @@ public class PmtController {
 
         pmtService.addTaskToDB(task);
         return "redirect:/subproject/{subprojectID}"; // TODO tjek om denne redirecter rigtigt
+    }
+
+    @PostMapping("/moveTaskRight")
+    public String completeTask(@RequestParam("taskId") Long taskId) {
+        // Update the task's attribute
+        Task task = taskRepository.findById(taskId);
+        task.setStatus("completed");
+        taskRepository.save(task);
+
+        // Redirect back to the task list page
+        return "redirect:/taskList";
     }
 
 }
