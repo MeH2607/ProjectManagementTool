@@ -87,6 +87,45 @@
         </div>
     </div>
 
+<!-- Create new task -->
+    <div class="row">
+
+        <form action="#" th:action="@{${subprojectID} + '/create_task'}" method="post" th:object="${task}">
+
+                <div>
+                    <label>Task name</label>
+                    <input type="text" name="name" placeholder="Name" style="width: 100%;" required>
+                </div>
+
+                <div>
+                    <label>Description</label>
+                    <input type="text" name="description" placeholder="Description" style="width: 100%;" required>
+                </div>
+
+                <div>
+                    <label>Allocated Time</label>
+                    <input type="number" name="allocatedTime" placeholder="AllocatedTime" style="width: 100%;" required>
+                </div>
+
+                <div>
+                    <label>Deadline</label>
+                    <input type="date" name="deadline" placeholder="deadline" style="width: 100%;" required>
+                </div>
+
+                <div>
+                    <label>Owner</label>
+                    <select name="ownerID" required>
+                        <option value="" disabled selected>Select owner</option>
+                        <option th:each="user : ${all_users}" th:value="${user.id}" th:text="${user.name}"></option>
+                    </select>
+                </div>
+
+                <button type="submit">Submit</button>
+
+
+            </form>
+    </div>
+
 <!-- TO DO TASKS -->
     <div class="row">
         <div th:href="${subproject}">
@@ -111,8 +150,9 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <a href="#" class="card-link">View task</a>
-                                    <a href="#" class="card-link">Another link</a>
+                                    <a href="#" class="card-link">...</a>
+                                    <a href="#" class="card-link">Edit task</a>
+                                    <a href="#" class="card-link">=></a>
                                 </div>
                             </div>
 

@@ -2,10 +2,10 @@ package com.example.projectmanagementtool.Repository;
 
 import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
-import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Model.User;
 import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
+import com.example.projectmanagementtool.Service.pmtException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -42,7 +42,7 @@ public class PMTRepository {
                 String Deadline = rs.getString("Deadline");
                 int SubprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
-                taskList.add(new Task(name, description, allocatedTime, OwnerID, Deadline, SubprojectID, status));
+                taskList.add(new Task(name, description, allocatedTime, Deadline, SubprojectID, status));
             }
             return taskList;
         } catch (SQLException e) {
@@ -80,6 +80,27 @@ public class PMTRepository {
         return subprojectList;
     }
 
+    // Adds new task to DB
+    public void addTaskToDB(Task task) throws pmtException {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, task.getName());
+            ps.setString(2, task.getDescription());
+            ps.setDouble(3, task.getAllocatedTime());
+            ps.setInt(4, task.getOwner().getId());
+            ps.setString(5, task.getDeadlineAsString());
+            ps.setInt(6, task.getSubprojectID());
+            ps.setString(7, "TODO");
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new pmtException(e.getMessage());
+        }
+    }
+
 
     // Retrieves a specific subproject from DB, from a subprojectID
     public Subproject getSubproject(int subprojectID) {
@@ -108,6 +129,8 @@ public class PMTRepository {
         }
         return subproject;
     }
+
+
     public List<Task> getTasksFromSubproject(int findSubprojectID) {
 
         List<Task> taskList = new ArrayList();
@@ -129,7 +152,7 @@ public class PMTRepository {
 
                 // iterating tasks and adding it to the list if its the correct subproject ID
                 if (findSubprojectID == subprojectID){
-                    taskList.add(new Task(name, description, allocatedTime, ownerID, deadline, subprojectID, status));
+                    taskList.add(new Task(name, description, allocatedTime, deadline, subprojectID, status));
                 }
 
             }

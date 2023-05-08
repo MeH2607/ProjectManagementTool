@@ -4,6 +4,7 @@ import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Model.User;
 import com.example.projectmanagementtool.Service.PMTService;
+import com.example.projectmanagementtool.Service.pmtException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,44 +60,6 @@ public class PmtController {
     }
 
 
-    @GetMapping("subproject/{subprojectID}")
-    public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
-        // List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
-
-        // Retrieving the subproject itself
-        Subproject subproject = pmtService.getSubProject(subprojectID);
-
-        // Retrieving the project that the subproject belongs to
-        Project project = pmtService.getProjectFromID(subproject.getProjectID());
-
-        // Retrieving all tasks from the specific Subprojects from the DB
-        List<Task> allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID);
-
-        // Sort tasks into list for its status
-        List<Task> todo = new ArrayList<Task>();
-        List<Task> doing = new ArrayList<Task>();
-        List<Task> done = new ArrayList<Task>();
-
-        for (Task task : allTasksForSubproject) {
-            switch (task.getStatus().toLowerCase()) {
-                case "todo": todo.add(task); break;
-                case "doing": doing.add(task); break;
-                case "done": done.add(task); break;
-            }
-        }
-
-        model.addAttribute("todo", todo);
-        model.addAttribute("doing", doing);
-        model.addAttribute("done", done);
-        model.addAttribute("subproject", subproject);
-        model.addAttribute("project", project);
-        List<Task> list = pmtService.getAllTasks();
-        model.addAttribute("list", list);
-
-
-        return "subproject";
-    }
-
     @GetMapping("createUser")
     public String createUser(Model model){
 
@@ -141,6 +104,64 @@ public class PmtController {
 
         return "redirect:/";
     }
+
+
+    @GetMapping("subproject/{subprojectID}")
+    public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
+        // List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
+
+        // Retrieving the subproject itself
+        Subproject subproject = pmtService.getSubProject(subprojectID);
+
+        // Retrieving the project that the subproject belongs to
+        Project project = pmtService.getProjectFromID(subproject.getProjectID());
+
+        // Retrieving all tasks from the specific Subprojects from the DB
+        List<Task> allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID);
+
+        // Sort tasks into list for its status
+        List<Task> todo = new ArrayList<Task>();
+        List<Task> doing = new ArrayList<Task>();
+        List<Task> done = new ArrayList<Task>();
+
+        for (Task task : allTasksForSubproject) {
+            switch (task.getStatus().toLowerCase()) {
+                case "todo": todo.add(task); break;
+                case "doing": doing.add(task); break;
+                case "done": done.add(task); break;
+            }
+        }
+        model.addAttribute("todo", todo);
+        model.addAttribute("doing", doing);
+        model.addAttribute("done", done);
+
+        // Predefinerer subproject ID ind i "create task"
+        Task task = new Task();
+        model.addAttribute("task", task);
+
+        List<User> allUsers = pmtService.getAllUsers();
+        model.addAttribute("all_users", allUsers);
+
+        model.addAttribute("subproject", subproject);
+        model.addAttribute("project", project);
+
+        List<Task> list = pmtService.getAllTasks();
+        model.addAttribute("list", list);
+
+        return "subproject";
+    }
+
+    @PostMapping("subproject/{subprojectID}/create_task")
+    public String addTaskToDB(@ModelAttribute("task") Task task, @PathVariable int subprojectID) throws pmtException {
+
+        System.out.println("Task subproject ID after creating task: " + task.getSubprojectID());
+
+        task.setOwner(pmtService.getUserFromID(task.getOwnerID()));
+
+        pmtService.addTaskToDB(task);
+        return "redirect:/subproject/{subprojectID}"; // TODO tjek om denne redirecter rigtigt
+    }
+
 }
 
 

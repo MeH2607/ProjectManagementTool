@@ -18,6 +18,11 @@ public class PMTService {
     public PMTService(ApplicationContext context, @Value("${pmt.repository}") String impl) {
         pmtRepository = (PMTRepository) context.getBean(impl);
     }
+
+    public void addTaskToDB(Task task) throws pmtException{
+        pmtRepository.addTaskToDB(task);
+    }
+
     public List<Task> getTasksFromSubproject(int subprojectID) {
         return pmtRepository.getTasksFromSubproject(subprojectID);
     }

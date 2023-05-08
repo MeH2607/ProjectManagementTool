@@ -1,11 +1,13 @@
 package com.example.projectmanagementtool.Model;
 
 public class User {
-    String name;
     int id;
+    String name;
     String role;
+
     public User() {}
-    public User(int id,String name, String role) {
+
+    public User(int id, String name, String role) {
         this.id = id;
         this.name = name;
         this.role = role;
