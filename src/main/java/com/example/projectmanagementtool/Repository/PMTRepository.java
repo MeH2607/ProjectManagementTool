@@ -257,11 +257,11 @@ public class PMTRepository {
         }
     }
 
-    public List<Project> getAllProjectsByName(){
+    public List<Project> getAllProjectsSorted(String sortType){
         List<Project> projectList = new ArrayList();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.projects order by Name";
+            String SQL = "SELECT * FROM pmt_db.projects order by " + sortType;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 
@@ -270,9 +270,8 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                int OwnerID = rs.getInt("OwnerID");
                 String Deadline = rs.getString("Deadline");
-                projectList.add(new Project(id, name, description, allocatedTime, OwnerID, Deadline));
+                projectList.add(new Project(id, name, description, allocatedTime, Deadline));
             }
             return projectList;
         } catch (SQLException e) {
