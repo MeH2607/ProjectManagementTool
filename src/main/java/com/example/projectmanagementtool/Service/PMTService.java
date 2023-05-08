@@ -62,7 +62,7 @@ public class PMTService {
         pmtRepository.createProject(project);
     }
 
-    public Task moveTaskToDoing(int taskId) {
+    public void moveTaskToDoing(int taskId) {
         pmtRepository.moveTaskToDoing(taskId);
     }
 }

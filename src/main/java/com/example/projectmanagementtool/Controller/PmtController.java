@@ -161,7 +161,7 @@ public class PmtController {
     @PostMapping("/moveTaskRight")
     public String completeTask(@RequestParam("taskId") int taskId) {
 
-        pmtService.findTaskById(taskId);
+        pmtService.moveTaskToDoing(taskId);
 
 
         // Redirect back to the task list page

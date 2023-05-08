@@ -142,6 +142,7 @@ public class PMTRepository {
 
             while (rs.next()) {
                 // iterating all tasks
+                int id = rs.getInt("id");
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 double allocatedTime = rs.getDouble("AllocatedTime");
@@ -152,7 +153,7 @@ public class PMTRepository {
 
                 // iterating tasks and adding it to the list if its the correct subproject ID
                 if (findSubprojectID == subprojectID){
-                    taskList.add(new Task(name, description, allocatedTime, deadline, subprojectID, status));
+                    taskList.add(new Task(id, name, description, allocatedTime, deadline, subprojectID, status));
                 }
 
             }
@@ -312,7 +313,7 @@ public class PMTRepository {
     public void moveTaskToDoing(int taskId) {
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "UPDATE tasks SET status = doing WHERE task.id = ?";
+            String SQL = "UPDATE tasks SET status = 'doing' WHERE tasks.id = ?";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ps.executeUpdate();
