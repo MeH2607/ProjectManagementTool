@@ -61,44 +61,6 @@ List<Task> task = pmtService.getAllTasks();
     }
 
 
-    @GetMapping("subproject/{subprojectID}")
-    public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
-        // List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
-
-        // Retrieving the subproject itself
-        Subproject subproject = pmtService.getSubProject(subprojectID);
-
-        // Retrieving the project that the subproject belongs to
-        Project project = pmtService.getProjectFromID(subproject.getProjectID());
-
-        // Retrieving all tasks from the specific Subprojects from the DB
-        List<Task> allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID);
-
-        // Sort tasks into list for its status
-        List<Task> todo = new ArrayList<Task>();
-        List<Task> doing = new ArrayList<Task>();
-        List<Task> done = new ArrayList<Task>();
-
-        for (Task task : allTasksForSubproject) {
-            switch (task.getStatus().toLowerCase()) {
-                case "todo": todo.add(task); break;
-                case "doing": doing.add(task); break;
-                case "done": done.add(task); break;
-            }
-        }
-
-        model.addAttribute("todo", todo);
-        model.addAttribute("doing", doing);
-        model.addAttribute("done", done);
-        model.addAttribute("subproject", subproject);
-        model.addAttribute("project", project);
-        List<Task> list = pmtService.getAllTasks();
-        model.addAttribute("list", list);
-
-
-        return "subproject";
-    }
-
     @GetMapping("createUser")
     public String createUser(Model model){
 
@@ -144,9 +106,62 @@ List<Task> task = pmtService.getAllTasks();
         return "redirect:/";
     }
 
-    @PostMapping("create_task")
-    public String addGroceryToShoppinglist(@ModelAttribute("task") Task task) throws pmtException {
-        System.out.println(task);
+
+    @GetMapping("subproject/{subprojectID}")
+    public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
+        // List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
+
+        // Retrieving the subproject itself
+        Subproject subproject = pmtService.getSubProject(subprojectID);
+
+        // Retrieving the project that the subproject belongs to
+        Project project = pmtService.getProjectFromID(subproject.getProjectID());
+
+        // Retrieving all tasks from the specific Subprojects from the DB
+        List<Task> allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID);
+
+        // Sort tasks into list for its status
+        List<Task> todo = new ArrayList<Task>();
+        List<Task> doing = new ArrayList<Task>();
+        List<Task> done = new ArrayList<Task>();
+
+        for (Task task : allTasksForSubproject) {
+            switch (task.getStatus().toLowerCase()) {
+                case "todo": todo.add(task); break;
+                case "doing": doing.add(task); break;
+                case "done": done.add(task); break;
+            }
+        }
+        model.addAttribute("todo", todo);
+        model.addAttribute("doing", doing);
+        model.addAttribute("done", done);
+
+        // Predefinerer subproject ID ind i "create task"
+        Task task = new Task();
+        task.setSubprojectID(subprojectID);
+        task.setStatus("Todo");
+        model.addAttribute("task", task);
+
+        //Lsn 2
+
+        model.addAttribute("taskname");
+
+        List<User> allUsers = pmtService.getAllUsers();
+        model.addAttribute("all_users", allUsers);
+
+
+        model.addAttribute("subproject", subproject);
+        model.addAttribute("project", project);
+
+        List<Task> list = pmtService.getAllTasks();
+        model.addAttribute("list", list);
+
+        return "subproject";
+    }
+
+    @PostMapping("subproject/create_task")
+    public String addGroceryToShoppinglist(@ModelAttribute("task") Task task, int ownerID) throws pmtException {
+        System.out.println("Creating Task");
         pmtService.addTaskToDB(task);
         return "redirect:/subproject/{subprojectID}"; // TODO tjek om denne redirecter rigtigt
     }
