@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <style>
-        .card {
-            background-color: rgba(191, 216, 196, 0.36);
-            max-width: 250px;
-            min-height: 350px;
-            margin-top: 20px;
-            margin-right: 20px;
-        }
-        .container {
-            max-width: 1500px; /* Change this value to adjust the width */
-        }
+    <link rel="stylesheet" type="text/css" href="/homepage.css">
 
-        body {
-            font-family: 'Titillium Web', sans-serif;
-        }
-    </style>
 </head>
-<body> hello
-<div class="container">
-    <div class="row">
-        <div th:each="task : ${list}">
-            <div class="card border-info mb-3" align="center">
-                <div class="card-body">
-                    <h5 class="text-center my-3 pb-3" th:text="${task.name}"></h5>
-                    <p class="card-text" align="center" th:text="${task.description}"></p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Allocated time: <span th:text="${task.allocatedTime}"></span></li>
-                    <li class="list-group-item">Deadline: <span th:text="${task.deadline}"></span></li>
-                </ul>
-            </div>
+<body>
+<div class="background" data-theme="light">
+    <main class="container">
+        <nav class="breadcrumb">
+            <ol>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li><a href="/allprojects">All projects</a></li>
+                <li role="list" dir="ltr">
+                    <a href="#" aria-haspopup="listbox">Select project</a>
+                    <ul role="listbox">
+                        <li th:each="project : ${projects}">
+                            <a th:href="@{/project/{projectID}(projectID=${project.id})}" th:text="${project.name}"></a>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="grid">
+            <article>
+                <h2 style="text-align: center" class="card-title">Projects</h2>
+                <p class="card-text">Get an overview of projects or create new projects</p>
+                <a type="button" href="/allprojects" class="btn btn-secondary btn-lg btn-block" role="button">All
+                    projects</a>
+                <a type="button" href="createProject" class="btn btn-secondary btn-lg btn-block" role="button">Create a
+                    project</a>
+            </article>
+            <article>
+                <h2 style="text-align: center" class="card-title">Users</h2>
+                <p class="card-text">Get an overview of user profiles or create new user profiles</p>
+
+                <a type="button" href="" class="btn btn-secondary btn-lg btn-block" role="button">All users</a>
+                <a type="button" href="createUser" class="btn btn-secondary btn-lg btn-block" role="button">Create a
+                    user</a>
+            </article>
         </div>
-    </div>
+    </main>
 </div>
 </body>
 </html>
+
+

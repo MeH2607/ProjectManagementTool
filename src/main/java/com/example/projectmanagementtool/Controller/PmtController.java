@@ -27,13 +27,10 @@ public class PmtController {
 
     @GetMapping("")
     public String index(Model model, HttpSession session) {
-List<Task> task = pmtService.getAllTasks();
+        List<Project> projects = pmtService.getAllProjects();
+        model.addAttribute("projects", projects);
 
-        model.addAttribute("task", task);
-        List<Task> list = pmtService.getAllTasks();
-        model.addAttribute("list", list);
-
-        return "homepage";
+        return "index";
     }
     @GetMapping("project/{projectID}")
     public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
@@ -49,11 +46,12 @@ List<Task> task = pmtService.getAllTasks();
         model.addAttribute("projects", projects);
         model.addAttribute("project", project);
 
-        return "projectPICO";
+        return "project";
     }
 
     @GetMapping("allprojects")
     public String allProjects(Model model, HttpSession session) {
+
         List<Project> projects = pmtService.getAllProjects();
         model.addAttribute("projects", projects);
 
