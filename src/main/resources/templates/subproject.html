@@ -88,10 +88,9 @@
     </div>
 
 <!-- Create new task -->
-
     <div class="row">
 
-        <form action="create_task" method="post" th:object="${task}">
+        <form action="#" th:action="@{${subprojectID} + '/create_task'}" method="post" th:object="${task}">
 
                 <div>
                     <label>Task name</label>
@@ -106,14 +105,12 @@
                 <div>
                     <label>Allocated Time</label>
                     <input type="number" name="allocatedTime" placeholder="AllocatedTime" style="width: 100%;" required>
-
                 </div>
 
                 <div>
                     <label>Deadline</label>
                     <input type="date" name="deadline" placeholder="deadline" style="width: 100%;" required>
                 </div>
-
 
                 <div>
                     <label>Owner</label>

@@ -92,8 +92,8 @@ public class PMTRepository {
             ps.setDouble(3, task.getAllocatedTime());
             ps.setInt(4, task.getOwner().getId());
             ps.setString(5, task.getDeadlineAsString());
-            ps.setInt(6, 1);
-            ps.setString(7, task.getStatus());
+            ps.setInt(6, task.getSubprojectID());
+            ps.setString(7, "TODO");
             ps.executeUpdate();
 
         } catch (SQLException e) {
