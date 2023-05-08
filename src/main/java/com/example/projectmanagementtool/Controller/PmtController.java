@@ -59,6 +59,11 @@ List<Task> task = pmtService.getAllTasks();
         List<Project> projects = pmtService.getAllProjects();
         model.addAttribute("projects", projects);
 
+        String criteria = new String();
+        List<String>sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
+        model.addAttribute("sortCriterias", sortCriterias);
+        model.addAttribute("criteria", criteria);
+
         return "allProjects";
     }
 
@@ -146,6 +151,8 @@ List<Task> task = pmtService.getAllTasks();
         return "redirect:/";
     }
 
+
+
     @GetMapping("allprojects/sortByName") //TODO find ud af hvad den bedste måde at lave sorting på er. Så man ikke skal lave seperete Controller metoder for hver sortering
     public String sortAllProjectsByName(Model model, HttpSession session) {
         List<Project> projects = pmtService.getAllProjectsByName();
@@ -155,6 +162,15 @@ List<Task> task = pmtService.getAllTasks();
 
         return "allProjects";
     }
-}
+
+
+
+    @PostMapping("allprojects/sorted")
+    public String sortAllProjectsByCriteria(@ModelAttribute("criteria") String criteria, @ModelAttribute() HttpSession session) {
+
+
+    return "redirect:/allprojects";
+    }
+    }
 
 

@@ -34,7 +34,11 @@
     <li class="breadcrumb-item active" aria-current="page"><a>All projects</a></li>
   </ol>
 
-  <a href="allprojects/sortByName" class="btn btn-info btn-sm" style="margin-left: 10px">Sort by name</a>
+  <select name="criteria">
+    <option value="Sort by" disabled selected></option>
+    <option th:each="criteria : ${sortCriterias}" th:value="${criteria}" th:text="${criteria}"></option>
+  </select>
+
 </nav>
 <div class="container">
   <div class="row">

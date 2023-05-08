@@ -279,4 +279,27 @@ public class PMTRepository {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
+
+    public List<Project> getAllProjectsByCriteria(String criteria){
+        List<Project> projectList = new ArrayList();
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "SELECT * FROM pmt_db.projects order by " + criteria;
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                String description = rs.getString("Description");
+                int allocatedTime = rs.getInt("AllocatedTime");
+                int OwnerID = rs.getInt("OwnerID");
+                String Deadline = rs.getString("Deadline");
+                projectList.add(new Project(id, name, description, allocatedTime, OwnerID, Deadline));
+            }
+            return projectList;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
 }
