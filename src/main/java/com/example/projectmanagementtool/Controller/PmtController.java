@@ -142,10 +142,6 @@ List<Task> task = pmtService.getAllTasks();
         task.setStatus("Todo");
         model.addAttribute("task", task);
 
-        //Lsn 2
-
-        model.addAttribute("taskname");
-
         List<User> allUsers = pmtService.getAllUsers();
         model.addAttribute("all_users", allUsers);
 
@@ -160,8 +156,10 @@ List<Task> task = pmtService.getAllTasks();
     }
 
     @PostMapping("subproject/create_task")
-    public String addGroceryToShoppinglist(@ModelAttribute("task") Task task, int ownerID) throws pmtException {
-        System.out.println("Creating Task");
+    public String addTaskToDB(@ModelAttribute("task") Task task) throws pmtException {
+        System.out.println("Creating Task " + task.getSubprojectID());
+        task.setOwner(pmtService.getUserFromID(task.getOwnerID()));
+        System.out.println(task.getOwner().getName());
         pmtService.addTaskToDB(task);
         return "redirect:/subproject/{subprojectID}"; // TODO tjek om denne redirecter rigtigt
     }

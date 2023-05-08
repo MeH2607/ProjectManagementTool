@@ -11,8 +11,9 @@ public class Task implements Component{
     private double allocatedTime;
     private int subprojectID;
     private String status;
+    private int ownerID;
 
-    public Task(String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID, String status) {
+    public Task(String name, String description, double allocatedTime, String deadline, int subprojectID, String status) {
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
@@ -35,6 +36,13 @@ public class Task implements Component{
     }
 
 
+    public int getOwnerID(){
+        return ownerID;
+    }
+
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
+    }
 
     public String getStatus() {
         return status;

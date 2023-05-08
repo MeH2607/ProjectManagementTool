@@ -42,7 +42,7 @@ public class PMTRepository {
                 String Deadline = rs.getString("Deadline");
                 int SubprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
-                taskList.add(new Task(name, description, allocatedTime, OwnerID, Deadline, SubprojectID, status));
+                taskList.add(new Task(name, description, allocatedTime, Deadline, SubprojectID, status));
             }
             return taskList;
         } catch (SQLException e) {
@@ -85,14 +85,14 @@ public class PMTRepository {
         try {
             Connection conn = ConnectionManager.getConnection();
             String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setString(1, task.getName());
             ps.setString(2, task.getDescription());
             ps.setDouble(3, task.getAllocatedTime());
             ps.setInt(4, task.getOwner().getId());
             ps.setString(5, task.getDeadlineAsString());
-            ps.setDouble(6, task.getSubprojectID());
+            ps.setInt(6, 1);
             ps.setString(7, task.getStatus());
             ps.executeUpdate();
 
@@ -152,7 +152,7 @@ public class PMTRepository {
 
                 // iterating tasks and adding it to the list if its the correct subproject ID
                 if (findSubprojectID == subprojectID){
-                    taskList.add(new Task(name, description, allocatedTime, ownerID, deadline, subprojectID, status));
+                    taskList.add(new Task(name, description, allocatedTime, deadline, subprojectID, status));
                 }
 
             }
