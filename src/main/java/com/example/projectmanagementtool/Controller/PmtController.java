@@ -152,22 +152,10 @@ List<Task> task = pmtService.getAllTasks();
     }
 
 
-
-    @GetMapping("allprojects/sortByName") //TODO find ud af hvad den bedste måde at lave sorting på er. Så man ikke skal lave seperete Controller metoder for hver sortering
-    public String sortAllProjectsByName(Model model, HttpSession session) {
-        List<Project> projects = pmtService.getAllProjectsByName();
-
-
-        model.addAttribute("projects", projects);
-
-        return "allProjects";
-    }
-
-
-
     @PostMapping("allprojects/sorted")
     public String sortAllProjectsByCriteria(@ModelAttribute("criteria") String criteria, @ModelAttribute() HttpSession session) {
 
+        List<Project> sortedProjects = pmtService.getAllProjectsByCriteria(criteria);
 
     return "redirect:/allprojects";
     }

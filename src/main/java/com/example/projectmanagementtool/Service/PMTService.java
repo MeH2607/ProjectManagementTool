@@ -57,9 +57,7 @@ public class PMTService {
         pmtRepository.createProject(project);
     }
 
-    public List<Project> getAllProjectsByName() {
-        return pmtRepository.getAllProjectsByName();
-    }
+
 
     public List<Project>getAllProjectsByCriteria(String criteria) {
         return pmtRepository.getAllProjectsByCriteria(criteria);
