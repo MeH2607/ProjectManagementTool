@@ -157,7 +157,8 @@
                                     <a href="#" class="card-link">Edit task</a>
                                     <a href="#" class="card-link">
 
-                                    <form th:action="@{/moveTaskToDoing}" method="post">
+
+                                    <form th:action="@{${subprojectID} + '/moveTaskToDoing'}" method="post" th:object="${task}">
                                         <!-- The following value in th:value = taskID is sent to @requestparam in the controller
                                         when the form is submitted
                                         -->

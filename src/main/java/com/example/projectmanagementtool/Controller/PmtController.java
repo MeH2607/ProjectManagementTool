@@ -155,15 +155,14 @@ public class PmtController {
         task.setOwner(pmtService.getUserFromID(task.getOwnerID()));
 
         pmtService.addTaskToDB(task);
-        return "redirect:/subproject/{subprojectID}"; // TODO tjek om denne redirecter rigtigt
+        return "redirect:/subproject/{subprojectID}";
     }
 
-    @PostMapping("/moveTaskToDoing")
-    public String moveTaskToDoing(@RequestParam("taskId") int taskId) {
+    @PostMapping("subproject/{subprojectID}/moveTaskToDoing")
+    public String moveTaskToDoing(@RequestParam("taskId") int taskId, @PathVariable int subprojectID) {
         // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
 
         pmtService.moveTaskToDoing(taskId);
-
 
         // Redirect back to the task list page
         return "redirect:/subproject/{subprojectID}"; // TODO ikke sikker på om virker endnu
