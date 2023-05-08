@@ -65,4 +65,12 @@ public class PMTService {
     public void moveTaskToDoing(int taskId) {
         pmtRepository.moveTaskToDoing(taskId);
     }
+
+    public void moveTaskToTodo(int taskId) {
+        pmtRepository.moveTaskToTodo(taskId);
+    }
+
+    public void moveTaskToDone(int taskId) {
+        pmtRepository.moveTaskToDone(taskId);
+    }
 }

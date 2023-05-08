@@ -313,7 +313,7 @@ public class PMTRepository {
     public void moveTaskToDoing(int taskId) {
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "UPDATE tasks SET status = 'doing' WHERE tasks.id = ?";
+            String SQL = "UPDATE tasks SET status = 'Doing' WHERE tasks.id = ?";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ps.executeUpdate();
@@ -323,5 +323,29 @@ public class PMTRepository {
         }
     }
 
+    public void moveTaskToTodo(int taskId) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "UPDATE tasks SET status = 'TODO' WHERE tasks.id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void moveTaskToDone(int taskId) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "UPDATE tasks SET status = 'Done' WHERE tasks.id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
