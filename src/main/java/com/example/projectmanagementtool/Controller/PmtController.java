@@ -159,14 +159,13 @@ public class PmtController {
     }
 
     @PostMapping("/moveTaskRight")
-    public String completeTask(@RequestParam("taskId") Long taskId) {
-        // Update the task's attribute
-        Task task = taskRepository.findById(taskId);
-        task.setStatus("completed");
-        taskRepository.save(task);
+    public String completeTask(@RequestParam("taskId") int taskId) {
+
+        pmtService.findTaskById(taskId);
+
 
         // Redirect back to the task list page
-        return "redirect:/taskList";
+        return "redirect:/subproject/{subprojectID}"; // ikke sikker på om virker endnu
     }
 
 }

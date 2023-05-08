@@ -308,4 +308,19 @@ public class PMTRepository {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
+
+    public void moveTaskToDoing(int taskId) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "UPDATE tasks SET status = doing WHERE task.id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+
 }
