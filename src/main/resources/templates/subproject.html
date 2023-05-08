@@ -202,7 +202,7 @@
                                 <div class="card-body">
 
                                     <a href="#" class="card-link">
-                                        <form th:action="@{/moveTaskToTodo}" method="post">
+                                        <form th:action="@{${subprojectID} + '/moveTaskToTodo'}" method="post" th:object="${task}">
                                             <!-- The following value in th:value = taskID is sent to @requestparam in the controller
                                             when the form is submitted
                                             -->
@@ -214,7 +214,7 @@
                                     <a href="#" class="card-link">Edit task</a>
 
                                     <a href="#" class="card-link">
-                                    <form th:action="@{/moveTaskToDone}" method="post">
+                                        <form th:action="@{${subprojectID} + '/moveTaskToDone'}" method="post" th:object="${task}">
                                         <!-- The following value in th:value = taskID is sent to @requestparam in the controller
                                         when the form is submitted
                                         -->
@@ -260,7 +260,7 @@
                                 <div class="card-body">
 
                                     <a href="#" class="card-link">
-                                        <form th:action="@{/moveTaskToDoing}" method="post">
+                                        <form th:action="@{${subprojectID} + '/moveTaskToDoing'}" method="post" th:object="${task}">
                                             <!-- The following value in th:value = taskID is sent to @requestparam in the controller
                                             when the form is submitted
                                             -->

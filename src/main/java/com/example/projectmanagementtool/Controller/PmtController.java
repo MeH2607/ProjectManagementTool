@@ -168,8 +168,8 @@ public class PmtController {
         return "redirect:/subproject/{subprojectID}"; // TODO ikke sikker på om virker endnu
     }
 
-    @PostMapping("/moveTaskToTodo")
-    public String moveTaskToTodo(@RequestParam("taskId") int taskId) {
+    @PostMapping("subproject/{subprojectID}/moveTaskToTodo")
+    public String moveTaskToTodo(@RequestParam("taskId") int taskId, @PathVariable int subprojectID) {
         // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
 
         pmtService.moveTaskToTodo(taskId);
@@ -179,8 +179,8 @@ public class PmtController {
         return "redirect:/subproject/{subprojectID}"; // TODO ikke sikker på om virker endnu
     }
 
-    @PostMapping("/moveTaskToDone")
-    public String moveTaskToDone(@RequestParam("taskId") int taskId) {
+    @PostMapping("subproject/{subprojectID}/moveTaskToDone")
+    public String moveTaskToDone(@RequestParam("taskId") int taskId, @PathVariable int subprojectID) {
         // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
 
         pmtService.moveTaskToDone(taskId);
