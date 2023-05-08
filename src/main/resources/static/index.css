@@ -12,10 +12,14 @@ body {
     padding: 20px;
     margin: auto;
 }
+.grid {
+    margin: auto; /* Add this line to center the container */
+    width: 60%;
+}
 
 article {
     display: inline-block;
-    min-width: 1000px;
+    width: 1000px;
     min-height: 150px;
     margin-top: 20px;
     margin-right: 20px;

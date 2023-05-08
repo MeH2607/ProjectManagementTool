@@ -20,6 +20,7 @@ article {
     margin: 20px;
     margin-bottom: 40px;
     vertical-align: top;
+    horiz-align: center;
 }
 
 details ul {
