@@ -52,6 +52,7 @@ public class PmtController {
         return "project";
     }
 
+    //Denne metode viser projekter som de kommer fra databasen uden sortering, men hvis man vælger en sorteringsmulighed, så bliver den sorteret
     @GetMapping("allprojects")
     public String allProjects(@RequestParam(required = false) String criteria,  Model model, HttpSession session) {
 
@@ -70,19 +71,6 @@ public class PmtController {
 
         return "allProjects";
     }
-
-    @GetMapping("allprojects/sortedByDB")
-    public String sortAllProjectsByCriteria(@ModelAttribute("criteria") String criteria, @ModelAttribute() HttpSession session) {
-        long start = System.currentTimeMillis();
-
-        List<Project> sortedProjects = pmtService.getAllProjectsByCriteria(criteria);
-
-        long end = System.currentTimeMillis();
-
-        System.out.println("Time elapsed: " + (end - start) + "ms");
-        return "redirect:/allprojects";
-    }
-
 
     @GetMapping("subproject/{subprojectID}")
     public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
