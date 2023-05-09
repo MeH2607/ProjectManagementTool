@@ -1,4 +1,5 @@
 package com.example.projectmanagementtool.Controller;
+
 import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
@@ -8,11 +9,7 @@ import com.example.projectmanagementtool.Service.PMTService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +27,7 @@ public class PmtController {
 
     @GetMapping("")
     public String index(Model model, HttpSession session) {
-List<Task> task = pmtService.getAllTasks();
+        List<Task> task = pmtService.getAllTasks();
 
         model.addAttribute("task", task);
         List<Task> list = pmtService.getAllTasks();
@@ -38,8 +35,9 @@ List<Task> task = pmtService.getAllTasks();
 
         return "homepage";
     }
+
     @GetMapping("project/{projectID}")
-    public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
+    public String subProjectOvervisew(@PathVariable int projectID, Model model, HttpSession session) {
 
         List<Task> tasks = pmtService.getAllTasks();
         List<Subproject> subprojects = pmtService.getSubProjects(projectID);
@@ -55,16 +53,34 @@ List<Task> task = pmtService.getAllTasks();
     }
 
     @GetMapping("allprojects")
-    public String allProjects(Model model, HttpSession session) {
-        List<Project> projects = pmtService.getAllProjects();
+    public String allProjects(@RequestParam(required = false) String criteria,  Model model, HttpSession session) {
+
+        List<Project> projects;
+        if(criteria != null)
+         projects = pmtService.getAllProjectsByCriteria(criteria);
+        else
+            projects = pmtService.getAllProjects();
+
         model.addAttribute("projects", projects);
 
-        String criteria = new String();
-        List<String>sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
+
+        List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
         model.addAttribute("sortCriterias", sortCriterias);
         model.addAttribute("criteria", criteria);
 
         return "allProjects";
+    }
+
+    @GetMapping("allprojects/sortedByDB")
+    public String sortAllProjectsByCriteria(@ModelAttribute("criteria") String criteria, @ModelAttribute() HttpSession session) {
+        long start = System.currentTimeMillis();
+
+        List<Project> sortedProjects = pmtService.getAllProjectsByCriteria(criteria);
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("Time elapsed: " + (end - start) + "ms");
+        return "redirect:/allprojects";
     }
 
 
@@ -88,9 +104,15 @@ List<Task> task = pmtService.getAllTasks();
 
         for (Task task : allTasksForSubproject) {
             switch (task.getStatus().toLowerCase()) {
-                case "todo": todo.add(task); break;
-                case "doing": doing.add(task); break;
-                case "done": done.add(task); break;
+                case "todo":
+                    todo.add(task);
+                    break;
+                case "doing":
+                    doing.add(task);
+                    break;
+                case "done":
+                    done.add(task);
+                    break;
             }
         }
 
@@ -107,29 +129,28 @@ List<Task> task = pmtService.getAllTasks();
     }
 
     @GetMapping("createUser")
-    public String createUser(Model model){
+    public String createUser(Model model) {
 
-        model.addAttribute("user",new User());
+        model.addAttribute("user", new User());
 
-        List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
+        List<String> roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
         model.addAttribute("roles", roles);
 
         return "createUserForm";
     }
 
     @PostMapping("createUser")
-    public String createUserSuccess(@ModelAttribute("user") User user){
+    public String createUserSuccess(@ModelAttribute("user") User user) {
         pmtService.createUser(user);
         System.out.println(user.getName() + " has been created");
         return "redirect:/";
     }
 
     @GetMapping("createProject")
-    public String createProject(Model model){
+    public String createProject(Model model) {
 
         Project project = new Project();
 
-        project.setOwner(new User());
 
         model.addAttribute("project", project);
 
@@ -142,7 +163,7 @@ List<Task> task = pmtService.getAllTasks();
     }
 
     @PostMapping("createProject")
-    public String createProjectSuccess(@ModelAttribute("project") Project project){
+    public String createProjectSuccess(@ModelAttribute("project") Project project) {
 
         project.setOwner(pmtService.getUserFromID(project.getOwnerID()));
         pmtService.createProject(project);
@@ -152,13 +173,6 @@ List<Task> task = pmtService.getAllTasks();
     }
 
 
-    @PostMapping("allprojects/sorted")
-    public String sortAllProjectsByCriteria(@ModelAttribute("criteria") String criteria, @ModelAttribute() HttpSession session) {
-
-        List<Project> sortedProjects = pmtService.getAllProjectsByCriteria(criteria);
-
-    return "redirect:/allprojects";
-    }
-    }
+}
 
 

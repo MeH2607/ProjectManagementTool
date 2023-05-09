@@ -34,7 +34,7 @@
     <li class="breadcrumb-item active" aria-current="page"><a>All projects</a></li>
   </ol>
 
-  <form action="/sorted"  method="post" th:object="${criteria}">
+  <form action="/allprojects"   method="get" th:object="${criteria}">
   <select name="criteria">
     <option value="Sort by" disabled selected></option>
     <option th:each="criteria : ${sortCriterias}" th:value="${criteria}" th:text="${criteria}" ></option>

@@ -2,6 +2,7 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
 <head>
     <meta charset="UTF-8">
     <title>Create Project</title>
@@ -53,10 +54,9 @@
         <div>
             <label>Owner</label>
 
-
-            <select name="owner.id" required>
-                <option value="" disabled selected>Select owner</option>
-                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}"></option> <!-- th:selected="${user.id == project.owner.id}" -->
+            <select name="ownerID" required>
+                <option value="" disabled selected required>Select owner</option>
+                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}"></option>
             </select>
 
         </div>
