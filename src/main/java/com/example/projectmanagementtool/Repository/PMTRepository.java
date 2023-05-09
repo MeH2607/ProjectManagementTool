@@ -2,10 +2,10 @@ package com.example.projectmanagementtool.Repository;
 
 import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
-import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Model.User;
 import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
+import com.example.projectmanagementtool.Service.pmtException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -42,7 +42,7 @@ public class PMTRepository {
                 String Deadline = rs.getString("Deadline");
                 int SubprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
-                taskList.add(new Task(name, description, allocatedTime, OwnerID, Deadline, SubprojectID, status));
+                taskList.add(new Task(name, description, allocatedTime, Deadline, SubprojectID, status));
             }
             return taskList;
         } catch (SQLException e) {
@@ -80,6 +80,27 @@ public class PMTRepository {
         return subprojectList;
     }
 
+    // Adds new task to DB
+    public void addTaskToDB(Task task) throws pmtException {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, task.getName());
+            ps.setString(2, task.getDescription());
+            ps.setDouble(3, task.getAllocatedTime());
+            ps.setInt(4, task.getOwner().getId());
+            ps.setString(5, task.getDeadlineAsString());
+            ps.setInt(6, task.getSubprojectID());
+            ps.setString(7, "TODO");
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new pmtException(e.getMessage());
+        }
+    }
+
 
     // Retrieves a specific subproject from DB, from a subprojectID
     public Subproject getSubproject(int subprojectID) {
@@ -108,6 +129,8 @@ public class PMTRepository {
         }
         return subproject;
     }
+
+
     public List<Task> getTasksFromSubproject(int findSubprojectID) {
 
         List<Task> taskList = new ArrayList();
@@ -119,6 +142,7 @@ public class PMTRepository {
 
             while (rs.next()) {
                 // iterating all tasks
+                int id = rs.getInt("id");
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 double allocatedTime = rs.getDouble("AllocatedTime");
@@ -129,7 +153,7 @@ public class PMTRepository {
 
                 // iterating tasks and adding it to the list if its the correct subproject ID
                 if (findSubprojectID == subprojectID){
-                    taskList.add(new Task(name, description, allocatedTime, ownerID, deadline, subprojectID, status));
+                    taskList.add(new Task(id, name, description, allocatedTime, deadline, subprojectID, status));
                 }
 
             }
@@ -283,6 +307,45 @@ public class PMTRepository {
             return subprojectList;
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
+
+    public void moveTaskToDoing(int taskId) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "UPDATE tasks SET status = 'Doing' WHERE tasks.id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void moveTaskToTodo(int taskId) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "UPDATE tasks SET status = 'TODO' WHERE tasks.id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void moveTaskToDone(int taskId) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "UPDATE tasks SET status = 'Done' WHERE tasks.id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

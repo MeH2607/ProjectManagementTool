@@ -1,8 +1,10 @@
 package com.example.projectmanagementtool.Model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Task implements Component{
+    private int id;
     private String name;
     private String description;
     private User owner;
@@ -10,8 +12,9 @@ public class Task implements Component{
     private double allocatedTime;
     private int subprojectID;
     private String status;
+    private int ownerID;
 
-    public Task(String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID, String status) {
+    public Task(String name, String description, double allocatedTime, String deadline, int subprojectID, String status) {
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
@@ -19,6 +22,42 @@ public class Task implements Component{
         this.deadline = LocalDate.parse(deadline);
         this.subprojectID = subprojectID;
         this.status = status;
+    }
+
+    public Task(int id, String name, String description, double allocatedTime, String deadline, int subprojectID, String status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.allocatedTime = allocatedTime;
+        this.owner = new User();
+        this.deadline = LocalDate.parse(deadline);
+        this.subprojectID = subprojectID;
+        this.status = status;
+    }
+
+    // Converts localDate into formatted string for the DB
+    public String getDeadlineAsString(){
+
+        // Creating a DateTimeFormatter object with the desired format for the DB
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        //Converting localdate to string
+        String deadlineAsString = deadline.format(formatter);
+
+        return deadlineAsString;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public int getOwnerID(){
+        return ownerID;
+    }
+
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
     }
 
     public String getStatus() {
@@ -85,6 +124,8 @@ public class Task implements Component{
     public void setSubprojectID(int subprojectID) {
         this.subprojectID = subprojectID;
     }
+
+
 
     @Override
     public String toString() {
