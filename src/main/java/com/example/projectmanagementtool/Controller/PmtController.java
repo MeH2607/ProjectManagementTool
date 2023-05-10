@@ -1,4 +1,5 @@
 package com.example.projectmanagementtool.Controller;
+
 import com.example.projectmanagementtool.Model.Project;
 import com.example.projectmanagementtool.Model.Subproject;
 import com.example.projectmanagementtool.Model.Task;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -46,11 +48,25 @@ public class PmtController {
         return "project";
     }
 
+    //Denne metode viser projekter som de kommer fra databasen uden sortering, men hvis man vælger en sorteringsmulighed, så bliver den sorteret
     @GetMapping("allprojects")
     public String allProjects(Model model, HttpSession session) {
 
         List<Project> projects = pmtService.getAllProjects();
+    public String allProjects(@RequestParam(required = false) String criteria,  Model model, HttpSession session) {
+
+        List<Project> projects;
+        if(criteria != null)
+         projects = pmtService.getAllProjectsByCriteria(criteria);
+        else
+            projects = pmtService.getAllProjectsByCriteria("name");
+
         model.addAttribute("projects", projects);
+
+
+        List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
+        model.addAttribute("sortCriterias", sortCriterias);
+        model.addAttribute("criteria", criteria);
 
         return "allProjects";
     }
@@ -127,6 +143,7 @@ public class PmtController {
                 case "done": done.add(task); break;
             }
         }
+
         model.addAttribute("todo", todo);
         model.addAttribute("doing", doing);
         model.addAttribute("done", done);
@@ -143,6 +160,7 @@ public class PmtController {
 
         List<Task> list = pmtService.getAllTasks();
         model.addAttribute("list", list);
+
 
         return "subproject";
     }

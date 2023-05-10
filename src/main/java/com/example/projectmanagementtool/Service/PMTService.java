@@ -62,6 +62,12 @@ public class PMTService {
         pmtRepository.createProject(project);
     }
 
+
+
+    public List<Project>getAllProjectsByCriteria(String criteria) {
+        return pmtRepository.getAllProjectsByCriteria(criteria);
+    }
+
     public void moveTaskToDoing(int taskId) {
         pmtRepository.moveTaskToDoing(taskId);
     }
