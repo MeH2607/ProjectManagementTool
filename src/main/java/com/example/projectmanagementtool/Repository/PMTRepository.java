@@ -286,13 +286,15 @@ public class PMTRepository {
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
+                System.out.println(rs.getInt("OwnerID"));
                 int id = rs.getInt("ID");
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                int OwnerID = rs.getInt("OwnerID");
+                User owner = getUserFromID(rs.getInt("OwnerID"));
+                System.out.println(owner.getName());
                 String Deadline = rs.getString("Deadline");
-                projectList.add(new Project(id, name, description, allocatedTime, OwnerID, Deadline));
+                projectList.add(new Project(id, name, description, allocatedTime, Deadline, owner));
             }
             return projectList;
         } catch (SQLException e) {
@@ -315,9 +317,9 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                int OwnerID = rs.getInt("OwnerID");
+                User owner = getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
-                projectList.add(new Project(id, name, description, allocatedTime, OwnerID, Deadline));
+                projectList.add(new Project(id, name, description, allocatedTime, Deadline, owner));
             }
             return projectList;
         } catch (SQLException e) {
