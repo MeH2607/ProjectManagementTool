@@ -235,6 +235,25 @@ public class PMTRepository {
         }
     }
 
+    public void createProject(Project project, int ownerID){
+
+        project.setSubprojectList(new ArrayList<>());
+        try{
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "Insert into projects(name,Description,AllocatedTime,OwnerID,Deadline) values (?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, project.getName());
+            ps.setString(2, project.getDescription());
+            ps.setDouble(3, 0);
+            ps.setInt(4, ownerID);
+            ps.setString(5, project.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
+
     public Project getProjectFromID(int projectID) {
         try {
             Connection conn = ConnectionManager.getConnection();

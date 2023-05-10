@@ -28,7 +28,12 @@
 
             <select name="ownerID" required>
                 <option value="" disabled selected>Select owner</option>
-                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}" required></option> <!-- th:selected="${user.id == project.owner.id}" -->
+                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}" required>
+
+                    <input type="hidden" th:name="ownerID" th:value="${user.id}" />
+
+                </option> <!-- th:selected="${user.id == project.owner.id}" -->
+
             </select>
 
         </div>

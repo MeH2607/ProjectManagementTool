@@ -104,10 +104,11 @@ public class PmtController {
     }
 
     @PostMapping("createProject")
-    public String createProjectSuccess(@ModelAttribute("project") Project project){
+    public String createProjectSuccess(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID){
 
-        project.setOwner(pmtService.getUserFromID(project.getOwnerID()));
-        pmtService.createProject(project);
+        // project.setOwner(pmtService.getUserFromID(project.getOwnerID()));
+
+        pmtService.createProject(project, ownerID);
         System.out.println(project.getName() + " has been created");
 
         return "redirect:/";

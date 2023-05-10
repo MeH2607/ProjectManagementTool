@@ -62,6 +62,10 @@ public class PMTService {
         pmtRepository.createProject(project);
     }
 
+    public void createProject(Project project, int ownerID) {
+        pmtRepository.createProject(project, ownerID);
+    }
+
 
 
     public List<Project>getAllProjectsByCriteria(String criteria) {
