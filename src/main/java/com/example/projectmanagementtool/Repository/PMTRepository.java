@@ -313,7 +313,9 @@ public class PMTRepository {
                 int allocatedTime = rs.getInt("AllocatedTime");
                 int OwnerID = rs.getInt("OwnerID");
                 String Deadline = rs.getString("Deadline");
-                projectList.add(new Project(id, name, description, allocatedTime, OwnerID, Deadline));
+                Project project = new Project(id, name, description, allocatedTime, OwnerID, Deadline);
+                setRemainingTime(project);
+                projectList.add(project);
             }
             return projectList;
         } catch (SQLException e) {
