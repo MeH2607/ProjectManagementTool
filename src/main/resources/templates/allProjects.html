@@ -55,7 +55,7 @@
                         </tr>
                         <tr>
                             <td>Allocated time:</td>
-                            <td><span th:text="${project.allocatedTime}"></span></td>
+                            <td><span th:text="${project.remainingTime} +' / '+ ${project.allocatedTime}"></span></td>
                         </tr>
                         <tr>
                             <td>Deadline:</td>
