@@ -60,7 +60,7 @@ public class PmtController {
         if(criteria != null)
          projects = pmtService.getAllProjectsByCriteria(criteria);
         else
-            projects = pmtService.getAllProjects();
+            projects = pmtService.getAllProjectsByCriteria("name");
 
         model.addAttribute("projects", projects);
 
