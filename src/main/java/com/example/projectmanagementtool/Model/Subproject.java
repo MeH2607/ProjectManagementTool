@@ -10,6 +10,7 @@ public class Subproject implements Component{
     private int id;
     private String name;
     private String description;
+    private User owner;
     private int ownerID;
     private double allocatedTime;
     private LocalDate deadline;
