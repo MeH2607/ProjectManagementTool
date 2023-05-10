@@ -258,6 +258,21 @@ public class PMTRepository {
         return null;
     }
 
+    public void setRemainingTime(Project project){ //TODO implementer denne her færdig
+        try{
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "SELECT ALLOCATEDTIME FROM SUBPROJECTS WHERE PROJECTID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, project.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                project.setRemainingTime(project.getRemainingTime() + rs.getInt("AllocatedTime"));
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
+
     public List<Project> getAllProjects() {
         List<Project> projectList = new ArrayList();
         try {

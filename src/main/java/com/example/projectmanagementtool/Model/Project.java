@@ -16,10 +16,13 @@ public class Project implements Component{
     private int ownerID; //Bruges til at få et id fra owner når man vælger en owner fra html formen,
     // da Thymeleaf har svært ved at arbejde
 
+    private int remainingTime;
+
     private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
     public Project() {
         this.subprojectList = new ArrayList<Subproject>();
+        this.remainingTime = 0;
     }
 
     public Project(int id, String name, String description, int allocatedTime, int ownerID, String deadline ) {
@@ -30,6 +33,7 @@ public class Project implements Component{
         this.owner = new User();
         this.deadline = LocalDate.parse(deadline);
         this.subprojectList = new ArrayList<Subproject>();
+        this.remainingTime = 0;
     }
   public Project(int id, String name, String description, int allocatedTime, String deadline) {
         this.id = id;
@@ -63,6 +67,8 @@ public class Project implements Component{
         return projectMembers;
     }
 
+
+
     @Override
     public String getName() {
         return name;
@@ -89,6 +95,8 @@ public class Project implements Component{
         }
         return allocatedTime;
     }
+
+
 
     @Override
     public LocalDate getDeadline() {
@@ -133,6 +141,14 @@ public class Project implements Component{
 
     public void setAllocatedTime(int allocatedTime) {
         this.allocatedTime = allocatedTime;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
     }
 
     @Override
