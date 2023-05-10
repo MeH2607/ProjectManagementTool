@@ -50,11 +50,7 @@ public class PmtController {
 
     //Denne metode viser projekter som de kommer fra databasen uden sortering, men hvis man vælger en sorteringsmulighed, så bliver den sorteret
     @GetMapping("allprojects")
-    public String allProjects(Model model, HttpSession session) {
-
-        List<Project> projects = pmtService.getAllProjects();
     public String allProjects(@RequestParam(required = false) String criteria,  Model model, HttpSession session) {
-
         List<Project> projects;
         if(criteria != null)
          projects = pmtService.getAllProjectsByCriteria(criteria);
