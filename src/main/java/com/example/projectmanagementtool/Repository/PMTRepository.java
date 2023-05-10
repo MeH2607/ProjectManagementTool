@@ -52,11 +52,11 @@ public class PMTRepository {
 
     // Create a method that fetches all subprojects from the database for a specific project
 
-    public List<Subproject> getSubProjects(int projectSearchID) {
+    public List<Subproject> getSubProjects(int projectSearchID, String criteria) {
         List<Subproject> subprojectList = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ProjectID = ?";
+            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ProjectID = ? order by " + criteria;
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, projectSearchID);
             ResultSet rs = ps.executeQuery();
@@ -131,12 +131,12 @@ public class PMTRepository {
     }
 
 
-    public List<Task> getTasksFromSubproject(int findSubprojectID) {
+    public List<Task> getTasksFromSubproject(int findSubprojectID, String criteria) {
 
         List<Task> taskList = new ArrayList();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM Tasks";
+            String SQL = "SELECT * FROM Tasks order by " + criteria;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 

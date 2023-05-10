@@ -32,10 +32,16 @@ public class PmtController {
         return "index";
     }
     @GetMapping("project/{projectID}")
-    public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
+    public String subProjectOverview(@PathVariable int projectID/*, @RequestParam(required = false) String criteria*/,  Model model, HttpSession session) {
 
         List<Task> tasks = pmtService.getAllTasks();
-        List<Subproject> subprojects = pmtService.getSubProjects(projectID);
+        List<Subproject> subprojects;
+
+     /*   if(criteria != null)
+            subprojects = pmtService.getSubProjects(projectID, criteria);
+        else*/
+            subprojects = pmtService.getSubProjects(projectID, "name");
+
         List<Project> projects = pmtService.getAllProjects();
         Project project = pmtService.getProjectFromID(projectID);
 
@@ -51,7 +57,9 @@ public class PmtController {
     //Denne metode viser projekter som de kommer fra databasen uden sortering, men hvis man vælger en sorteringsmulighed, så bliver den sorteret
     @GetMapping("allprojects")
     public String allProjects(@RequestParam(required = false) String criteria,  Model model, HttpSession session) {
+
         List<Project> projects;
+
         if(criteria != null)
          projects = pmtService.getAllProjectsByCriteria(criteria);
         else
@@ -115,7 +123,7 @@ public class PmtController {
 
 
     @GetMapping("subproject/{subprojectID}")
-    public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
+    public String getSubproject(@PathVariable int subprojectID, @RequestParam(required = false) String criteria, Model model, HttpSession session) {
         // List<Task> subprojectTasks = pmtService.getTasksFromSubproject(subprojectID);
 
         // Retrieving the subproject itself
@@ -125,7 +133,11 @@ public class PmtController {
         Project project = pmtService.getProjectFromID(subproject.getProjectID());
 
         // Retrieving all tasks from the specific Subprojects from the DB
-        List<Task> allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID);
+        List<Task> allTasksForSubproject;
+        if(criteria != null)
+            allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID, criteria);
+        else
+            allTasksForSubproject = pmtService.getTasksFromSubproject(subprojectID, "name");
 
         // Sort tasks into list for its status
         List<Task> todo = new ArrayList<Task>();

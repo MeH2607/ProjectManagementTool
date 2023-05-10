@@ -23,12 +23,12 @@ public class PMTService {
         pmtRepository.addTaskToDB(task);
     }
 
-    public List<Task> getTasksFromSubproject(int subprojectID) {
-        return pmtRepository.getTasksFromSubproject(subprojectID);
+    public List<Task> getTasksFromSubproject(int subprojectID, String criteria) {
+        return pmtRepository.getTasksFromSubproject(subprojectID, criteria);
     }
 
-    public List<Subproject> getSubProjects (int projectID) {
-        return pmtRepository.getSubProjects(projectID);
+    public List<Subproject> getSubProjects (int projectID, String criteria) {
+        return pmtRepository.getSubProjects(projectID, criteria);
     }
 
     public List<User> getAllUsers() {
@@ -61,7 +61,6 @@ public class PMTService {
     public void createProject(Project project) {
         pmtRepository.createProject(project);
     }
-
 
 
     public List<Project>getAllProjectsByCriteria(String criteria) {
