@@ -35,6 +35,7 @@ public class PMTRepository {
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
+                int id = rs.getInt("ID");
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 double allocatedTime = rs.getDouble("AllocatedTime");
@@ -42,7 +43,7 @@ public class PMTRepository {
                 String Deadline = rs.getString("Deadline");
                 int SubprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
-                taskList.add(new Task(name, description, allocatedTime, Deadline, SubprojectID, status));
+                taskList.add(new Task(id, name, description, allocatedTime, Deadline, SubprojectID, status));
             }
             return taskList;
         } catch (SQLException e) {

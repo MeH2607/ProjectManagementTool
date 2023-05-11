@@ -34,16 +34,50 @@ public class PmtController {
     @GetMapping("project/{projectID}")
     public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
 
-        List<Task> tasks = pmtService.getAllTasks();
+        List<Task> allTasks = pmtService.getAllTasks();
         List<Subproject> subprojects = pmtService.getSubProjects(projectID);
         List<Project> projects = pmtService.getAllProjects();
         Project project = pmtService.getProjectFromID(projectID);
 
 
-        model.addAttribute("tasks", tasks);
+        model.addAttribute("tasks", allTasks);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projects", projects);
         model.addAttribute("project", project);
+
+
+
+        // Sort allTasks into list for its status
+        List<Task> todo = new ArrayList<Task>();
+        List<Task> doing = new ArrayList<Task>();
+        List<Task> done = new ArrayList<Task>();
+
+        for (Task task : allTasks) {
+            System.out.println("This is the task id:" + task.getId());
+            switch (task.getStatus().toLowerCase()) {
+                case "todo": todo.add(task); break;
+                case "doing": doing.add(task); break;
+                case "done": done.add(task); break;
+            }
+        }
+
+        model.addAttribute("todo", todo);
+        model.addAttribute("doing", doing);
+        model.addAttribute("done", done);
+
+        // Predefinerer subproject ID ind i "create task"
+        Task task = new Task();
+        model.addAttribute("task", task);
+
+        List<User> allUsers = pmtService.getAllUsers();
+        model.addAttribute("all_users", allUsers);
+
+        model.addAttribute("project", project);
+
+        List<Task> list = pmtService.getAllTasks();
+        model.addAttribute("list", list);
+
+
 
         return "project";
     }
@@ -134,6 +168,7 @@ public class PmtController {
         List<Task> done = new ArrayList<Task>();
 
         for (Task task : allTasksForSubproject) {
+
             switch (task.getStatus().toLowerCase()) {
                 case "todo": todo.add(task); break;
                 case "doing": doing.add(task); break;
@@ -173,14 +208,14 @@ public class PmtController {
         return "redirect:/subproject/{subprojectID}";
     }
 
-    @PostMapping("subproject/{subprojectID}/moveTaskToDoing")
-    public String moveTaskToDoing(@RequestParam("taskId") int taskId, @PathVariable int subprojectID) {
+    @PostMapping("project/{projectID}/moveTaskToDoing")
+    public String moveTaskToDoing(@RequestParam("taskId") int taskId) {
         // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
 
         pmtService.moveTaskToDoing(taskId);
 
         // Redirect back to the task list page
-        return "redirect:/subproject/{subprojectID}"; // TODO ikke sikker på om virker endnu
+        return "redirect:/project/{projectID}";
     }
 
     @PostMapping("project/{projectID}/moveTaskToTodo")
