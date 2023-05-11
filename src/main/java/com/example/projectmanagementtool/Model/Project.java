@@ -1,7 +1,5 @@
 package com.example.projectmanagementtool.Model;
 
-import com.example.projectmanagementtool.Repository.PMTRepository;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,14 +83,14 @@ public class Project implements Component{
     }
 
     @Override
-    public double getAllocatedTime() {
-        PMTRepository pmtRepository = new PMTRepository();
+    public int getAllocatedTime() {
+       /* PMTRepository pmtRepository = new PMTRepository();
         List<Subproject> subprojects = pmtRepository.getAllSubprojects();
         for (Subproject subproject : subprojects) {
             if (subproject.getProjectID() == this.id) {
                 allocatedTime += subproject.getAllocatedTime();
             }
-        }
+        }*/
         return allocatedTime;
     }
 

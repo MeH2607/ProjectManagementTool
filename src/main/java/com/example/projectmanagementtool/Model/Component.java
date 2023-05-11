@@ -7,7 +7,7 @@ public interface Component {
     public String getName();
     public String getDescription();
     public User getOwner();
-    public double getAllocatedTime(); // Total allocated time per task/subproject/project (not 'time remaining')
+    public int getAllocatedTime(); // Total allocated time per task/subproject/project (not 'time remaining')
     public LocalDate getDeadline();
 
 }

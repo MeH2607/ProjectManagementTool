@@ -1,7 +1,5 @@
 package com.example.projectmanagementtool.Model;
 
-import com.example.projectmanagementtool.Repository.PMTRepository;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +9,10 @@ public class Subproject implements Component{
     private String name;
     private String description;
     private int ownerID;
-    private double allocatedTime;
+    private int allocatedTime;
     private LocalDate deadline;
 
-    public Subproject(int id, String name, String description, double allocatedTime, int ownerID, String deadline, int subprojectID) {
+    public Subproject(int id, String name, String description, int allocatedTime, int ownerID, String deadline, int subprojectID) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -48,7 +46,7 @@ public class Subproject implements Component{
         this.ownerID = ownerID;
     }
 
-    public void setAllocatedTime(double allocatedTime) {
+    public void setAllocatedTime(int allocatedTime) {
         this.allocatedTime = allocatedTime;
     }
 
@@ -93,14 +91,14 @@ public class Subproject implements Component{
     }
 
     @Override
-    public double getAllocatedTime() {
-        PMTRepository pmtRepository = new PMTRepository();
+    public int getAllocatedTime() {
+     /*   PMTRepository pmtRepository = new PMTRepository();
         List<Task> tasks = pmtRepository.getAllTasks();
         for (Task task : tasks) {
             if (task.getSubprojectID() == this.id) {
                 allocatedTime += task.getAllocatedTime();
             }
-        }
+        }*/
         return allocatedTime;
     }
 
