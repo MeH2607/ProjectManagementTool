@@ -53,7 +53,6 @@ public class PmtController {
         List<Task> done = new ArrayList<Task>();
 
         for (Task task : allTasks) {
-            System.out.println("This is the task id:" + task.getId());
             switch (task.getStatus().toLowerCase()) {
                 case "todo": todo.add(task); break;
                 case "doing": doing.add(task); break;
@@ -197,15 +196,15 @@ public class PmtController {
         return "subproject";
     }
 
-    @PostMapping("subproject/{subprojectID}/create_task")
-    public String addTaskToDB(@ModelAttribute("task") Task task, @PathVariable int subprojectID) throws pmtException {
+    @PostMapping("project/{projectID}/create_task")
+    public String addTaskToDB(@ModelAttribute("task") Task task) throws pmtException {
 
         System.out.println("Task subproject ID after creating task: " + task.getSubprojectID());
 
         task.setOwner(pmtService.getUserFromID(task.getOwnerID()));
 
         pmtService.addTaskToDB(task);
-        return "redirect:/subproject/{subprojectID}";
+        return "redirect:/project/{projectID}";
     }
 
     @PostMapping("project/{projectID}/moveTaskToDoing")

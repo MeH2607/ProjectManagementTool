@@ -60,6 +60,46 @@
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
                 -->
 
+                <div class="row">
+                    <div class="card-body">
+                        <form style="text-align: center;" action="#" th:action="@{${project.id} + '/create_task'}" method="post" th:object="${task}">
+                            <div style="width: 50%; color: white">
+
+                                <div>
+                                    <label>Task name</label>
+                                    <input type="text" name="name" placeholder="Name" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Description</label>
+                                    <input type="text" name="description" placeholder="Description" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Allocated Time</label>
+                                    <input type="number" name="allocatedTime" placeholder="AllocatedTime" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Deadline</label>
+                                    <input type="date" name="deadline" placeholder="deadline" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Owner</label>
+                                    <select name="ownerID" required>
+                                        <option value="" disabled selected>Select owner</option>
+                                        <option th:each="user : ${all_users}" th:value="${user.id}" th:text="${user.name}"></option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>ID</label>
+                                    <input type="hidden" name="subprojectID" th:value="${subproject.id}" style="width: 100%;" required>
+                                </div>
+
+                                <button type="submit">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
 
     <!-- TO DO TASKS -->
     <div class="row">
