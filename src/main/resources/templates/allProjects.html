@@ -42,7 +42,7 @@
                 <header style="background: rgb(227, 226, 226); text-align: center; height: 150px;">
                     <h3 th:text="${project.name}"></h3>
 
-                    <progress th:value="${project.remainingTime}" th:max="${project.allocatedTime}"></progress>
+                    <progress th:value="${project.timeSpent}" th:max="${project.allocatedTime}"></progress>
 
                 </header>
                 <div style="height: 290px;">
@@ -55,7 +55,7 @@
                         </tr>
                         <tr>
                             <td>Allocated time (hours):</td>
-                            <td><span th:text="${project.remainingTime} +' / '+ ${project.allocatedTime}"></span></td>
+                            <td><span th:text="${project.timeSpent} +' / '+ ${project.allocatedTime}"></span></td>
                         </tr>
                         <tr>
                             <td>Deadline:</td>

@@ -9,16 +9,17 @@ public class Subproject implements Component{
     private String name;
     private String description;
     private User owner;
-    private int ownerID;
     private int allocatedTime;
+    private int timeSpent;
     private LocalDate deadline;
 
-    public Subproject(int id, String name, String description, int allocatedTime, int ownerID, String deadline, int subprojectID) {
+    public Subproject(int id, String name, String description,  User owner, String deadline, int subprojectID) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.allocatedTime = allocatedTime;
-        this.ownerID = ownerID;
+        this.allocatedTime = 0;
+        this.timeSpent = 0;
+        this.owner = owner;
         this.deadline = LocalDate.parse(deadline);
         this.projectID = subprojectID;
     }
@@ -43,13 +44,6 @@ public class Subproject implements Component{
         this.description = description;
     }
 
-    public int getOwnerID() {
-        return ownerID;
-    }
-
-    public void setOwnerID(int ownerID) {
-        this.ownerID = ownerID;
-    }
 
     public void setAllocatedTime(int allocatedTime) {
         this.allocatedTime = allocatedTime;
@@ -97,14 +91,15 @@ public class Subproject implements Component{
 
     @Override
     public int getAllocatedTime() {
-     /*   PMTRepository pmtRepository = new PMTRepository();
-        List<Task> tasks = pmtRepository.getAllTasks();
-        for (Task task : tasks) {
-            if (task.getSubprojectID() == this.id) {
-                allocatedTime += task.getAllocatedTime();
-            }
-        }*/
         return allocatedTime;
+    }
+
+    public int getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(int timeSpent) {
+        this.timeSpent = timeSpent;
     }
 
     @Override
@@ -118,7 +113,7 @@ public class Subproject implements Component{
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", allocatedTime=" + allocatedTime +
-                ", ownerID=" + ownerID +
+                ", Owner=" + owner.getName() +
                 ", deadline='" + deadline + '\'' +
                 ", projectID=" + projectID + id +
 

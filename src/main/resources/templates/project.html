@@ -30,11 +30,13 @@
                 </li>
             </ol>
         </nav>
+
         <h1 style="color: white; text-align: center" th:text="${project.name} "></h1>
         <div class="grid">
             <article th:each="subproject : ${subprojects}">
                 <header style="background: rgb(227,226,226); text-align: center ">
                     <h2 th:text="${subproject.name}"></h2>
+                    <progress th:value="${project.timeSpent}" th:max="${project.allocatedTime}"></progress>
                 </header>
                 <div>
                     <p class="card-text" th:text="${subproject.description}"></p><br>
@@ -47,7 +49,7 @@
                     </tr>
                     <tr>
                         <td>Allocated time:</td>
-                        <td><span th:text="${subproject.allocatedTime}"></span></td>
+                        <td><span th:text="${subproject.timeSpent} + ' / '+ ${subproject.allocatedTime}"></span></td>
                     </tr>
                     <tr>
                         <td>Deadline:</td>
