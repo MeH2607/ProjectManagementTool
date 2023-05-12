@@ -28,6 +28,8 @@ public class Subproject implements Component{
         this.owner = owner;
     }
 
+
+
     public int getId() {
         return id;
     }
@@ -86,7 +88,7 @@ public class Subproject implements Component{
     }
 
     public User getOwner() {
-        return null;
+        return owner;
     }
 
     @Override

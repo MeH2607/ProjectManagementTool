@@ -19,8 +19,8 @@ public class PMTService {
         pmtRepository = (PMTRepository) context.getBean(impl);
     }
 
-    public void addTaskToDB(Task task) throws pmtException{
-        pmtRepository.addTaskToDB(task);
+    public void addTaskToDB(Task task, int ownerID) throws pmtException{
+        pmtRepository.addTaskToDB(task, ownerID);
     }
 
     public List<Task> getTasksFromSubproject(int subprojectID) {
@@ -56,10 +56,6 @@ public class PMTService {
 
     public void createUser(User user) {
         pmtRepository.createUser(user);
-    }
-
-    public void createProject(Project project) {
-        pmtRepository.createProject(project);
     }
 
     public void createProject(Project project, int ownerID) {
