@@ -12,24 +12,13 @@ public class Task implements Component{
     private int allocatedTime;
     private int subprojectID;
     private String status;
-    private int ownerID;
 
-    public Task(String name, String description, int allocatedTime, String deadline, int subprojectID, String status) {
-        this.name = name;
-        this.description = description;
-        this.allocatedTime = allocatedTime;
-        this.owner = new User();
-        this.deadline = LocalDate.parse(deadline);
-        this.subprojectID = subprojectID;
-        this.status = status;
-    }
-
-    public Task(int id, String name, String description, int allocatedTime, String deadline, int subprojectID, String status) {
+    public Task(int id, String name, String description, int allocatedTime, User owner, String deadline, int subprojectID, String status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
-        this.owner = new User();
+        this.owner = owner;
         this.deadline = LocalDate.parse(deadline);
         this.subprojectID = subprojectID;
         this.status = status;
@@ -50,14 +39,6 @@ public class Task implements Component{
 
     public int getId() {
         return id;
-    }
-
-    public int getOwnerID(){
-        return ownerID;
-    }
-
-    public void setOwnerID(int ownerID) {
-        this.ownerID = ownerID;
     }
 
     public String getStatus() {
