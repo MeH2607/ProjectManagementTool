@@ -36,7 +36,7 @@
             <article th:each="subproject : ${subprojects}">
                 <header style="background: rgb(227,226,226); text-align: center ">
                     <h2 th:text="${subproject.name}"></h2>
-                    <progress th:value="${project.timeSpent}" th:max="${project.allocatedTime}"></progress>
+                    <progress th:value="${subproject.timeSpent}" th:max="${subproject.allocatedTime}"></progress>
                 </header>
                 <div>
                     <p class="card-text" th:text="${subproject.description}"></p><br>
