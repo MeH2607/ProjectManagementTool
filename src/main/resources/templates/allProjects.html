@@ -44,6 +44,9 @@
             <article th:each="project : ${projects}">
                 <header style="background: rgb(227, 226, 226); text-align: center; height: 150px;">
                     <h3 th:text="${project.name}"></h3>
+
+                    <progress th:value="${project.remainingTime}" th:max="${project.allocatedTime}"></progress>
+
                 </header>
                 <div style="height: 290px;">
                     <p class="card-text" th:text="${project.description}"></p><br>
