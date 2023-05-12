@@ -43,6 +43,17 @@ public class Project implements Component{
         this.subprojectList = new ArrayList<Subproject>();
     }
 
+    public Project(int id, String name, String description, int allocatedTime, String deadline, User owner) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.allocatedTime = allocatedTime;
+        this.owner = new User();
+        this.deadline = LocalDate.parse(deadline);
+        this.owner = owner;
+        this.subprojectList = new ArrayList<Subproject>();
+    }
+
     public void addSubproject(Subproject newSubproject) {
         subprojectList.add(newSubproject);
     }

@@ -233,6 +233,25 @@ public class PMTRepository {
         }
     }
 
+    public void createProject(Project project, int ownerID){
+
+        project.setSubprojectList(new ArrayList<>());
+        try{
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "Insert into projects(name,Description,AllocatedTime,OwnerID,Deadline) values (?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, project.getName());
+            ps.setString(2, project.getDescription());
+            ps.setDouble(3, 0);
+            ps.setInt(4, ownerID);
+            ps.setString(5, project.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
+
     public Project getProjectFromID(int projectID) {
         try {
             Connection conn = ConnectionManager.getConnection();
@@ -298,9 +317,10 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                int OwnerID = rs.getInt("OwnerID");
+                User owner = getUserFromID(rs.getInt("OwnerID"));
+                System.out.println(owner.getName());
                 String Deadline = rs.getString("Deadline");
-                projectList.add(new Project(id, name, description, allocatedTime, OwnerID, Deadline));
+                projectList.add(new Project(id, name, description, allocatedTime, Deadline, owner));
             }
             return projectList;
         } catch (SQLException e) {
@@ -322,7 +342,7 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                int OwnerID = rs.getInt("OwnerID");
+                User owner = getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
                 Project project = new Project(id, name, description, allocatedTime, OwnerID, Deadline);
                 calculateTimeSpentAndAllocatedTime(project);

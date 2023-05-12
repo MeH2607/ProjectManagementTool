@@ -89,31 +89,25 @@
 
 <!-- Create new task -->
     <div class="row">
-
         <div class="card-body">
             <form style="text-align: center;" action="#" th:action="@{${subprojectID} + '/create_task'}" method="post" th:object="${task}">
-
                 <div style="width: 50%; color: white">
                     <div>
                         <label>Task name</label>
                         <input type="text" name="name" placeholder="Name" style="width: 100%;" required>
                     </div>
-
                     <div>
                         <label>Description</label>
                         <input type="text" name="description" placeholder="Description" style="width: 100%;" required>
                     </div>
-
                     <div>
                         <label>Allocated Time</label>
                         <input type="number" name="allocatedTime" placeholder="AllocatedTime" style="width: 100%;" required>
                     </div>
-
                     <div>
                         <label>Deadline</label>
                         <input type="date" name="deadline" placeholder="deadline" style="width: 100%;" required>
                     </div>
-
                     <div>
                         <label>Owner</label>
                         <select name="ownerID" required>
@@ -147,7 +141,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">[[${task.name}]]</h5>
                                     <p class="card-text">[[${task.description}]]</p>
-                                    <p class="card-text">[[${task.owner}]]</p>
+                                    <p class="card-text">[[${task.owner.name}]]</p>
                                     <p class="card-text">[[${task.allocatedTime}]]</p>
                                     <p class="card-text">[[${task.deadline}]]</p>
                                 </div>

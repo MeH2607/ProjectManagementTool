@@ -9,6 +9,21 @@ body {
     line-height: 1;
 }
 
+.row {
+    align-content: center;
+}
+
+.status-column {
+    background-color: rgba(252, 251, 251, 0.81);
+    width: 400px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .container {
     max-width: 100%; /* Change this value to adjust the width */
     padding: 20px;

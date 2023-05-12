@@ -8,6 +8,7 @@ public class Subproject implements Component{
     private int id;
     private String name;
     private String description;
+    private User owner;
     private int ownerID;
     private int allocatedTime;
     private LocalDate deadline;
@@ -20,6 +21,10 @@ public class Subproject implements Component{
         this.ownerID = ownerID;
         this.deadline = LocalDate.parse(deadline);
         this.projectID = subprojectID;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public int getId() {
