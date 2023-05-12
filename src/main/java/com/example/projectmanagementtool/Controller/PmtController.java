@@ -97,7 +97,20 @@ public class PmtController {
         model.addAttribute("sortCriterias", sortCriterias);
         model.addAttribute("criteria", criteria);
 
+        List<User> allUsers = pmtService.getAllUsers();
+        model.addAttribute("all_users", allUsers);
+
         return "allProjects";
+    }
+    @PostMapping("allprojects")
+    public String addProjectToDB(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID) throws pmtException {
+
+        System.out.println("Owner ID for new project is " + ownerID);
+
+        pmtService.createProject(project, ownerID);
+
+        System.out.println("Project " + project.getName() + "with owner " + pmtService.getUserFromID(ownerID).getName() + " has been created");
+        return "redirect:/allprojects";
     }
 
 
@@ -206,6 +219,7 @@ public class PmtController {
 
         return "redirect:/project/{projectID}";
     }
+
 
     @PostMapping("project/{projectID}/moveTaskToDoing")
     public String moveTaskToDoing(@RequestParam("taskId") int taskId) {
