@@ -9,12 +9,12 @@ public class Task implements Component{
     private String description;
     private User owner;
     private LocalDate deadline;
-    private double allocatedTime;
+    private int allocatedTime;
     private int subprojectID;
     private String status;
     private int ownerID;
 
-    public Task(String name, String description, double allocatedTime, String deadline, int subprojectID, String status) {
+    public Task(String name, String description, int allocatedTime, String deadline, int subprojectID, String status) {
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
@@ -24,7 +24,7 @@ public class Task implements Component{
         this.status = status;
     }
 
-    public Task(int id, String name, String description, double allocatedTime, String deadline, int subprojectID, String status) {
+    public Task(int id, String name, String description, int allocatedTime, String deadline, int subprojectID, String status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -73,7 +73,7 @@ public class Task implements Component{
     }
 
     @Override
-    public double getAllocatedTime() {
+    public int getAllocatedTime() {
         return allocatedTime;
     }
 
@@ -113,7 +113,7 @@ public class Task implements Component{
         this.deadline = deadline;
     }
 
-    public void setAllocatedTime(double allocatedTime) {
+    public void setAllocatedTime(int allocatedTime) {
         this.allocatedTime = allocatedTime;
     }
 
