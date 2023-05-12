@@ -13,12 +13,12 @@ public class Subproject implements Component{
     private int allocatedTime;
     private LocalDate deadline;
 
-    public Subproject(int id, String name, String description, int allocatedTime, int ownerID, String deadline, int subprojectID) {
+    public Subproject(int id, String name, String description, int allocatedTime, User owner, String deadline, int subprojectID) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
-        this.ownerID = ownerID;
+        this.owner = owner;
         this.deadline = LocalDate.parse(deadline);
         this.projectID = subprojectID;
     }
@@ -26,6 +26,8 @@ public class Subproject implements Component{
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+
 
     public int getId() {
         return id;
@@ -92,7 +94,7 @@ public class Subproject implements Component{
     }
 
     public User getOwner() {
-        return null;
+        return owner;
     }
 
     @Override

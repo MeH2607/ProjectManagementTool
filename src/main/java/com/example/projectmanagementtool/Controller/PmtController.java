@@ -32,7 +32,7 @@ public class PmtController {
         return "index";
     }
     @GetMapping("project/{projectID}")
-    public String subProjectOvervisew(@PathVariable int projectID,  Model model, HttpSession session) {
+    public String subProjectOverview(@PathVariable int projectID,  Model model, HttpSession session) {
 
         List<Task> allTasks = pmtService.getAllTasks();
         List<Subproject> subprojects = pmtService.getSubProjects(projectID);
@@ -139,8 +139,6 @@ public class PmtController {
     @PostMapping("createProject")
     public String createProjectSuccess(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID){
 
-        // project.setOwner(pmtService.getUserFromID(project.getOwnerID()));
-
         pmtService.createProject(project, ownerID);
         System.out.println(project.getName() + " has been created");
 
@@ -197,13 +195,15 @@ public class PmtController {
     }
 
     @PostMapping("project/{projectID}/create_task")
-    public String addTaskToDB(@ModelAttribute("task") Task task) throws pmtException {
+    public String addTaskToDB(@ModelAttribute("task") Task task, @RequestParam("ownerID") int ownerID) throws pmtException {
 
-        System.out.println("Task subproject ID after creating task: " + task.getSubprojectID());
+        System.out.println("Owner ID for new task is " + ownerID);
 
-        task.setOwner(pmtService.getUserFromID(task.getOwnerID()));
+        pmtService.addTaskToDB(task, ownerID);
 
-        pmtService.addTaskToDB(task);
+        System.out.println("Task " + task.getName() + "with assignee " + pmtService.getUserFromID(ownerID).getName() + " has been created");
+
+
         return "redirect:/project/{projectID}";
     }
 
