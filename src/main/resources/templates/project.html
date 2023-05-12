@@ -30,7 +30,6 @@
                 </li>
             </ol>
         </nav>
-
         <h1 style="color: white; text-align: center" th:text="${project.name} "></h1>
         <div class="grid">
             <article th:each="subproject : ${subprojects}">
@@ -49,9 +48,8 @@
                 <table class="table table-striped" style="width: 70%">
                     <tbody>
                     <tr>
-                        <td>Owner:</td>
-                        <td><span th:text="${subproject.owner}"></span></td>
-                        <!-- Det er denne som skal laves / fixes -->
+                        <td>Project Manager:</td>
+                        <td><span th:text="${subproject.owner.name}"></span></td> <!-- Det er denne som skal laves / fixes -->
                     </tr>
                     <tr>
                         <td>Allocated time:</td>
@@ -82,46 +80,43 @@
                                       th:action="@{${project.id} + '/create_task'}" method="post" th:object="${task}">
                                     <div style="color: white">
 
-                                        <div>
-                                            <label>Task name</label>
-                                            <input type="text" name="name" placeholder="Name" style="width: 100%;"
-                                                   required>
-                                        </div>
-                                        <div>
-                                            <label>Description</label>
-                                            <input type="text" name="description" placeholder="Description"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div>
-                                            <label>Allocated Time</label>
-                                            <input type="number" name="allocatedTime" placeholder="AllocatedTime"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div>
-                                            <label>Deadline</label>
-                                            <input type="date" name="deadline" placeholder="deadline"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div>
-                                            <label>Owner</label>
-                                            <select name="ownerID" required>
-                                                <option value="" disabled selected>Select owner</option>
-                                                <option th:each="user : ${all_users}" th:value="${user.id}"
-                                                        th:text="${user.name}"></option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label>ID</label>
-                                            <input type="hidden" name="subprojectID" th:value="${subproject.id}"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                                Cancel
-                                            </button>
-                                            <button type="submit" class="btn btn-success">Create task</button>
-                                        </div>
-                                    </div>
+                                <div>
+                                    <label>Task name</label>
+                                    <input type="text" name="name" placeholder="Name" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Description</label>
+                                    <input type="text" name="description" placeholder="Description" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Allocated Time</label>
+                                    <input type="number" name="allocatedTime" placeholder="AllocatedTime" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Deadline</label>
+                                    <input type="date" name="deadline" placeholder="deadline" style="width: 100%;" required>
+                                </div>
+                                <div>
+                                    <label>Assignee</label>
+                                    <select name="ownerID" required>
+                                        <option value="" disabled selected>Select Assignee</option>
+                                        <option th:each="user : ${all_users}" th:value="${user.id}" th:text="${user.name}">
+
+                                            <input type="hidden" th:name="ownerID" th:value="${user.id}" />
+
+                                        </option>
+
+
+
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>ID</label>
+                                    <input type="hidden" name="subprojectID" th:value="${subproject.id}" style="width: 100%;" required>
+                                </div>
+
+                                <button type="submit">Submit</button>
+                            </div>
 
                                 </form>
                             </div>
@@ -146,19 +141,15 @@
                                         <details closed
                                                  th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
 
-                                            <summary th:text="${task.name}" class="task-title"></summary>
-                                            <p class="task-description" th:text="${task.description}"></p>
-                                            <ul class="task-details">
-                                                <p><span class="detail-text"
-                                                         th:text="${'Allocated time: ' + task.allocatedTime}"></span>
-                                                </p>
-                                                <p><span class="detail-text"
-                                                         th:text="${'Deadline: ' + task.deadline}"></span></p>
-                                                <p><span class="detail-text" th:text="${'Owner: ' + task.owner}"></span>
-                                                </p>
-                                                <p><span class="detail-text" th:text="${'task id' + task.id}"></span>
-                                                </p>
-                                            </ul>
+                                <summary th:text="${task.name}" class="task-title"></summary>
+                                <p class="task-description" th:text="${task.description}"></p>
+                                <ul class="task-details">
+                                    <p><span class="detail-text"
+                                             th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                    <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
+                                    <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
+                                    <!-- <p><span class="detail-text" th:text="${'task id' + task.id}" ></span></p> -->
+                                </ul>
 
                                             <!-- move -->
                                             <div class="card-body">
@@ -200,21 +191,15 @@
                                             <details closed
                                                      th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
 
-                                                <summary th:text="${task.name}" class="task-title"></summary>
-                                                <p class="task-description" th:text="${task.description}"></p>
-                                                <ul class="task-details">
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Allocated time: ' + task.allocatedTime}"></span>
-                                                    </p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Deadline: ' + task.deadline}"></span></p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Owner: ' + task.owner}"></span>
-                                                    </p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'task id' + task.id}"></span>
-                                                    </p>
-                                                </ul>
+                            <summary th:text="${task.name}" class="task-title"></summary>
+                            <p class="task-description" th:text="${task.description}"></p>
+                            <ul class="task-details">
+                                <p><span class="detail-text"
+                                         th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
+                                <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
+                                <!-- <p><span class="detail-text" th:text="${'task id' + task.id}" ></span></p> -->
+                            </ul>
 
                                                 <!-- move -->
                                                 <div class="card-body">
@@ -272,21 +257,15 @@
                                             <details closed
                                                      th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
 
-                                                <summary th:text="${task.name}" class="task-title"></summary>
-                                                <p class="task-description" th:text="${task.description}"></p>
-                                                <ul class="task-details">
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Allocated time: ' + task.allocatedTime}"></span>
-                                                    </p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Deadline: ' + task.deadline}"></span></p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Owner: ' + task.owner}"></span>
-                                                    </p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'task id' + task.id}"></span>
-                                                    </p>
-                                                </ul>
+                            <summary th:text="${task.name}" class="task-title"></summary>
+                            <p class="task-description" th:text="${task.description}"></p>
+                            <ul class="task-details">
+                                <p><span class="detail-text"
+                                         th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
+                                <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
+                                <!-- <p><span class="detail-text" th:text="${'task id' + task.id}" ></span></p>-->
+                            </ul>
 
                                                 <!-- move -->
                                                 <div class="card-body">
