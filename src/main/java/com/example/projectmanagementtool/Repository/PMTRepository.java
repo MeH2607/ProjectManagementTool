@@ -265,9 +265,9 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                int OwnerID = rs.getInt("OwnerID");
+                User owner = getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
-                return new Project(id, name, description, OwnerID, allocatedTime, Deadline);
+                return new Project(id, name, description, allocatedTime,owner, Deadline);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
@@ -344,7 +344,7 @@ public class PMTRepository {
                 int allocatedTime = rs.getInt("AllocatedTime");
                 User owner = getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
-                Project project = new Project(id, name, description, allocatedTime, OwnerID, Deadline);
+                Project project = new Project(id, name, description, allocatedTime, owner, Deadline);
                 calculateTimeSpentAndAllocatedTime(project);
                 projectList.add(project);
             }

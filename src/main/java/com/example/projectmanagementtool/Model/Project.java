@@ -23,12 +23,12 @@ public class Project implements Component{
         this.remainingTime = 0;
     }
 
-    public Project(int id, String name, String description, int allocatedTime, int ownerID, String deadline) {
+    public Project(int id, String name, String description, int allocatedTime, User owner, String deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.allocatedTime = allocatedTime;
-        this.owner = new User();
+        this.owner = owner;
         this.deadline = LocalDate.parse(deadline);
         this.subprojectList = new ArrayList<Subproject>();
         this.remainingTime = 0;
