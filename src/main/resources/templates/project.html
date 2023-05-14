@@ -31,7 +31,18 @@
             </ol>
         </nav>
 
+        <!-- sort button -->
+        <form action="#" th:action="${project.id}" method="get" th:object="${criteria}">
+            <select name="criteria" style="margin-left: 10px">
+                <option value="Sort by" disabled selected></option>
+                <option th:each="criteria : ${sortCriterias}" th:value="${criteria}" th:text="${criteria}" ></option>
+            </select>
+            <button type="submit">Sort</button>
+        </form>
+
+        <!-- Project Name headline -->
         <h1 style="color: white; text-align: center" th:text="${project.name} "></h1>
+
         <div class="grid">
             <article th:each="subproject : ${subprojects}">
                 <header style="background: rgb(227,226,226); text-align: center ">
