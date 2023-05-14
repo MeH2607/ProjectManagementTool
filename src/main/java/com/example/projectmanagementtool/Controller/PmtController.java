@@ -26,25 +26,30 @@ public class PmtController {
 
     @GetMapping("")
     public String index(Model model, HttpSession session) {
-        List<Project> projects = pmtService.getAllProjects();
+        List<Project> projects = pmtService.getAllProjectsByCriteria("name");
         model.addAttribute("projects", projects);
 
         return "index";
     }
+
     @GetMapping("project/{projectID}")
-    public String subProjectOverview(@PathVariable int projectID,  Model model, HttpSession session) {
+    public String subProjectOverview(@PathVariable int projectID, @RequestParam(required = false) String criteria, Model model, HttpSession session) {
 
         List<Task> allTasks = pmtService.getAllTasks();
-        List<Subproject> subprojects = pmtService.getSubProjects(projectID);
-        List<Project> projects = pmtService.getAllProjects();
+
+        List<Subproject> subprojects = (criteria != null) ? pmtService.getSubProjects(projectID, criteria) : pmtService.getSubProjects(projectID, "name");
+
+        List<Project> projects = pmtService.getAllProjectsByCriteria("name");
         Project project = pmtService.getProjectFromID(projectID);
 
+        List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline")); //Tilføjer sorterings kriterier som en liste
+        model.addAttribute("sortCriterias", sortCriterias);
+        model.addAttribute("criteria", criteria);
 
         model.addAttribute("tasks", allTasks);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projects", projects);
         model.addAttribute("project", project);
-
 
 
         // Sort allTasks into list for its status
@@ -54,9 +59,15 @@ public class PmtController {
 
         for (Task task : allTasks) {
             switch (task.getStatus().toLowerCase()) {
-                case "todo": todo.add(task); break;
-                case "doing": doing.add(task); break;
-                case "done": done.add(task); break;
+                case "todo":
+                    todo.add(task);
+                    break;
+                case "doing":
+                    doing.add(task);
+                    break;
+                case "done":
+                    done.add(task);
+                    break;
             }
         }
 
@@ -77,18 +88,13 @@ public class PmtController {
         model.addAttribute("list", list);
 
 
-
         return "project";
     }
 
     //Denne metode viser projekter som de kommer fra databasen uden sortering, men hvis man vælger en sorteringsmulighed, så bliver den sorteret
     @GetMapping("allprojects")
-    public String allProjects(@RequestParam(required = false) String criteria,  Model model, HttpSession session) {
-        List<Project> projects;
-        if(criteria != null)
-         projects = pmtService.getAllProjectsByCriteria(criteria);
-        else
-            projects = pmtService.getAllProjectsByCriteria("name");
+    public String allProjects(@RequestParam(required = false) String criteria, Model model, HttpSession session) {
+        List<Project> projects = (criteria != null) ? pmtService.getAllProjectsByCriteria(criteria) : pmtService.getAllProjectsByCriteria("name");
 
         model.addAttribute("projects", projects);
 
@@ -102,25 +108,25 @@ public class PmtController {
 
 
     @GetMapping("createUser")
-    public String createUser(Model model){
+    public String createUser(Model model) {
 
-        model.addAttribute("user",new User());
+        model.addAttribute("user", new User());
 
-        List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
+        List<String> roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
         model.addAttribute("roles", roles);
 
         return "createUserForm";
     }
 
     @PostMapping("createUser")
-    public String createUserSuccess(@ModelAttribute("user") User user){
+    public String createUserSuccess(@ModelAttribute("user") User user) {
         pmtService.createUser(user);
         System.out.println(user.getName() + " has been created");
         return "redirect:/";
     }
 
     @GetMapping("createProject")
-    public String createProject(Model model){
+    public String createProject(Model model) {
 
         Project project = new Project();
 
@@ -137,7 +143,7 @@ public class PmtController {
     }
 
     @PostMapping("createProject")
-    public String createProjectSuccess(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID){
+    public String createProjectSuccess(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID) {
 
         pmtService.createProject(project, ownerID);
         System.out.println(project.getName() + " has been created");
@@ -167,9 +173,15 @@ public class PmtController {
         for (Task task : allTasksForSubproject) {
 
             switch (task.getStatus().toLowerCase()) {
-                case "todo": todo.add(task); break;
-                case "doing": doing.add(task); break;
-                case "done": done.add(task); break;
+                case "todo":
+                    todo.add(task);
+                    break;
+                case "doing":
+                    doing.add(task);
+                    break;
+                case "done":
+                    done.add(task);
+                    break;
             }
         }
 

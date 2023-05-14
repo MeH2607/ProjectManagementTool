@@ -27,8 +27,8 @@ public class PMTService {
         return pmtRepository.getTasksFromSubproject(subprojectID);
     }
 
-    public List<Subproject> getSubProjects (int projectID) {
-        return pmtRepository.getSubProjects(projectID);
+    public List<Subproject> getSubProjects (int projectID, String criteria) {
+        return pmtRepository.getSubProjects(projectID, criteria);
     }
 
     public List<User> getAllUsers() {
@@ -48,10 +48,6 @@ public class PMTService {
     }
     public Subproject getSubProject(int subprojectID) {
         return pmtRepository.getSubproject(subprojectID);
-    }
-
-    public List<Project> getAllProjects() {
-        return pmtRepository.getAllProjects();
     }
 
     public void createUser(User user) {

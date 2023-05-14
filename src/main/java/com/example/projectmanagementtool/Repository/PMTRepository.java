@@ -52,11 +52,11 @@ public class PMTRepository {
     }
 
     // Fetches all subprojects from the database for a specific project
-    public List<Subproject> getSubProjects(int projectSearchID) {
+    public List<Subproject> getSubProjects(int projectSearchID, String criteria) {
         List<Subproject> subprojectList = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ProjectID = ?";
+            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ProjectID = ? order by " + criteria;
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, projectSearchID);
             ResultSet rs = ps.executeQuery();
@@ -72,7 +72,6 @@ public class PMTRepository {
                 subproject = new Subproject(id, name, description, owner, deadline, projectID);
                 calculateTimeSpentAndAllocatedTimeForSubProjects(subproject);
                 subprojectList.add(subproject);
-
             }
 
         } catch (SQLException e) {
@@ -317,31 +316,6 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
         }
     }
 
-    public List<Project> getAllProjects() {
-        List<Project> projectList = new ArrayList();
-        try {
-            Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.projects";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL);
-
-            while (rs.next()) {
-                int id = rs.getInt("ID");
-                String name = rs.getString("Name");
-                String description = rs.getString("Description");
-                int allocatedTime = rs.getInt("AllocatedTime");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
-                System.out.println(owner.getName());
-                String Deadline = rs.getString("Deadline");
-                projectList.add(new Project(id, name, description, allocatedTime, Deadline, owner));
-            }
-            return projectList;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
-    }
-
-
     public List<Project> getAllProjectsByCriteria(String criteria) {
         List<Project> projectList = new ArrayList();
         try {
@@ -367,6 +341,7 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
         }
     }
 
+    //TODO check denne her
     public List<Subproject> getAllSubprojects() {
         List<Subproject> subprojectList = new ArrayList();
         try {
