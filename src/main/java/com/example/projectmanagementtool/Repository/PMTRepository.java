@@ -30,7 +30,7 @@ public class PMTRepository {
         List<Task> taskList = new ArrayList();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM Tasks";
+            String SQL = "SELECT * FROM Tasks order by name";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 
@@ -56,7 +56,8 @@ public class PMTRepository {
         List<Subproject> subprojectList = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.subprojects WHERE ProjectID = ? order by " + criteria;
+            // "users.name as owner" lader os sortere efter projekt owners navn
+            String SQL = "SELECT subprojects.*, users.name as owner FROM pmt_db.subprojects join users on users.id = subprojects.OwnerID  where ProjectID = ? order by " + criteria;
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, projectSearchID);
             ResultSet rs = ps.executeQuery();
@@ -320,7 +321,8 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
         List<Project> projectList = new ArrayList();
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.projects order by " + criteria;
+            // "users.name as owner" lader os sortere efter projekt owners navn
+            String SQL = "SELECT projects.*, users.name as owner FROM pmt_db.projects join users on users.id = projects.OwnerID order by " + criteria;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 
