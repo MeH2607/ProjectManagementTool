@@ -246,9 +246,8 @@ public class PmtController {
         pmtService.moveTaskToDone(taskId);
 
         // Redirect back to the task list page
-        return "redirect:/project/{projectID}"; // TODO ikke sikker på om virker endnu
+        return "redirect:/project/{projectID}";
     }
-
 }
 
 

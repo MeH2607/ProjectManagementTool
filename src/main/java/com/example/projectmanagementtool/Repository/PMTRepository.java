@@ -226,7 +226,7 @@ public class PMTRepository {
             ps.setString(2, project.getDescription());
             ps.setDouble(3, 0);
             ps.setInt(4, ownerID);
-            ps.setString(5, project.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
+            ps.setString(5, project.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             ps.executeUpdate();
         }
         catch(SQLException e){
