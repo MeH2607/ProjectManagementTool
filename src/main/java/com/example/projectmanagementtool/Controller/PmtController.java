@@ -1,7 +1,6 @@
 package com.example.projectmanagementtool.Controller;
 
 import com.example.projectmanagementtool.Model.*;
-import com.example.projectmanagementtool.Repository.UserRepository;
 import com.example.projectmanagementtool.Service.PMTService;
 import com.example.projectmanagementtool.Service.pmtException;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +20,7 @@ public class PmtController {
     public PmtController(PMTService pmtService) {
         this.pmtService = pmtService;
     }
-    private boolean isLoogedIn(HttpSession session) {
+    private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("user") != null;
     }
 
@@ -37,7 +36,7 @@ public class PmtController {
 
 
 
-        return isLoogedIn(session) ? "Homepage" : "login";
+        return isLoggedIn(session) ? "Homepage" : "login";
     }
 
     @GetMapping("login")
@@ -122,7 +121,7 @@ public class PmtController {
         List<Task> list = pmtService.getAllTasks();
         model.addAttribute("list", list);
 
-        return isLoogedIn(session) ? "project" : "login";
+        return isLoggedIn(session) ? "project" : "login";
     }
 
     //Denne metode viser projekter som de kommer fra databasen uden sortering, men hvis man vælger en sorteringsmulighed, så bliver den sorteret
@@ -138,7 +137,7 @@ public class PmtController {
         model.addAttribute("criteria", criteria);
         List<User> allUsers = pmtService.getAllUsers();
         model.addAttribute("all_users", allUsers);
-        return isLoogedIn(session) ? "allprojects" : "login";
+        return isLoggedIn(session) ? "allprojects" : "login";
     }
 
     @PostMapping("allprojects")
@@ -232,7 +231,7 @@ public class PmtController {
         model.addAttribute("list", list);
 
 
-        return isLoogedIn(session) ? "subproject" : "login";
+        return isLoggedIn(session) ? "subproject" : "login";
     }
 
     @PostMapping("project/{projectID}/create_task")
