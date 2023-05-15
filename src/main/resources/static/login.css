@@ -16,33 +16,12 @@ body {
 .container {
     max-width: 100%; /* Change this value to adjust the width */
     padding: 20px;
-    margin: auto;
-}
-.grid {
-    margin: auto; /* Add this line to center the container */
-    width: 60%;
-}
 
+}
 article {
-    display: inline-block;
     width: 30%;
     min-height: 150px;
-    margin-top: 20px;
-    margin-right: 20px;
-    vertical-align: top;
-}
-
-details ul {
-    margin: 0;
-    padding: 0;
-}
-
-details {
-    margin-bottom: 3px; /* or adjust as needed */
-}
-
-section {
-    margin-bottom: 0;
+    margin: 20px auto; /* Set margin to auto horizontally */
 }
 
 .breadcrumb {

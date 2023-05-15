@@ -20,13 +20,11 @@ body {
 }
 
 article {
-    display: inline-block;
+
     width: 450px;
     height: 600px;
-    margin: 20px;
-    margin-bottom: 40px;
-    vertical-align: top;
-    horiz-align: center;
+    margin: 20px auto 40px;
+
 }
 
 details ul {
