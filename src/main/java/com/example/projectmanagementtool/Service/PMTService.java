@@ -22,7 +22,7 @@ public class PMTService {
         userRepository = (UserRepository) context.getBean(impl2);
     }
 
-    public void addTaskToDB(Task task, int ownerID) throws pmtException{
+    public void createTask(Task task, int ownerID) throws pmtException{
         pmtRepository.createTask(task, ownerID);
     }
 

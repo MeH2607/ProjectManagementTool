@@ -37,6 +37,13 @@ CREATE TABLE SubProjects
     FOREIGN KEY (OwnerID) REFERENCES Users (ID)
 );
 
+CREATE TABLE Ressources
+(
+    ID            INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    Name          VARCHAR(255) NOT NULL
+);
+
+
 CREATE TABLE Tasks
 (
     ID            INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
@@ -46,8 +53,14 @@ CREATE TABLE Tasks
     OwnerID       INT,
     Deadline      DATE,
     SubprojectID  INT,
+    RessourceID  INT,
     Status VARCHAR(255),
     Ressource VARCHAR(255),
     FOREIGN KEY (SubprojectID) REFERENCES SubProjects (ID),
-    FOREIGN KEY (OwnerID) REFERENCES Users (ID)
+    FOREIGN KEY (OwnerID) REFERENCES Users (ID),
+    FOREIGN KEY (RessourceID) REFERENCES Ressources (ID)
 );
+
+
+
+

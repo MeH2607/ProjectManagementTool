@@ -139,7 +139,7 @@
                 -->
 
 
-                <!-- Modal -->
+                <!-- Modal - Create new task -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -168,6 +168,7 @@
                                             <input type="date" name="deadline" placeholder="deadline"
                                                    style="width: 100%;" required>
                                         </div>
+
                                         <div>
                                             <select name="ownerID" required>
                                                 <option value="" disabled selected>Select Assignee</option>
@@ -177,6 +178,19 @@
                                                 </option>
                                             </select>
                                         </div>
+
+                                        <!-- Ressource -->
+
+                                        <div>
+                                            <select name="ownerID" required>
+                                                <option value="" disabled selected>Select Assignee</option>
+                                                <option th:each="user : ${all_users}" th:value="${user.id}"
+                                                        th:text="${user.name}">
+                                                    <input type="hidden" th:name="ownerID" th:value="${user.id}"/>
+                                                </option>
+                                            </select>
+                                        </div>
+
                                         <div>
                                             <label>ID</label>
                                             <input type="hidden" name="subprojectID" th:value="${subproject.id}"

@@ -239,7 +239,7 @@ public class PmtController {
 
         System.out.println("Owner ID for new task is " + ownerID);
 
-        pmtService.addTaskToDB(task, ownerID);
+        pmtService.createTask(task, ownerID);
 
         System.out.println("Task " + task.getName() + "with assignee " + pmtService.getUserFromID(ownerID).getName() + " has been created");
 
