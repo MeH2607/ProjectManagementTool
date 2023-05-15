@@ -22,8 +22,8 @@ body {
 article {
     display: inline-block;
     width: 450px;
-    height: 500px;
-    margin-right: 20px;
+    height: 600px;
+    margin: 20px;
     margin-bottom: 40px;
     vertical-align: top;
     horiz-align: center;
@@ -50,10 +50,11 @@ section {
     line-height: 0.7;
     border-radius: 5px;
 }
+
 .hero {
     background-color: #394046;
-    background-image: url("https://wallpaperaccess.com/full/2483850.jpg");
+    background-image: url("https://media.istockphoto.com/id/1200681157/photo/sun-comes-out-from-behind-the-earth-in-space-with-geometric-network-polygon-graphic-and.jpg?b=1&s=170667a&w=0&k=20&c=Znul_IYnRDD6_IYF8F5NsooiXSXxG0BhZQm40Ag7Psc=");
     background-position: center;
-    height: 25%;
+    height: 500px;
     background-size: cover;
 }
