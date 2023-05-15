@@ -56,7 +56,7 @@ public class PmtController {
             if (user.getPassword().equals(password) && user.getEmail().equals(email)) {
                 // create session for user and set session timeout to 30 sec (container default: 15 min)
                 session.setAttribute("user", user);
-                session.setMaxInactiveInterval(30);
+                session.setMaxInactiveInterval(300);
                 return  "redirect:/";
 
             }
@@ -131,7 +131,6 @@ public class PmtController {
 
         model.addAttribute("projects", projects);
 
-
         List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
         model.addAttribute("sortCriterias", sortCriterias);
         model.addAttribute("criteria", criteria);
@@ -147,6 +146,25 @@ public class PmtController {
         System.out.println("Project " + project.getName() + "with owner " + pmtService.getUserFromID(ownerID).getName() + " has been created");
         return "redirect:/allprojects";
     }
+
+    @GetMapping("project/{projectID}/allsubprojects")
+    public String allSubprojects(@PathVariable int projectID, @RequestParam(required = false) String criteria, Model model, HttpSession session) {
+        List<Subproject> subprojects = (criteria != null) ? pmtService.getSubProjects(projectID, criteria) : pmtService.getSubProjects(projectID, "name");
+
+        model.addAttribute("subprojects", subprojects);
+        List<Project> projects = pmtService.getAllProjectsByCriteria("name");
+        model.addAttribute("projects", projects);
+        Project project = pmtService.getProjectFromID(projectID);
+        model.addAttribute("project", project);
+
+        List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
+        model.addAttribute("sortCriterias", sortCriterias);
+        model.addAttribute("criteria", criteria);
+        List<User> allUsers = pmtService.getAllUsers();
+        model.addAttribute("all_users", allUsers);
+        return isLoggedIn(session) ? "allSubprojects" : "login";
+    }
+
 
 
     @PostMapping("createUser")

@@ -312,6 +312,8 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
         }
     }
 
+
+
     //TODO check denne her
     public List<Subproject> getAllSubprojects() {
         List<Subproject> subprojectList = new ArrayList();
