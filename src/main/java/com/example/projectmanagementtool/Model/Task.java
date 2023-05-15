@@ -12,8 +12,9 @@ public class Task implements Component{
     private int allocatedTime;
     private int subprojectID;
     private String status;
+    private String ressource;
 
-    public Task(int id, String name, String description, int allocatedTime, User owner, String deadline, int subprojectID, String status) {
+    public Task(int id, String name, String description, int allocatedTime, User owner, String deadline, int subprojectID, String status, String ressource) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -22,6 +23,7 @@ public class Task implements Component{
         this.deadline = LocalDate.parse(deadline);
         this.subprojectID = subprojectID;
         this.status = status;
+        this.ressource = ressource;
     }
 
     // Converts localDate into formatted string for the DB

@@ -44,7 +44,8 @@ public class PMTRepository {
                 String Deadline = rs.getString("Deadline");
                 int SubprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
-                taskList.add(new Task(id, name, description, allocatedTime, owner, Deadline, SubprojectID, status));
+                String ressource = rs.getString("Ressource");
+                taskList.add(new Task(id, name, description, allocatedTime, owner, Deadline, SubprojectID, status, ressource));
             }
             return taskList;
         } catch (SQLException e) {

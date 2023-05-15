@@ -31,7 +31,7 @@ VALUES ("Product Research", "Conducting research to determine the product to be 
 ("Game Testing", "Performing QA tests on the mobile game", 20, 9, "9,10", "2023-09-15", 2),
 ("Web App Testing", "Conducting comprehensive QA testing of the web app's functionality and user experience", 30, 3, "2,7,10", "2023-12-15", 3);
 
-INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)
+INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status, Ressource)
 VALUES
 ("Create User Profile API", "Develop and test API for user profile functionality", 10, 2, "2023-06-15", 1, 'TODO'),
 ("Implement User Profile UI", "Design and implement user profile UI elements", 20, 3, "2023-06-30", 1, 'Doing'),
