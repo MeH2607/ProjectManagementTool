@@ -61,9 +61,12 @@
                                 </select>
                             </div>
                             <div>
+                                <input type="hidden" name="projectID" th:value="${project.id}" required>
+                            </div>
+                            <div>
                                 <br>
                                 <label>Subproject deadline</label>
-                                <input type="date" name="deadline"align="center" required>
+                                <input type="date" name="deadline" required>
                             </div>
 
                             <div class="modal-footer">

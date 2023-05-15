@@ -192,7 +192,7 @@ public class PMTRepository {
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setString(1, subproject.getName());
             ps.setString(2, subproject.getDescription());
-            ps.setInt(3, subproject.getAllocatedTime());
+            ps.setInt(3, 0);
             ps.setInt(4, ownerID);
             ps.setString(5, subproject.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
             ps.setInt(6, subproject.getProjectID());

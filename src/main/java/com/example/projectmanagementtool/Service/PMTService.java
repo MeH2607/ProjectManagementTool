@@ -72,8 +72,6 @@ public class PMTService {
         pmtRepository.createSubProject(subproject, ownerID);
     }
 
-
-
     public List<Project>getAllProjectsByCriteria(String criteria) {
         return pmtRepository.getAllProjectsByCriteria(criteria);
     }
