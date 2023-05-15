@@ -153,10 +153,11 @@ public class PMTRepository {
                 String deadline = rs.getString("Deadline");
                 int subprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
+                String ressource = rs.getString("Ressource");
 
                 // iterating tasks and adding it to the list if it has the correct subproject ID
                 if (findSubprojectID == subprojectID) {
-                    taskList.add(new Task(id, name, description, allocatedTime, owner, deadline, subprojectID, status));
+                    taskList.add(new Task(id, name, description, allocatedTime, owner, deadline, subprojectID, status, ressource));
                 }
 
             }
