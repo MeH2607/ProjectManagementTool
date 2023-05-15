@@ -30,9 +30,7 @@
                 </li>
             </ol>
         </nav>
-        <b type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" style="float: right">
-            Create a new subproject
-        </b>
+
 
         <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -81,18 +79,27 @@
             </div>
         </div>
 
-
-        <!-- sort button -->
-        <form action="#" th:action="${project.id}" method="get" th:object="${criteria}">
-            <select name="criteria" style="margin-left: 10px">
-                <option value="Sort by" disabled selected></option>
-                <option th:each="criteria : ${sortCriterias}" th:value="${criteria}" th:text="${criteria}" ></option>
-            </select>
-            <button type="submit">Sort</button>
-        </form>
-
         <!-- Project Name headline -->
         <h1 style="color: white; text-align: center" th:text="${project.name} "></h1>
+
+        <!-- create subproject -->
+
+        <b type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" style="float: right">
+            Create a new subproject
+        </b>
+
+
+        <!-- sort button -->
+
+        <form action="/allprojects" method="get" th:object="${criteria}">
+            <select name="criteria" style="width: 20%; background-color: white;">
+                <option value="" disabled selected>Select sorting criteria</option>
+                <option th:each="criteria : ${sortCriterias}" th:value="${criteria}" th:text="${criteria}"></option>
+            </select>
+            <br>
+            <button class="btn btn-primary" type="submit" style="width: 20%;  margin-top: 5px">Sort</button>
+        </form>
+
 
         <div class="grid">
             <article th:each="subproject : ${subprojects}">
