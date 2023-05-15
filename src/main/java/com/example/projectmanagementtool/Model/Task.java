@@ -38,6 +38,13 @@ public class Task implements Component{
         return deadlineAsString;
     }
 
+    public String getRessource() {
+        return ressource;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

@@ -23,7 +23,7 @@ public class PMTService {
     }
 
     public void addTaskToDB(Task task, int ownerID) throws pmtException{
-        pmtRepository.addTaskToDB(task, ownerID);
+        pmtRepository.createTask(task, ownerID);
     }
 
     public List<Task> getTasksFromSubproject(int subprojectID) {

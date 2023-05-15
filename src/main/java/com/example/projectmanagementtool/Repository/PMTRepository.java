@@ -85,11 +85,11 @@ public class PMTRepository {
 
 
     // Adds new task to DB
-    public void addTaskToDB(Task task, int ownerID) throws pmtException {
+    public void createTask(Task task, int ownerID) throws pmtException {
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status, Ressource)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setString(1, task.getName());
             ps.setString(2, task.getDescription());
@@ -98,6 +98,7 @@ public class PMTRepository {
             ps.setString(5, task.getDeadlineAsString());
             ps.setInt(6, task.getSubprojectID());
             ps.setString(7, "TODO");
+            ps.setString(8, task.getRessource());
             ps.executeUpdate();
 
         } catch (SQLException e) {
