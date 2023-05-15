@@ -239,7 +239,7 @@ public class PmtController {
         System.out.println("Task " + task.getName() + "with assignee " + pmtService.getUserFromID(ownerID).getName() + " has been created");
 
 
-        return "redirect:subproject/{subprojectID}";
+        return "redirect:/subproject/{subprojectID}";
     }
 
 
@@ -250,7 +250,7 @@ public class PmtController {
         pmtService.moveTaskToDoing(taskId);
 
         // Redirect back to the task list page
-        return "redirect:subproject/{subprojectID}";
+        return "redirect:/subproject/{subprojectID}";
     }
 
     @PostMapping("subproject/{subprojectID}/moveTaskToTodo")
@@ -260,7 +260,7 @@ public class PmtController {
         pmtService.moveTaskToTodo(taskId);
 
         // Redirect back to the task list page
-        return "redirect:subproject/{subprojectID}";
+        return "redirect:/subproject/{subprojectID}";
     }
 
     @PostMapping("subproject/{subprojectID}/moveTaskToDone")
