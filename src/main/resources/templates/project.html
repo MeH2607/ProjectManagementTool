@@ -30,6 +30,54 @@
                 </li>
             </ol>
         </nav>
+        <b type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" style="float: right">
+            Create a new subproject
+        </b>
+
+        <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel2">Create a new project</h1>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/createSubproject" method="post" th:object="${subproject}">
+                            <div>
+                                <label>Subproject name</label>
+                                <input type="text" name="name" required>
+                            </div>
+                            <div>
+                                <label>Subproject description</label>
+                                <input type="text" name="description" required>
+                            </div>
+                            <div>
+                                <label>Owner</label>
+                                <select name="ownerID" required>
+                                    <option value="" disabled selected>Select owner</option>
+                                    <option th:each="user : ${all_users}" th:value="${user.id}" th:text="${user.name}" required>
+                                        <input type="hidden" th:name="ownerID" th:value="${user.id}" />
+                                    </option> <!-- th:selected="${user.id == project.owner.id}" -->
+                                </select>
+                            </div>
+                            <div>
+                                <br>
+                                <label>Subproject deadline</label>
+                                <input type="date" name="deadline"align="center" required>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Create subproject</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <h1 style="color: white; text-align: center" th:text="${project.name} "></h1>
         <div class="grid">

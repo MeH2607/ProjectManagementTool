@@ -1,9 +1,7 @@
 package com.example.projectmanagementtool.Controller;
 
-import com.example.projectmanagementtool.Model.Project;
-import com.example.projectmanagementtool.Model.Subproject;
-import com.example.projectmanagementtool.Model.Task;
-import com.example.projectmanagementtool.Model.User;
+import com.example.projectmanagementtool.Model.*;
+import com.example.projectmanagementtool.Repository.UserRepository;
 import com.example.projectmanagementtool.Service.PMTService;
 import com.example.projectmanagementtool.Service.pmtException;
 import jakarta.servlet.http.HttpSession;
@@ -23,14 +21,50 @@ public class PmtController {
     public PmtController(PMTService pmtService) {
         this.pmtService = pmtService;
     }
+    private boolean isLoogedIn(HttpSession session) {
+        return session.getAttribute("user") != null;
+    }
 
     @GetMapping("")
     public String index(Model model, HttpSession session) {
         List<Project> projects = pmtService.getAllProjects();
         model.addAttribute("projects", projects);
 
-        return "index";
+        model.addAttribute("user",new User());
+
+        List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
+        model.addAttribute("roles", roles);
+
+
+
+        return isLoogedIn(session) ? "Homepage" : "login";
     }
+
+    @GetMapping("login")
+    public String showLogin() {
+        // return login form
+        return "login";
+    }
+
+    @PostMapping("login")
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password,
+                        HttpSession session,
+                        Model model) {
+        // find user in repo - return admin1 if success
+        User user = pmtService.getUser(email, password);
+        if (user != null)
+            if (user.getPassword().equals(password) && user.getEmail().equals(email)) {
+                // create session for user and set session timeout to 30 sec (container default: 15 min)
+                session.setAttribute("user", user);
+                session.setMaxInactiveInterval(30);
+                return  "redirect:/";
+
+            }
+        // wrong credentials
+        model.addAttribute("wrongCredentials", true);
+        return "login";
+    }
+
     @GetMapping("project/{projectID}")
     public String subProjectOverview(@PathVariable int projectID,  Model model, HttpSession session) {
 
@@ -38,14 +72,12 @@ public class PmtController {
         List<Subproject> subprojects = pmtService.getSubProjects(projectID);
         List<Project> projects = pmtService.getAllProjects();
         Project project = pmtService.getProjectFromID(projectID);
-
+        Subproject subproject = new Subproject();
 
         model.addAttribute("tasks", allTasks);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projects", projects);
         model.addAttribute("project", project);
-
-
 
         // Sort allTasks into list for its status
         List<Task> todo = new ArrayList<Task>();
@@ -76,9 +108,7 @@ public class PmtController {
         List<Task> list = pmtService.getAllTasks();
         model.addAttribute("list", list);
 
-
-
-        return "project";
+        return isLoogedIn(session) ? "project" : "login";
     }
 
     //Denne metode viser projekter som de kommer fra databasen uden sortering, men hvis man vælger en sorteringsmulighed, så bliver den sorteret
@@ -89,41 +119,22 @@ public class PmtController {
          projects = pmtService.getAllProjectsByCriteria(criteria);
         else
             projects = pmtService.getAllProjectsByCriteria("name");
-
         model.addAttribute("projects", projects);
-
-
         List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
         model.addAttribute("sortCriterias", sortCriterias);
         model.addAttribute("criteria", criteria);
-
         List<User> allUsers = pmtService.getAllUsers();
         model.addAttribute("all_users", allUsers);
-
-        return "allProjects";
+        return isLoogedIn(session) ? "allprojects" : "login";
     }
     @PostMapping("allprojects")
     public String addProjectToDB(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID) throws pmtException {
-
         System.out.println("Owner ID for new project is " + ownerID);
-
         pmtService.createProject(project, ownerID);
-
         System.out.println("Project " + project.getName() + "with owner " + pmtService.getUserFromID(ownerID).getName() + " has been created");
         return "redirect:/allprojects";
     }
 
-
-    @GetMapping("createUser")
-    public String createUser(Model model){
-
-        model.addAttribute("user",new User());
-
-        List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
-        model.addAttribute("roles", roles);
-
-        return "createUserForm";
-    }
 
     @PostMapping("createUser")
     public String createUserSuccess(@ModelAttribute("user") User user){
@@ -134,27 +145,27 @@ public class PmtController {
 
     @GetMapping("createProject")
     public String createProject(Model model){
-
         Project project = new Project();
-
         project.setOwner(new User());
-
         model.addAttribute("project", project);
-
         List<User> userList = pmtService.getAllUsers();
-
         model.addAttribute("userList", userList);
-
 
         return "createProjectForm";
     }
 
     @PostMapping("createProject")
     public String createProjectSuccess(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID){
-
         pmtService.createProject(project, ownerID);
         System.out.println(project.getName() + " has been created");
+        return "redirect:/";
+    }
 
+    @PostMapping("createSubproject")
+    public String createSubprojectSuccess(@ModelAttribute("subproject") Subproject subproject, @RequestParam("ownerID") int ownerID){
+
+        pmtService.createSubproject(subproject, ownerID);
+        System.out.println(subproject.getName() + " has been created");
         return "redirect:/";
     }
 
@@ -204,7 +215,7 @@ public class PmtController {
         model.addAttribute("list", list);
 
 
-        return "subproject";
+        return isLoogedIn(session) ? "subproject" : "login";
     }
 
     @PostMapping("project/{projectID}/create_task")

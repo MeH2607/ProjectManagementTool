@@ -15,6 +15,7 @@ import java.util.List;
 
 @Repository("PMTRepository")
 public class PMTRepository {
+    UserRepository userRepository = new UserRepository();
 
     // Create a method that fetches all projects from the database
 
@@ -39,7 +40,7 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
                 int SubprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
@@ -66,7 +67,7 @@ public class PMTRepository {
                 int id = rs.getInt("ID");
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String deadline = rs.getString("Deadline");
                 int projectID = rs.getInt("ProjectID");
                 subproject = new Subproject(id, name, description, owner, deadline, projectID);
@@ -119,7 +120,7 @@ public class PMTRepository {
                 int id = rs.getInt("ID");
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String deadline = rs.getString("Deadline");
                 int projectID = rs.getInt("ProjectID");
                 subproject = new Subproject(id, name, description, owner, deadline, projectID);
@@ -147,7 +148,7 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String deadline = rs.getString("Deadline");
                 int subprojectID = rs.getInt("SubprojectID");
                 String status = rs.getString("Status");
@@ -164,56 +165,6 @@ public class PMTRepository {
         }
     }
 
-    public User getUserFromID(int id) {
-        try {
-            Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM Users WHERE ID = ?";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                String name = rs.getString("Name");
-                String role = rs.getString("Role");
-                return new User(id, name, role);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
-        return null;
-    }
-
-    public List<User> getAllUsers() {
-        try {
-            Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM Users";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL);
-            List<User> userList = new ArrayList();
-            while (rs.next()) {
-                int id = rs.getInt("ID");
-                String name = rs.getString("Name");
-                String role = rs.getString("Role");
-                userList.add(new User(id, name, role));
-            }
-            return userList;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
-    }
-
-    public void createUser(User user) {
-        try {
-            Connection conn = ConnectionManager.getConnection();
-            String SQL = "Insert into Users (Name, Role) values (?,?)";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getRole());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
-    }
 
     public void createProject(Project project, int ownerID){
 
@@ -234,6 +185,24 @@ public class PMTRepository {
         }
     }
 
+    public void createSubProject(Subproject subproject, int ownerID){
+        try{
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "Insert into subprojects(name,Description,AllocatedTime,OwnerID,Deadline,ProjectID) values (?,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, subproject.getName());
+            ps.setString(2, subproject.getDescription());
+            ps.setInt(3, subproject.getAllocatedTime());
+            ps.setInt(4, ownerID);
+            ps.setString(5, subproject.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
+            ps.setInt(6, subproject.getProjectID());
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
+
     public Project getProjectFromID(int projectID) {
         try {
             Connection conn = ConnectionManager.getConnection();
@@ -247,7 +216,7 @@ public class PMTRepository {
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
                 return new Project(id, name, description, allocatedTime,owner, Deadline);
             }
@@ -330,7 +299,7 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 System.out.println(owner.getName());
                 String Deadline = rs.getString("Deadline");
                 projectList.add(new Project(id, name, description, allocatedTime, Deadline, owner));
@@ -355,7 +324,7 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
                 int allocatedTime = rs.getInt("AllocatedTime");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
                 Project project = new Project(id, name, description, allocatedTime, owner, Deadline);
                 calculateTimeSpentAndAllocatedTimeForProjects(project);
@@ -380,7 +349,7 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
                 int id = rs.getInt("ID");
                 String name = rs.getString("Name");
                 String description = rs.getString("Description");
-                User owner = getUserFromID(rs.getInt("OwnerID"));
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String deadline = rs.getString("Deadline");
                 int projectID = rs.getInt("ProjectID");
                 subproject = new Subproject(id, name, description, owner, deadline, projectID);
