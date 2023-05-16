@@ -87,4 +87,8 @@ public class PMTService {
     public void moveTaskToDone(int taskId) {
         pmtRepository.moveTaskToDone(taskId);
     }
+
+    public void moveTaskToArchived(int taskId) {
+        pmtRepository.moveTaskToArchived(taskId);
+    }
 }

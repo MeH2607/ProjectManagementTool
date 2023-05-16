@@ -242,6 +242,16 @@ public class PmtController {
         return "redirect:/subproject/{subprojectID}";
     }
 
+    // Archive task
+    @PostMapping("subproject/{subprojectID}/move_task_to_archived")
+    public String moveTaskToArchived(@RequestParam("taskId") int taskId) {
+        // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
+
+        pmtService.moveTaskToArchived(taskId);
+
+        // Redirect back to the task list page
+        return "redirect:/subproject/{subprojectID}";
+    }
 
     @PostMapping("subproject/{subprojectID}/moveTaskToDoing")
     public String moveTaskToDoing(@RequestParam("taskId") int taskId) {

@@ -379,4 +379,17 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public void moveTaskToArchived(int taskId) {
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "UPDATE tasks SET status = 'Archived' WHERE tasks.id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
