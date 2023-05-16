@@ -282,6 +282,14 @@ public class PmtController {
         // Redirect back to the task list page
         return "redirect:/subproject/{subprojectID}";
     }
+
+    @GetMapping("subproject/{subprojectID}/editTask")
+    public String editTask(@RequestParam("taskId") int taskID){
+
+        pmtService.editTask(taskID);
+
+        return "redirect:/subproject/{subprojectID}";
+    }
 }
 
 

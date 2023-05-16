@@ -393,17 +393,46 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
         }
     }
 
-    public void updateTask(Task task){
-        try{
+    public Task getTaskFromID(int taskId){
+
+        try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "update tasks set name = ?, Description = ?, AllocatedTime = ?, OwnerID = ?, deadline = ? where ID = ?";
+            String SQL = "SELECT * FROM tasks.projects WHERE ID = ?";
             PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                String description = rs.getString("Description");
+                int allocatedTime = rs.getInt("AllocatedTime");
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
+                String deadline = rs.getString("Deadline");
+                int subprojectID = rs.getInt("subprojectID");
+                String status = rs.getString("Status");
+                return new Task( id,  name,  description,  allocatedTime,  owner,  deadline,  subprojectID,  status);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+        return null;
+    }
+
+    public void editTask(int taskID){
+        try{
+            Task task = getTaskFromID(taskID);
+
+            Connection conn = ConnectionManager.getConnection();
+            String SQL2 = "update tasks set name = ?, Description = ?, AllocatedTime = ?, OwnerID = ?, deadline = ? where ID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL2);
             ps.setString(1, task.getName());
             ps.setString(2, task.getDescription());
             ps.setInt(3, task.getAllocatedTime());
             ps.setInt(4, task.getOwner().getId());
             ps.setString(5, task.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             ps.setInt(6, task.getId());
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             throw new RuntimeException(e.getMessage());

@@ -91,4 +91,7 @@ public class PMTService {
     public void moveTaskToArchived(int taskId) {
         pmtRepository.moveTaskToArchived(taskId);
     }
+    public void editTask(int taskID){
+        pmtRepository.editTask(taskID);
+    }
 }
