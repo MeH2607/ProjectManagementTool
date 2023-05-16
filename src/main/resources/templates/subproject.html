@@ -142,11 +142,11 @@
 
                 <!-- modal for edit task-->
                 <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                     tabindex="-1" aria-labelledby="staticBackdropLabelEditTask" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create a new task</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabelEditTask">Edit task</h1>
                             </div>
                             <div class="modal-body">
                                 <form style="text-align: center;" action="#" th:action="@{${subproject.id} + '/editTask?taskid=' + ${task.id}}" method="post" th:object="${task}">
@@ -157,7 +157,7 @@
                                                    required>
                                         </div>
                                         <div>
-                                            <input type="text" name="description" th:placeholder="${task.description}"
+                                            <input type="text" name="description" th:value="${task.description}"
                                                    style="width: 100%;" required>
                                         </div>
                                         <div>
@@ -213,8 +213,9 @@
                                 <tr th:each="task : ${todo}" th:if="${task.subprojectID == subproject.id}">
                                     <section id="accordions" style="width: 100%">
                                         <details closed th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
-
                                             <summary th:text="${task.name}" class="task-title"></summary>
+
+                                            <!-- editModal button Hvordan kan denne her pege på den bestemte task?-->
                                             <a type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                data-bs-target="#editModal" style="float:right">
                                                 Edit task
