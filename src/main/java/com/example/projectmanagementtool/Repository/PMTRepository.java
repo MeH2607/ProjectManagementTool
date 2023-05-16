@@ -392,4 +392,21 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public void updateTask(Task task){
+        try{
+            Connection conn = ConnectionManager.getConnection();
+            String SQL = "update tasks set name = ?, Description = ?, AllocatedTime = ?, OwnerID = ?, deadline = ? where ID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, task.getName());
+            ps.setString(2, task.getDescription());
+            ps.setInt(3, task.getAllocatedTime());
+            ps.setInt(4, task.getOwner().getId());
+            ps.setString(5, task.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            ps.setInt(6, task.getId());
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
