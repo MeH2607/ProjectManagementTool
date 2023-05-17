@@ -397,7 +397,7 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
 
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM tasks.projects WHERE ID = ?";
+            String SQL = "SELECT * FROM tasks WHERE ID = ?";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ResultSet rs = ps.executeQuery();

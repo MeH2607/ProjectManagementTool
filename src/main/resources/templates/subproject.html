@@ -140,61 +140,7 @@
                     </div>
                 </div>
 
-                <!-- modal for edit task-->
-                <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabelEditTask" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabelEditTask">Edit task</h1>
-                            </div>
-                            <div class="modal-body">
-                                <form style="text-align: center;" action="#" th:action="@{${subproject.id} + '/editTask?taskid=' + ${task.id}}" method="post" th:object="${task}">
-                                    <div style="color: white">
 
-                                        <div>
-                                            <input type="text" name="name" th:value="${task.name}" style="width: 100%;"
-                                                   required>
-                                        </div>
-                                        <div>
-                                            <input type="text" name="description" th:value="${task.description}"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div>
-                                            <input type="number" name="allocatedTime" th:placeholder="${task.allocatedTime}"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div>
-                                            <input type="date" name="deadline" th:placeholder="${task.deadline}"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div>
-                                            <select name="ownerID" required>
-                                                <option th:value="task.owner.name" ></option>
-                                                <option th:each="user : ${all_users}" th:value="${user.id}"
-                                                        th:text="${user.name}">
-                                                    <input type="hidden" th:name="ownerID" th:value="${user.id}"/>
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label>ID</label>
-                                            <input type="hidden" name="subprojectID" th:value="${subproject.id}"
-                                                   style="width: 100%;" required>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success">Edit task task</button>
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
                 <!-- Kanban board -->
@@ -220,6 +166,64 @@
                                                data-bs-target="#editModal" style="float:right">
                                                 Edit task
                                             </a>
+
+                                            <!-- modal for edit task-->
+                                            <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                                                 tabindex="-1" aria-labelledby="staticBackdropLabelEditTask" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabelEditTask">Edit task</h1>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form style="text-align: center;" action="#" th:action="@{${subproject.id} + '/editTask/' + ${task.id}}" method="post" th:object="${task}">
+                                                                <div style="color: white">
+
+                                                                    <div>
+                                                                        <input type="text" name="name" th:value="${task.name}"  style="width: 100%;"
+                                                                               required>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="text" name="description" th:value="${task.description}"
+                                                                               style="width: 100%;" required>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="number" name="allocatedTime" th:value="${task.allocatedTime}"
+                                                                               style="width: 100%;" required>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="date" name="deadline" th:value="${task.deadline}"
+                                                                               style="width: 100%;" required>
+                                                                    </div>
+                                                                    <div>
+                                                                        <select name="ownerID" required>
+                                                                            <option th:value="task.owner.name" ></option>
+                                                                            <option th:each="user : ${all_users}" th:value="${user.id}"
+                                                                                    th:text="${user.name}">
+                                                                                <input type="hidden" th:name="ownerID" th:value="${user.id}"/>
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>ID</label>
+                                                                        <input type="hidden" name="subprojectID" th:value="${subproject.id}"
+                                                                               style="width: 100%;" required>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="submit" class="btn btn-success">Edit task task</button>
+                                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                                            Cancel
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                             <p class="task-description" th:text="${task.description}"></p>
 
 

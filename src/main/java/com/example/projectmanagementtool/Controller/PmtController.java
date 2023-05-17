@@ -283,8 +283,8 @@ public class PmtController {
         return "redirect:/subproject/{subprojectID}";
     }
 
-    @GetMapping("subproject/{subprojectID}/editTask")
-    public String editTask(@RequestParam("taskId") int taskID){
+    @PostMapping("subproject/{subprojectID}/editTask/{taskID}")
+    public String editTask(@PathVariable int taskID){
 
         pmtService.editTask(taskID);
 
