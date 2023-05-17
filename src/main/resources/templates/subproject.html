@@ -92,6 +92,7 @@
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Create a new task</h1>
                             </div>
                             <div class="modal-body">
+
                                 <form style="text-align: center;" action="#"
                                       th:action="@{${subproject.id} + '/create_task'}" method="post" th:object="${task}">
                                     <div style="color: white">
@@ -175,8 +176,13 @@
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5" id="staticBackdropLabelEditTask">Edit task</h1>
                                                         </div>
+
                                                         <div class="modal-body">
-                                                            <form style="text-align: center;" action="#" th:action="@{${subproject.id} + '/editTask/' + ${task.id}}" method="post" th:object="${task}">
+
+                                                            <form style="text-align: center;" action="#"
+                                                                  th:action="@{${subproject.id} + '/create_task'}" method="post" th:object="${task}">
+
+                                                            <form style="text-align: center;" action="#" th:action="@{${subproject.id} + '/editTask'}" method="post" th:object="${task}">
                                                                 <div style="color: white">
 
                                                                     <div>
