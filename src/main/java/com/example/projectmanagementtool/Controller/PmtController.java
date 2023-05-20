@@ -34,8 +34,6 @@ public class PmtController {
         List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
         model.addAttribute("roles", roles);
 
-
-
         return isLoggedIn(session) ? "Homepage" : "login";
     }
 
@@ -282,6 +280,20 @@ public class PmtController {
         // Redirect back to the task list page
         return "redirect:/subproject/{subprojectID}";
     }
+    @GetMapping("/profile")
+    public String profile(Model model, HttpSession session) {
+
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
+        model.addAttribute("projects", pmtService.getAllProjectsByCriteria("name"));
+        model.addAttribute("subprojects", pmtService.getAllProjectsByCriteria("name"));
+        model.addAttribute("tasks", pmtService.getAllTasks());
+
+        return isLoggedIn(session) ? "profile" : "login";
+    }
+
+
+
 }
 
 

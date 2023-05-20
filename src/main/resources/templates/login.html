@@ -46,10 +46,13 @@
             <form th:action="@{/login}" method="post">
                 <p th:if="${wrongCredentials}" class="error">Forkert email eller password</p>
                 <p><label>Email:</label>
-                    <input name="email" type="text" autofocus></p>
+                    <input name="email" type="text" autofocus>
+                </p>
                 <p>
                     <label>Password:</label>
-                    <input name="password" type="text"></p>
+                    <input name="password" type="text">
+                </p>
+
                 <p>
                     <button type="submit">Login</button>
                     <a th:href="@{'/'}">
