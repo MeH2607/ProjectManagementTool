@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class PmtController {
     public PmtController(PMTService pmtService) {
         this.pmtService = pmtService;
     }
+
     private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("user") != null;
     }
@@ -29,11 +32,10 @@ public class PmtController {
         List<Project> projects = pmtService.getAllProjectsByCriteria("name");
         model.addAttribute("projects", projects);
 
-        model.addAttribute("user",new User());
+        model.addAttribute("user", new User());
 
-        List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
+        List<String> roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
         model.addAttribute("roles", roles);
-
 
 
         return isLoggedIn(session) ? "Homepage" : "login";
@@ -57,7 +59,7 @@ public class PmtController {
                 // create session for user and set session timeout to 30 sec (container default: 15 min)
                 session.setAttribute("user", user);
                 session.setMaxInactiveInterval(300);
-                return  "redirect:/";
+                return "redirect:/";
 
             }
         // wrong credentials
@@ -162,7 +164,7 @@ public class PmtController {
     }
 
     @PostMapping("createProject")
-    public String createProjectSuccess(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID){
+    public String createProjectSuccess(@ModelAttribute("project") Project project, @RequestParam("ownerID") int ownerID) {
         pmtService.createProject(project, ownerID);
         System.out.println(project.getName() + " has been created");
 
@@ -170,13 +172,12 @@ public class PmtController {
     }
 
     @PostMapping("createSubproject")
-    public String createSubprojectSuccess(@ModelAttribute("subproject") Subproject subproject, @RequestParam("ownerID") int ownerID){
+    public String createSubprojectSuccess(@ModelAttribute("subproject") Subproject subproject, @RequestParam("ownerID") int ownerID) {
 
         pmtService.createSubproject(subproject, ownerID);
         System.out.println(subproject.getName() + " has been created");
         return "redirect:/";
     }
-
 
 
     @GetMapping("subproject/{subprojectID}")
@@ -199,9 +200,15 @@ public class PmtController {
         for (Task task : allTasksForSubproject) {
 
             switch (task.getStatus().toLowerCase()) {
-                case "todo": todo.add(task); break;
-                case "doing": doing.add(task); break;
-                case "done": done.add(task); break;
+                case "todo":
+                    todo.add(task);
+                    break;
+                case "doing":
+                    doing.add(task);
+                    break;
+                case "done":
+                    done.add(task);
+                    break;
             }
         }
 
@@ -225,6 +232,15 @@ public class PmtController {
 
         List<Task> list = pmtService.getAllTasks();
         model.addAttribute("list", list);
+
+        List<Task> deadLineList = new ArrayList<>();
+        for (Task taskDeadline : list) {
+            //Checker om der er 10 dage mellem dags dato og deadline
+            if (!taskDeadline.getStatus().equals("DONE") && ChronoUnit.DAYS.between(LocalDate.now(), taskDeadline.getDeadline()) < 10) {
+                deadLineList.add(taskDeadline);
+            }
+        model.addAttribute("deadLineList", deadLineList);
+        }
 
         return isLoggedIn(session) ? "subproject" : "login";
     }
