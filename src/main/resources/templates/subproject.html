@@ -54,7 +54,7 @@
                     <small class="me-auto" th:text="${deadLineList.size()} + 'deadlines approaching'"></small>
 
                 </div>
-                <div class="toast-buddy" >Deadline approaching for tasks:
+                <div class="toast-body" >Deadline approaching for tasks:
                     <li th:each="taskDeadline : ${deadLineList}">
                         <a th:text="${taskDeadline.name}"></a>
                     </li>
