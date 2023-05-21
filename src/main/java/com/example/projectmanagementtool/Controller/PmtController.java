@@ -235,7 +235,7 @@ public class PmtController {
 
         List<Task> deadLineList = new ArrayList<>();
         for (Task taskDeadline : list) {
-            //Checker om der er 10 dage mellem dags dato og deadline
+            //Checker om der er 10 dage mellem dags dato og deadline og at en task ikke er sat til done
             if (!taskDeadline.getStatus().equals("DONE") && ChronoUnit.DAYS.between(LocalDate.now(), taskDeadline.getDeadline()) < 10) {
                 deadLineList.add(taskDeadline);
             }
