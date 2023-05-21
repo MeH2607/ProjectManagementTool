@@ -38,7 +38,7 @@ public class PmtController {
         List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
         model.addAttribute("roles", roles);
 
-        return isLoggedIn(session) ? "Homepage" : "login";
+        return "Homepage";
     }
 
     @GetMapping("login")
@@ -77,9 +77,14 @@ public class PmtController {
 
         return "login";
     }
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 
     @GetMapping("project/{projectID}")
-    public String subProjectOverview(@PathVariable int projectID, @RequestParam(required = false) String criteria, Model model, HttpSession session) {
+    public String subProjectOverview(@PathVariable int projectID, @RequestParam(required = false) String criteria, Model model, HttpSession session, HttpServletRequest request) {
 
         List<Subproject> subprojects = (criteria != null) ? pmtService.getSubProjects(projectID, criteria) : pmtService.getSubProjects(projectID, "name");
         List<Project> projects = pmtService.getAllProjectsByCriteria("name");
@@ -93,6 +98,9 @@ public class PmtController {
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projects", projects);
         model.addAttribute("project", project);
+
+        String returnUrl = request.getRequestURI();
+        model.addAttribute("returnUrl", returnUrl);
 
         // Sort allTasks into list for its status
         List<Task> todo = new ArrayList<Task>();
@@ -136,8 +144,11 @@ public class PmtController {
     @GetMapping("allprojects")
     public String allProjects(@RequestParam(required = false) String criteria, Model model, HttpSession session) {
         List<Project> projects = (criteria != null) ? pmtService.getAllProjectsByCriteria(criteria) : pmtService.getAllProjectsByCriteria("name");
+        List<Subproject> subprojects = pmtService.getAllSubProjectsByCriteria("name");
 
         model.addAttribute("projects", projects);
+        model.addAttribute("subprojects", subprojects);
+
 
         List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
         model.addAttribute("sortCriterias", sortCriterias);
