@@ -3,6 +3,7 @@ package com.example.projectmanagementtool.Controller;
 import com.example.projectmanagementtool.Model.*;
 import com.example.projectmanagementtool.Service.PMTService;
 import com.example.projectmanagementtool.Service.pmtException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,10 @@ public class PmtController {
     @GetMapping("")
     public String index(Model model, HttpSession session) {
         List<Project> projects = pmtService.getAllProjectsByCriteria("name");
+        List<Subproject> subprojects = pmtService.getAllSubProjectsByCriteria("name");
+        System.out.println(subprojects);
         model.addAttribute("projects", projects);
+        model.addAttribute("subprojects", subprojects);
 
         model.addAttribute("user",new User());
 
@@ -38,28 +42,39 @@ public class PmtController {
     }
 
     @GetMapping("login")
-    public String showLogin() {
+    public String showLogin(HttpServletRequest request, Model model) {
+
+        String returnUrl = request.getRequestURI();
+        model.addAttribute("returnUrl", returnUrl);
+        System.out.println("print from login" + returnUrl);
+
         // return login form
         return "login";
     }
 
 
     @PostMapping("login")
-    public String login(@RequestParam("email") String email, @RequestParam("password") String password,
+    public String login(@RequestParam("email") String email,
+                        @RequestParam("password") String password,
+                        @RequestParam("returnUrl") String returnUrl,
                         HttpSession session,
                         Model model) {
         // find user in repo - return admin1 if success
         User user = pmtService.getUser(email, password);
+
+
+
         if (user != null)
             if (user.getPassword().equals(password) && user.getEmail().equals(email)) {
                 // create session for user and set session timeout to 30 sec (container default: 15 min)
                 session.setAttribute("user", user);
                 session.setMaxInactiveInterval(300);
-                return  "redirect:/";
+                return "redirect:" + returnUrl;
 
             }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
+
         return "login";
     }
 
@@ -178,7 +193,7 @@ public class PmtController {
 
 
     @GetMapping("subproject/{subprojectID}")
-    public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session) {
+    public String getSubproject(@PathVariable int subprojectID, Model model, HttpSession session, HttpServletRequest request) {
 
         Subproject subproject = pmtService.getSubProject(subprojectID);
         Project project = pmtService.getProjectFromID(subproject.getProjectID());
@@ -224,6 +239,11 @@ public class PmtController {
         List<Task> list = pmtService.getAllTasks();
         model.addAttribute("list", list);
 
+
+        String returnUrl = request.getRequestURI();
+        model.addAttribute("returnUrl", returnUrl);
+        System.out.println("print from subproject" + returnUrl);
+
         return isLoggedIn(session) ? "subproject" : "login";
     }
 
@@ -242,52 +262,83 @@ public class PmtController {
 
     // Archive task
     @PostMapping("subproject/{subprojectID}/move_task_to_archived")
-    public String moveTaskToArchived(@RequestParam("taskId") int taskId) {
+    public String moveTaskToArchived(@RequestParam("taskId") int taskId,
+                                     @RequestParam("returnUrl") String returnUrl) {
         // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
 
         pmtService.moveTaskToArchived(taskId);
 
+        System.out.println("print from movetask" + returnUrl);
+
+
         // Redirect back to the task list page
-        return "redirect:/subproject/{subprojectID}";
+        return "redirect:" + returnUrl;
     }
 
     @PostMapping("subproject/{subprojectID}/moveTaskToDoing")
-    public String moveTaskToDoing(@RequestParam("taskId") int taskId) {
+    public String moveTaskToDoing(@RequestParam("taskId") int taskId,
+                                  @RequestParam("returnUrl") String returnUrl) {
         // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
 
         pmtService.moveTaskToDoing(taskId);
 
         // Redirect back to the task list page
-        return "redirect:/subproject/{subprojectID}";
+        return "redirect:" + returnUrl;
     }
 
     @PostMapping("subproject/{subprojectID}/moveTaskToTodo")
-    public String moveTaskToTodo(@RequestParam("taskId") int taskId) {
-        // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
-
+    public String moveTaskToTodo(@PathVariable("subprojectID") int subprojectID,
+                                 @RequestParam("taskId") int taskId,
+                                 @RequestParam("returnUrl") String returnUrl) {
         pmtService.moveTaskToTodo(taskId);
 
-        // Redirect back to the task list page
-        return "redirect:/subproject/{subprojectID}";
+        // Redirect back to the original page
+        return "redirect:" + returnUrl;
     }
 
+
     @PostMapping("subproject/{subprojectID}/moveTaskToDone")
-    public String moveTaskToDone(@RequestParam("taskId") int taskId) {
+    public String moveTaskToDone(@RequestParam("taskId") int taskId, @RequestParam("returnUrl") String returnUrl) {
         // the taskID in @RequestParam("taskId") is used to map the value of taskId parameter from the HTML
 
         pmtService.moveTaskToDone(taskId);
 
         // Redirect back to the task list page
-        return "redirect:/subproject/{subprojectID}";
+        return "redirect:" + returnUrl;
     }
     @GetMapping("/profile")
-    public String profile(Model model, HttpSession session) {
+    public String profile(Model model, HttpSession session, HttpServletRequest request) {
 
         User user = (User) session.getAttribute("user");
+        List<Task> allTasks = pmtService.getAllTasks();
         model.addAttribute("user", user);
         model.addAttribute("projects", pmtService.getAllProjectsByCriteria("name"));
-        model.addAttribute("subprojects", pmtService.getAllProjectsByCriteria("name"));
+        model.addAttribute("subprojects", pmtService.getAllSubProjectsByCriteria("name"));
         model.addAttribute("tasks", pmtService.getAllTasks());
+
+        List<Task> todo = new ArrayList<Task>();
+        List<Task> doing = new ArrayList<Task>();
+        List<Task> done = new ArrayList<Task>();
+
+        for (Task task : allTasks) {
+
+            switch (task.getStatus().toLowerCase()) {
+                case "todo": todo.add(task); break;
+                case "doing": doing.add(task); break;
+                case "done": done.add(task); break;
+            }
+        }
+
+        model.addAttribute("todo", todo);
+        model.addAttribute("doing", doing);
+        model.addAttribute("done", done);
+
+
+        String returnUrl = request.getRequestURI();
+        model.addAttribute("returnUrl", returnUrl);
+        System.out.println("print from prpfile" + returnUrl);
+
+
 
         return isLoggedIn(session) ? "profile" : "login";
     }

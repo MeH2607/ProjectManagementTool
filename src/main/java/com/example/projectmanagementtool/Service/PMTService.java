@@ -91,4 +91,8 @@ public class PMTService {
     public void moveTaskToArchived(int taskId) {
         pmtRepository.moveTaskToArchived(taskId);
     }
+
+    public List<Subproject> getAllSubProjectsByCriteria(String criteria) {
+        return pmtRepository.getAllSubProjectsByCriteria(criteria);
+    }
 }

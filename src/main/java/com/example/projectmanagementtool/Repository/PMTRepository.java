@@ -392,4 +392,31 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public List<Subproject> getAllSubProjectsByCriteria(String criteria) {
+        List<Subproject> subprojectList = new ArrayList();
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            // "users.name as owner" lader os sortere efter projekt owners navn
+            String SQL = "SELECT subprojects.*, users.name as owner FROM pmt_db.subprojects join users on users.id = subprojects.OwnerID order by " + criteria;
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()) {
+                Subproject subproject;
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                String description = rs.getString("Description");
+                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
+                String deadline = rs.getString("Deadline");
+                int projectID = rs.getInt("ProjectID");
+                subproject = new Subproject(id, name, description, owner, deadline, projectID);
+                calculateTimeSpentAndAllocatedTimeForSubProjects(subproject);
+                subprojectList.add(subproject);
+            }
+            return subprojectList;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connecting to the database", e);
+        }
+    }
 }

@@ -27,6 +27,17 @@
                         </li>
                     </ul>
                 </li>
+                <li role="list" dir="ltr">
+                    <a class="link-dark" href="#" aria-haspopup="listbox">Select subproject</a>
+                    <ul role="listbox">
+                        <li th:each="subproject : ${subprojects}">
+                            <a th:href="@{/subproject/{subproject}(subproject=${subproject.id})}" th:text="${subproject.name}"></a>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+            <ol style="float: right; margin-right: 10px">
+                <li class="breadcrumb-item"><a class="link-dark" href="/profile">Your profile</a></li>
             </ol>
         </nav>
         <h1 style="text-align: center; color: white;"><a> All projects </a></h1>
