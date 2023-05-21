@@ -106,6 +106,24 @@
                     <tr>
                         <td>Deadline:</td>
                         <td><span th:text="${subproject.deadline}"></span></td>
+                        </tr>
+                    <tr>
+                        <td>Tasks nearing deadline</td>
+                        <td>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="max-width: 350px; max-height: 20px">
+                            <p th:text="${deadLineList.size()} + ' deadlines approaching'"></p>
+                            </button>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body">
+                                    <li th:each="taskDeadline : ${deadLineList}">
+                                        <a th:text="${taskDeadline.name} + ': ' + ${taskDeadline.deadline}"></a>
+                                    </li>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 
