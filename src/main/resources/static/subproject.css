@@ -15,19 +15,7 @@ body {
 .row {
     align-content: center;
 }
-/*
-.status-column {
-    background-color: rgba(252, 251, 251, 0.81);
-    width: 400px;
-    margin-top: 20px;
-    margin-right: 20px;
-    margin-left: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
- */
 
 .container {
     max-width: 100%; /* Change this value to adjust the width */
@@ -99,6 +87,7 @@ section {
 .task-title {
     font-size: 1.2em;
 }
+
 .background {
     background-color: rgb(17, 32, 51);
     background-position: center;
@@ -117,6 +106,7 @@ section {
 input[type="checkbox"]:checked + .toast {
     display: block;
 }
+
 .toast {
     display: none;
 }

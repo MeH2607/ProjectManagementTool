@@ -1,4 +1,5 @@
 package com.example.projectmanagementtool.Repository.Util;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,15 @@ public class ConnectionManager {
     private static String USER;
     private static String PASSWORD;
 
+    public static Connection getConnection() {
+        try {
+            if (conn == null) conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
     @Value("${spring.datasource.url}")
     public void setUrl(String url) {
         URL = url;
@@ -28,15 +38,6 @@ public class ConnectionManager {
     @Value("${spring.datasource.password}")
     public void setPassword(String password) {
         PASSWORD = password;
-    }
-
-    public static Connection getConnection() {
-        try {
-            if (conn == null) conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
     }
 
 }

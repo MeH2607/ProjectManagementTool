@@ -3,7 +3,7 @@ package com.example.projectmanagementtool.Model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Task implements Component{
+public class Task implements Component {
     private int id;
     private String name;
     private String description;
@@ -24,18 +24,18 @@ public class Task implements Component{
         this.status = status;
     }
 
-    // Converts localDate into formatted string for the DB
-    public String getDeadlineAsString(){
+    public Task() {
+    }
 
+    // Converts localDate into formatted string for the DB
+    public String getDeadlineAsString() {
         // Creating a DateTimeFormatter object with the desired format for the DB
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         //Converting localdate to string
         String deadlineAsString = deadline.format(formatter);
-
         return deadlineAsString;
     }
-
 
     public int getId() {
         return id;
@@ -49,13 +49,13 @@ public class Task implements Component{
         this.status = status;
     }
 
-    public Task() {
-
-    }
-
     @Override
     public int getAllocatedTime() {
         return allocatedTime;
+    }
+
+    public void setAllocatedTime(int allocatedTime) {
+        this.allocatedTime = allocatedTime;
     }
 
     @Override
@@ -63,9 +63,17 @@ public class Task implements Component{
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -73,29 +81,17 @@ public class Task implements Component{
         return owner;
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     @Override
     public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
-    }
-
-    public void setAllocatedTime(int allocatedTime) {
-        this.allocatedTime = allocatedTime;
     }
 
     public int getSubprojectID() {
@@ -106,18 +102,8 @@ public class Task implements Component{
         this.subprojectID = subprojectID;
     }
 
-
-
     @Override
     public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", owner=" + owner +
-                ", deadline=" + deadline +
-                ", allocatedTime=" + allocatedTime +
-                ", subprojectID=" + subprojectID +
-                ", status='" + status + '\'' +
-                '}';
+        return "Task{" + "name='" + name + '\'' + ", description='" + description + '\'' + ", owner=" + owner + ", deadline=" + deadline + ", allocatedTime=" + allocatedTime + ", subprojectID=" + subprojectID + ", status='" + status + '\'' + '}';
     }
 }

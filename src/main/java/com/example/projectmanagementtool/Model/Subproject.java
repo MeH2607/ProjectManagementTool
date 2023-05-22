@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subproject implements Component{
+public class Subproject implements Component {
     private int id;
     private String name;
     private String description;
@@ -12,8 +12,9 @@ public class Subproject implements Component{
     private int allocatedTime;
     private int timeSpent;
     private LocalDate deadline;
+    private int projectID;
 
-    public Subproject(int id, String name, String description,  User owner, String deadline, int subprojectID) {
+    public Subproject(int id, String name, String description, User owner, String deadline, int subprojectID) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,11 +25,8 @@ public class Subproject implements Component{
         this.projectID = subprojectID;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public Subproject() {
     }
-
-
 
     public int getId() {
         return id;
@@ -36,23 +34,6 @@ public class Subproject implements Component{
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
-    public void setAllocatedTime(int allocatedTime) {
-        this.allocatedTime = allocatedTime;
-    }
-
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
     }
 
     public int getProjectID() {
@@ -63,16 +44,9 @@ public class Subproject implements Component{
         this.projectID = projectID;
     }
 
-    private int projectID;
-
-
-    public Subproject() {
-    }
-
-
     // getProjectMembers should iterate the subprojects tasks by each call
-    public List<User> getSubprojectMembers(){
-        List <User> subprojectMembers = new ArrayList<>();
+    public List<User> getSubprojectMembers() {
+        List<User> subprojectMembers = new ArrayList<>();
         // TODO iterate all tasks in this subproject and add the members to the list before returning it
         return subprojectMembers;
     }
@@ -82,18 +56,34 @@ public class Subproject implements Component{
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getOwner() {
         return owner;
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     @Override
     public int getAllocatedTime() {
         return allocatedTime;
+    }
+
+    public void setAllocatedTime(int allocatedTime) {
+        this.allocatedTime = allocatedTime;
     }
 
     public int getTimeSpent() {
@@ -109,15 +99,13 @@ public class Subproject implements Component{
         return deadline;
     }
 
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
-        return "Subproject{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", allocatedTime=" + allocatedTime +
-                ", Owner=" + owner.getName() +
-                ", deadline='" + deadline + '\'' +
-                ", projectID=" + projectID + id +
+        return "Subproject{" + "name='" + name + '\'' + ", description='" + description + '\'' + ", allocatedTime=" + allocatedTime + ", Owner=" + owner.getName() + ", deadline='" + deadline + '\'' + ", projectID=" + projectID + id +
 
                 '}';
     }

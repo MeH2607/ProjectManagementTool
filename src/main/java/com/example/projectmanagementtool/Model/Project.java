@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project implements Component{
+public class Project implements Component {
     private int id;
     private String name;
     private String description;
@@ -13,9 +13,7 @@ public class Project implements Component{
     private LocalDate deadline;
     private int ownerID; //Bruges til at få et id fra owner når man vælger en owner fra html formen,
     // da Thymeleaf har svært ved at arbejde
-
     private int timeSpent;
-
     private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
     public Project() {
@@ -33,7 +31,8 @@ public class Project implements Component{
         this.subprojectList = new ArrayList<Subproject>();
         this.timeSpent = 0;
     }
-  public Project(int id, String name, String description, int allocatedTime, String deadline) {
+
+    public Project(int id, String name, String description, int allocatedTime, String deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -62,6 +61,9 @@ public class Project implements Component{
         return subprojectList;
     }
 
+    public void setSubprojectList(List<Subproject> subprojectList) {
+        this.subprojectList = subprojectList;
+    }
 
     public List<User> getProjectMembers() {
         // Finds 'projectmembers' by iterating all members in all subprojects
@@ -76,11 +78,13 @@ public class Project implements Component{
         return projectMembers;
     }
 
-
-
     @Override
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -88,44 +92,31 @@ public class Project implements Component{
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public User getOwner() {
         return owner;
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     @Override
     public int getAllocatedTime() {
-       /* PMTRepository pmtRepository = new PMTRepository();
-        List<Subproject> subprojects = pmtRepository.getAllSubprojects();
-        for (Subproject subproject : subprojects) {
-            if (subproject.getProjectID() == this.id) {
-                allocatedTime += subproject.getAllocatedTime();
-            }
-        }*/
         return allocatedTime;
     }
 
-
+    public void setAllocatedTime(int allocatedTime) {
+        this.allocatedTime = allocatedTime;
+    }
 
     @Override
     public LocalDate getDeadline() {
         return deadline;
-    }
-
-    public void setSubprojectList(List<Subproject> subprojectList) {
-        this.subprojectList = subprojectList;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public void setDeadline(LocalDate deadline) {
@@ -148,10 +139,6 @@ public class Project implements Component{
         this.id = id;
     }
 
-    public void setAllocatedTime(int allocatedTime) {
-        this.allocatedTime = allocatedTime;
-    }
-
     public int getTimeSpent() {
         return timeSpent;
     }
@@ -162,12 +149,6 @@ public class Project implements Component{
 
     @Override
     public String toString() {
-        return "Project{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", owner=" + owner +
-                ", deadline=" + deadline +
-                ", subprojectList=" + subprojectList +
-                '}';
+        return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' + ", owner=" + owner + ", deadline=" + deadline + ", subprojectList=" + subprojectList + '}';
     }
 }

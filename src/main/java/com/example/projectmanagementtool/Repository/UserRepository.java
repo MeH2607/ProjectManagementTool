@@ -4,7 +4,10 @@ import com.example.projectmanagementtool.Model.User;
 import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +86,7 @@ public class UserRepository {
             User user = null;
 
             while (rs.next()) {
-                user = new User(
-                        rs.getInt("ID"),
-                        rs.getString("Name"),
-                        rs.getString("Email"),
-                        rs.getString("Password"),
-                        rs.getString("Role"));
+                user = new User(rs.getInt("ID"), rs.getString("Name"), rs.getString("Email"), rs.getString("Password"), rs.getString("Role"));
             }
             return user;
 

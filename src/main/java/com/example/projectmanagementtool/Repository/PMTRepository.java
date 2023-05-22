@@ -17,16 +17,6 @@ import java.util.List;
 public class PMTRepository {
     UserRepository userRepository = new UserRepository();
 
-    // Create a method that fetches all projects from the database
-
-    // Create a method that fetches all users from the database
-
-    // Create a method that fetches all tasks from the database
-
-    // Create a method that fetches all subtasks from the database
-
-    // simply gets the task-table from db
-
     public List<Task> getAllTasks() {
         List<Task> taskList = new ArrayList();
         try {
@@ -75,20 +65,17 @@ public class PMTRepository {
                 calculateTimeSpentAndAllocatedTimeForSubProjects(subproject);
                 subprojectList.add(subproject);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
         return subprojectList;
     }
 
-
     // Adds new task to DB
     public void addTaskToDB(Task task, int ownerID) throws pmtException {
         try {
             Connection conn = ConnectionManager.getConnection();
-            String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)" + "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setString(1, task.getName());
             ps.setString(2, task.getDescription());
@@ -98,12 +85,10 @@ public class PMTRepository {
             ps.setInt(6, task.getSubprojectID());
             ps.setString(7, "TODO");
             ps.executeUpdate();
-
         } catch (SQLException e) {
             throw new pmtException(e.getMessage());
         }
     }
-
 
     // Retrieves a specific subproject from DB, from a subprojectID
     public Subproject getSubproject(int subprojectID) {
@@ -132,9 +117,7 @@ public class PMTRepository {
         return subproject;
     }
 
-
     public List<Task> getTasksFromSubproject(int findSubprojectID) {
-
         List<Task> taskList = new ArrayList();
         try {
             Connection conn = ConnectionManager.getConnection();
@@ -157,7 +140,6 @@ public class PMTRepository {
                 if (findSubprojectID == subprojectID) {
                     taskList.add(new Task(id, name, description, allocatedTime, owner, deadline, subprojectID, status));
                 }
-
             }
             return taskList;
         } catch (SQLException e) {
@@ -166,10 +148,9 @@ public class PMTRepository {
     }
 
 
-    public void createProject(Project project, int ownerID){
-
+    public void createProject(Project project, int ownerID) {
         project.setSubprojectList(new ArrayList<>());
-        try{
+        try {
             Connection conn = ConnectionManager.getConnection();
             String SQL = "Insert into projects(name,Description,AllocatedTime,OwnerID,Deadline) values (?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(SQL);
@@ -179,14 +160,13 @@ public class PMTRepository {
             ps.setInt(4, ownerID);
             ps.setString(5, project.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             ps.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
 
-    public void createSubProject(Subproject subproject, int ownerID){
-        try{
+    public void createSubProject(Subproject subproject, int ownerID) {
+        try {
             Connection conn = ConnectionManager.getConnection();
             String SQL = "Insert into subprojects(name,Description,AllocatedTime,OwnerID,Deadline,ProjectID) values (?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(SQL);
@@ -197,8 +177,7 @@ public class PMTRepository {
             ps.setString(5, subproject.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
             ps.setInt(6, subproject.getProjectID());
             ps.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
@@ -218,7 +197,7 @@ public class PMTRepository {
                 int allocatedTime = rs.getInt("AllocatedTime");
                 User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
                 String Deadline = rs.getString("Deadline");
-                return new Project(id, name, description, allocatedTime,owner, Deadline);
+                return new Project(id, name, description, allocatedTime, owner, Deadline);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
@@ -232,9 +211,7 @@ public class PMTRepository {
         try {
             Connection conn = ConnectionManager.getConnection();
             //Regner hvor meget tid der er blevet brugt af projektet
-            String SQL = "select sum(tasks.allocatedTIme) as timeSpent from tasks " +
-                    "join subprojects where tasks.SubprojectID = subprojects.id " +
-                    "and subprojects.projectid = ? and tasks.status = 'done';";
+            String SQL = "select sum(tasks.allocatedTIme) as timeSpent from tasks " + "join subprojects where tasks.SubprojectID = subprojects.id " + "and subprojects.projectid = ? and tasks.status = 'done';";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, project.getId());
             ResultSet rs = ps.executeQuery();
@@ -243,44 +220,38 @@ public class PMTRepository {
             }
 
             //Regner den totalle allocated time ud.
-            String SQL2 = "select sum(tasks.allocatedTime) as totalAllocatedTime " +
-                    "from tasks join subprojects where tasks.SubprojectID = subprojects.id " +
-                    "and subprojects.projectid = ?;";
-             ps = conn.prepareStatement(SQL2);
+            String SQL2 = "select sum(tasks.allocatedTime) as totalAllocatedTime " + "from tasks join subprojects where tasks.SubprojectID = subprojects.id " + "and subprojects.projectid = ?;";
+            ps = conn.prepareStatement(SQL2);
             ps.setInt(1, project.getId());
-             rs = ps.executeQuery();
-             while(rs.next()) {
-                 project.setAllocatedTime(rs.getInt("totalAllocatedTime"));
-             }
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                project.setAllocatedTime(rs.getInt("totalAllocatedTime"));
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
 
-public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproject) {
+    public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproject) {
         try {
             Connection conn = ConnectionManager.getConnection();
             //Regner hvor meget tid der er blevet brugt af projektet
-            String SQL = "select sum(tasks.allocatedTIme) as timeSpent from tasks " +
-                    "join subprojects where tasks.SubprojectID = subprojects.id " +
-                    "and subprojects.id = ? and tasks.status = 'done';";
+            String SQL = "select sum(tasks.allocatedTIme) as timeSpent from tasks " + "join subprojects where tasks.SubprojectID = subprojects.id " + "and subprojects.id = ? and tasks.status = 'done';";
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, subproject.getId());
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 subproject.setTimeSpent(rs.getInt("timeSpent"));
             }
-
             //Regner den totalle allocated time ud.
-            String SQL2 = "select sum(tasks.allocatedTime) as totalAllocatedTime " +
-                    "from tasks join subprojects where tasks.SubprojectID = subprojects.id " +
-                    "and subprojects.id = ?;";
-             ps = conn.prepareStatement(SQL2);
+            String SQL2 = "select sum(tasks.allocatedTime) as totalAllocatedTime " + "from tasks join subprojects where tasks.SubprojectID = subprojects.id " + "and subprojects.id = ?;";
+            ps = conn.prepareStatement(SQL2);
             ps.setInt(1, subproject.getId());
-             rs = ps.executeQuery();
-             while(rs.next()) {
-                 subproject.setAllocatedTime(rs.getInt("totalAllocatedTime"));
-             }
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                subproject.setAllocatedTime(rs.getInt("totalAllocatedTime"));
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
@@ -312,35 +283,6 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
         }
     }
 
-
-
-    //TODO check denne her
-    public List<Subproject> getAllSubprojects() {
-        List<Subproject> subprojectList = new ArrayList();
-        try {
-            Connection conn = ConnectionManager.getConnection();
-            String SQL = "SELECT * FROM pmt_db.subprojects";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL);
-
-            while (rs.next()) {
-                Subproject subproject;
-                int id = rs.getInt("ID");
-                String name = rs.getString("Name");
-                String description = rs.getString("Description");
-                User owner = userRepository.getUserFromID(rs.getInt("OwnerID"));
-                String deadline = rs.getString("Deadline");
-                int projectID = rs.getInt("ProjectID");
-                subproject = new Subproject(id, name, description, owner, deadline, projectID);
-                calculateTimeSpentAndAllocatedTimeForSubProjects(subproject);
-                subprojectList.add(subproject);
-            }
-            return subprojectList;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
-    }
-
     public void moveTaskToDoing(int taskId) {
         try {
             Connection conn = ConnectionManager.getConnection();
@@ -348,7 +290,6 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -361,7 +302,6 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -374,7 +314,6 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -387,7 +326,6 @@ public void calculateTimeSpentAndAllocatedTimeForSubProjects(Subproject subproje
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }

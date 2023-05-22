@@ -14,15 +14,15 @@ import java.util.List;
 
 @Service
 public class PMTService {
-    private PMTRepository pmtRepository;
-    private UserRepository userRepository;
+    private final PMTRepository pmtRepository;
+    private final UserRepository userRepository;
 
     public PMTService(ApplicationContext context, @Value("${pmt.repository}") String impl, @Value("${user.repository}") String impl2) {
         pmtRepository = (PMTRepository) context.getBean(impl);
         userRepository = (UserRepository) context.getBean(impl2);
     }
 
-    public void addTaskToDB(Task task, int ownerID) throws pmtException{
+    public void addTaskToDB(Task task, int ownerID) throws pmtException {
         pmtRepository.addTaskToDB(task, ownerID);
     }
 
@@ -30,7 +30,7 @@ public class PMTService {
         return pmtRepository.getTasksFromSubproject(subprojectID);
     }
 
-    public List<Subproject> getSubProjects (int projectID, String criteria) {
+    public List<Subproject> getSubProjects(int projectID, String criteria) {
         return pmtRepository.getSubProjects(projectID, criteria);
     }
 
@@ -41,6 +41,7 @@ public class PMTService {
     public User getUserFromID(int ID) {
         return userRepository.getUserFromID(ID);
     }
+
     public User getUser(String email, String password) {
         return userRepository.getUser(email, password);
     }
@@ -52,6 +53,7 @@ public class PMTService {
     public Project getProjectFromID(int projectID) {
         return pmtRepository.getProjectFromID(projectID);
     }
+
     public Subproject getSubProject(int subprojectID) {
         return pmtRepository.getSubproject(subprojectID);
     }
@@ -68,7 +70,7 @@ public class PMTService {
         pmtRepository.createSubProject(subproject, ownerID);
     }
 
-    public List<Project>getAllProjectsByCriteria(String criteria) {
+    public List<Project> getAllProjectsByCriteria(String criteria) {
         return pmtRepository.getAllProjectsByCriteria(criteria);
     }
 

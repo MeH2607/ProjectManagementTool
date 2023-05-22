@@ -3,37 +3,39 @@
 <head>
     <title>Project</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css">
-
-    <link rel="stylesheet" type="text/css" href="/subproject.css">
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" rel="stylesheet">
+    <link href="/subproject.css" rel="stylesheet" type="text/css">
 
 
 </head>
 <body>
 <div class="background" data-theme="light">
     <main class="container">
+
+        <!-- Navbar -->
         <nav class="breadcrumb">
             <ol>
                 <li class="breadcrumb-item"><a class="link-dark" href="/">Home</a></li>
                 <li><a class="link-dark" href="/allprojects">All projects</a></li>
-                <li role="list" dir="ltr">
-                    <a class="link-dark" href="#" aria-haspopup="listbox">[[${project.name}]]</a>
+                <li dir="ltr" role="list">
+                    <a aria-haspopup="listbox" class="link-dark" href="#">[[${project.name}]]</a>
                     <ul role="listbox">
                         <li th:each="project : ${projects}">
                             <a th:href="@{/project/{projectID}(projectID=${project.id})}" th:text="${project.name}"></a>
                         </li>
                     </ul>
                 </li>
-                <li role="list" dir="ltr">
-                    <a class="link-dark" href="#" aria-haspopup="listbox" style="color:blue">[[${subproject.name}]]</a>
+                <li dir="ltr" role="list">
+                    <a aria-haspopup="listbox" class="link-dark" href="#" style="background-color:#a6d6fd; height: 35px">[[${subproject.name}]]</a>
                     <ul role="listbox">
                         <li th:each="subproject : ${subprojects}">
-                            <a th:href="@{/subproject/{subproject}(subproject=${subproject.id})}" th:text="${subproject.name}"></a>
+                            <a th:href="@{/subproject/{subproject}(subproject=${subproject.id})}"
+                               th:text="${subproject.name}"></a>
                         </li>
                     </ul>
                 </li>
@@ -44,29 +46,28 @@
             </ol>
         </nav>
 
-
-        <!-- subproject Name headline -->
+        <!-- View of all tasks in the subproject -->
         <div class="grid">
             <article>
                 <header style="background: rgb(227,226,226); text-align: center ">
                     <h2 th:text="'Subproject: ' + ${subproject.name}"></h2>
-                    <progress th:value="${subproject.timeSpent}" th:max="${subproject.allocatedTime}"></progress>
+                    <progress th:max="${subproject.allocatedTime}" th:value="${subproject.timeSpent}"></progress>
                 </header>
                 <div>
                     <p class="card-text" th:text="${subproject.description}"></p><br>
                 </div>
                 <!-- Button trigger modal -->
-                <a type="button" class="btn btn-primary" data-bs-toggle="modal"
-                   data-bs-target="#staticBackdrop" style="float:right">
+                <a class="btn btn-primary" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
+                   style="float:right" type="button">
                     Create a new task
                 </a>
 
+                <!-- View of the subproject details -->
                 <table class="table table-striped" style="width: 70%">
                     <tbody>
                     <tr>
                         <td>Project Manager:</td>
                         <td><span th:text="${subproject.owner.name}"></span></td>
-                        <!-- Det er denne som skal laves / fixes -->
                     </tr>
                     <tr>
                         <td>Allocated time:</td>
@@ -75,20 +76,20 @@
                     <tr>
                         <td>Deadline:</td>
                         <td><span th:text="${subproject.deadline}"></span></td>
-                        </tr>
+                    </tr>
                     <tr>
                         <td>Tasks nearing deadline</td>
                         <td>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width: 350px; height: 50px;">
-                            <p th:text="${deadLineList.size()} + ' deadlines approaching'"></p>
+                            <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary"
+                                    data-bs-target="#collapseExample" data-bs-toggle="collapse"
+                                    style="width: 350px; height: 50px;" type="button">
+                                <p th:text="${deadLineList.size()} + ' deadlines approaching'"></p>
                             </button>
-                            </p>
                             <div class="collapse" id="collapseExample">
                                 <div class="card card-body" style="width: 350px;">
                                     <li th:each="taskDeadline : ${deadLineList}">
                                         <a th:text="${taskDeadline.name} + ': ' + ${taskDeadline.deadline}"></a>
                                     </li>
-
                                 </div>
                             </div>
                         </td>
@@ -96,58 +97,47 @@
                     </tbody>
                 </table>
 
-
                 <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div aria-hidden="true" aria-labelledby="staticBackdropLabel" class="modal fade" data-bs-backdrop="static"
+                     data-bs-keyboard="false" id="staticBackdrop" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Create a new task</h1>
                             </div>
                             <div class="modal-body">
-                                <form style="text-align: center;" action="#"
-                                      th:action="@{${subproject.id} + '/create_task'}" method="post" th:object="${task}">
+                                <form method="post" style="text-align: center;"
+                                      th:action="@{${subproject.id} + '/create_task'}" th:object="${task}">
                                     <div style="color: white">
-
                                         <div>
-                                            <input type="text" name="name" placeholder="Name" style="width: 100%;"
-                                                   required>
+                                            <input name="name" placeholder="Name" required style="width: 100%;" type="text">
                                         </div>
                                         <div>
-                                            <input type="text" name="description" placeholder="Description"
-                                                   style="width: 100%;" required>
+                                            <input name="description" placeholder="Description" required style="width: 100%;" type="text">
                                         </div>
                                         <div>
-                                            <input type="number" name="allocatedTime" placeholder="AllocatedTime"
-                                                   style="width: 100%;" required>
+                                            <input name="allocatedTime" placeholder="AllocatedTime" required style="width: 100%;" type="number">
                                         </div>
                                         <div>
-                                            <input type="date" name="deadline" placeholder="deadline"
-                                                   style="width: 100%;" required>
+                                            <input name="deadline" placeholder="deadline" required style="width: 100%;" type="date">
                                         </div>
                                         <div>
                                             <select name="ownerID" required>
-                                                <option value="" disabled selected>Select Assignee</option>
-                                                <option th:each="user : ${all_users}" th:value="${user.id}"
-                                                        th:text="${user.name}">
-                                                    <input type="hidden" th:name="ownerID" th:value="${user.id}"/>
+                                                <option disabled selected value="">Select Assignee</option>
+                                                <option th:each="user : ${all_users}" th:text="${user.name}" th:value="${user.id}">
+                                                    <input th:name="ownerID" th:value="${user.id}" type="hidden"/>
                                                 </option>
                                             </select>
                                         </div>
                                         <div>
                                             <label>ID</label>
-                                            <input type="hidden" name="subprojectID" th:value="${subproject.id}"
-                                                   style="width: 100%;" required>
+                                            <input name="subprojectID" required style="width: 100%;" th:value="${subproject.id}" type="hidden">
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success">Create task</button>
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                                Cancel
-                                            </button>
+                                            <button class="btn btn-success" type="submit">Create task</button>
+                                            <button class="btn btn-danger" data-bs-dismiss="modal" type="button">Cancel</button>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
@@ -156,13 +146,11 @@
 
 
                 <!-- Kanban board -->
-
                 <div class="container">
                     <div class="row">
-                        <button id="expandButton" class="btn btn-primary">Expand All</button>
+                        <button class="btn btn-primary" id="expandButton">Expand All</button>
 
-                    <!-- TO DO -->
-
+                        <!-- TO DO -->
                         <div class="col">
                             <div th:href="${subproject}">
                                 <div class="card-body">
@@ -170,53 +158,48 @@
                                 </div>
                                 <tr th:each="task : ${todo}" th:if="${task.subprojectID == subproject.id}">
                                     <section id="accordions" style="width: 100%">
-                                        <details closed th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
+                                        <details closed
+                                                 th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
 
-                                            <summary th:text="${task.name}" class="task-title"></summary>
+                                            <summary class="task-title" th:text="${task.name}"></summary>
                                             <p class="task-description" th:text="${task.description}"></p>
                                             <ul class="task-details">
                                                 <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
                                                 <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
                                                 <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
-                                                <!-- <p><span class="detail-text" th:text="${'task id' + task.id}" ></span></p> -->
                                             </ul>
 
                                             <!-- Move tasks -->
-
                                             <div class="card-body">
                                                 <div class="card-body d-flex justify-content-between">
 
-                                                <!-- ARCHIVE TASK. -->
-
-                                                    <form th:action="@{${subprojectID} + '/move_task_to_archived'}" method="post" th:object="${task}">
-                                                        <input type="hidden" th:name="taskId" th:value="${task.id}"/>
-                                                        <input type="hidden" th:name="returnUrl" th:value="${returnUrl}" />
-                                                        <button type="submit" class="btn btn-primary btn-sm" style="width: 100px">
-                                                            Archive
-                                                        </button>
+                                                    <!-- ARCHIVE TASK. -->
+                                                    <form method="post"
+                                                          th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
+                                                        <input th:name="taskId" th:value="${task.id}" type="hidden"/>
+                                                        <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
+                                                        <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
                                                     </form>
 
 
-                                                <!-- Move to Doing -->
-
-                                                    <form th:action="@{${subprojectID} + '/moveTaskToDoing'}"
-                                                          method="post"
+                                                    <!-- Move to Doing -->
+                                                    <form method="post"
+                                                          th:action="@{${subprojectID} + '/moveTaskToDoing'}"
                                                           th:object="${task}">
 
                                                         <!-- The following value in th:value = taskID is sent to @requestparam in the controller
                                                         when the form is submitted -->
 
-                                                        <input type="hidden" th:name="taskId" th:value="${task.id}"/>
-                                                        <input type="hidden" th:name="returnUrl" th:value="${returnUrl}" />
-                                                        <button type="submit" class="btn btn-primary btn-sm" style="width: 100px">
+                                                        <input th:name="taskId" th:value="${task.id}" type="hidden"/>
+                                                        <input th:name="returnUrl" th:value="${returnUrl}"
+                                                               type="hidden"/>
+                                                        <button class="btn btn-primary btn-sm" style="width: 100px"
+                                                                type="submit">
                                                             Doing
                                                         </button>
                                                     </form>
-
-                                                    </a>
                                                 </div>
                                             </div>
-
                                         </details>
                                     </section>
                                 </tr>
@@ -224,8 +207,7 @@
                         </div>
 
 
-
-                    <!-- DOING -->
+                        <!-- DOING -->
 
                         <div class="col">
                             <div th:href="${subproject}">
@@ -236,9 +218,9 @@
                                     <tr th:each="task : ${doing}" th:if="${task.subprojectID == subproject.id}">
                                         <section id="accordions" style="width: 100%">
                                             <details closed
-                                                     th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}"
-                                                     id="accordion${task.id}">
-                                                <summary th:text="${task.name}" class="task-title"></summary>
+                                                     id="accordion${task.id}"
+                                                     th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
+                                                <summary class="task-title" th:text="${task.name}"></summary>
                                                 <p class="task-description" th:text="${task.description}"></p>
                                                 <ul class="task-details">
                                                     <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
@@ -252,35 +234,29 @@
                                                     <div class="card-body d-flex justify-content-between">
 
                                                         <!-- Move to to-do -->
-
-                                                    <form th:action="@{${subprojectID} + '/moveTaskToTodo'}" method="post" th:object="${task}">
-                                                        <input type="hidden" th:name="taskId" th:value="${task.id}"/>
-                                                        <input type="hidden" th:name="returnUrl" th:value="${returnUrl}" />
-                                                        <button type="submit" class="btn btn-primary btn-sm" style="width: 100px">
-                                                            Todo
-                                                        </button>
-                                                    </form>
+                                                        <form method="post"
+                                                              th:action="@{${subprojectID} + '/moveTaskToTodo'}" th:object="${task}">
+                                                            <input th:name="taskId" th:value="${task.id}" type="hidden"/>
+                                                            <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
+                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Todo</button>
+                                                        </form>
 
                                                         <!-- ARCHIVE TASK. -->
 
-                                                    <form th:action="@{${subprojectID} + '/move_task_to_archived'}" method="post" th:object="${task}">
-                                                        <input type="hidden" th:name="taskId" th:value="${task.id}"/>
-                                                        <input type="hidden" th:name="returnUrl" th:value="${returnUrl}" />
-                                                        <button type="submit" class="btn btn-primary btn-sm" style="width: 100px">
-                                                            Archive
-                                                        </button>
-                                                    </form>
+                                                        <form method="post"
+                                                              th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
+                                                            <input th:name="taskId" th:value="${task.id}" type="hidden"/>
+                                                            <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
+                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
+                                                        </form>
 
                                                         <!-- Move to Done -->
-
-                                                    <form th:action="@{${subprojectID} + '/moveTaskToDone'}" method="post" th:object="${task}">
-                                                        <input type="hidden" th:name="taskId" th:value="${task.id}"/>
-                                                        <input type="hidden" th:name="returnUrl" th:value="${returnUrl}" />
-                                                        <button type="submit" class="btn btn-primary btn-sm" style="width: 100px">
-                                                            Done
-                                                        </button>
-                                                    </form>
-
+                                                        <form method="post"
+                                                              th:action="@{${subprojectID} + '/moveTaskToDone'}" th:object="${task}">
+                                                            <input th:name="taskId" th:value="${task.id}" type="hidden"/>
+                                                            <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
+                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Done</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </details>
@@ -291,14 +267,11 @@
                         </div>
 
 
-
-
-                    <!-- DONE -->
+                        <!-- DONE -->
 
                         <div class="col">
                             <div th:href="${subproject}">
                                 <div class="status-column mb-3">
-
                                     <div class="card-body">
                                         <h3 class="text-center float-middle">DONE</h3>
                                     </div>
@@ -308,46 +281,36 @@
                                             <details closed
                                                      th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
 
-                                                <summary th:text="${task.name}" class="task-title"></summary>
+                                                <summary class="task-title" th:text="${task.name}"></summary>
                                                 <p class="task-description" th:text="${task.description}"></p>
                                                 <ul class="task-details">
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Allocated time: ' + task.allocatedTime}"></span>
-                                                    </p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Deadline: ' + task.deadline}"></span></p>
-                                                    <p><span class="detail-text"
-                                                             th:text="${'Assigned: ' + task.owner.name}"></span></p>
-                                                    <!-- <p><span class="detail-text" th:text="${'task id' + task.id}" ></span></p>-->
+                                                    <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
                                                 </ul>
 
-                                                    <!-- Move to Doing -->
-
+                                                <!-- Move to Doing -->
                                                 <div class="card-body">
                                                     <div class="card-body d-flex justify-content-between">
+                                                        <form method="post"
+                                                              th:action="@{${subprojectID} + '/moveTaskToDoing'}"
+                                                              th:object="${task}">
 
-                                                            <form th:action="@{${subprojectID} + '/moveTaskToDoing'}"
-                                                                  method="post"
-                                                                  th:object="${task}">
-
-                                                                <!-- The following value in th:value = taskID is sent to @requestparam in the controller
-                                                                when the form is submitted -->
-
-                                                                <input type="hidden" th:name="taskId" th:value="${task.id}"/>
-                                                                <input type="hidden" th:name="returnUrl" th:value="${returnUrl}" />
-                                                                <button type="submit" class="btn btn-primary btn-sm" style="width: 100px">Doing</button>
-                                                            </form>
+                                                            <!-- The following value in th:value = taskID is sent to @requestparam in the controller
+                                                            when the form is submitted -->
+                                                            <input th:name="taskId" th:value="${task.id}" type="hidden"/>
+                                                            <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
+                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Doing</button>
+                                                        </form>
 
                                                         <!-- ARCHIVE TASK. -->
 
-                                                        <form th:action="@{${subprojectID} + '/move_task_to_archived'}" method="post" th:object="${task}">
-                                                            <input type="hidden" th:name="taskId" th:value="${task.id}"/>
-                                                            <input type="hidden" th:name="returnUrl" th:value="${returnUrl}" />
-                                                            <button type="submit" class="btn btn-primary btn-sm" style="width: 100px">
-                                                                Archive
-                                                            </button>
+                                                        <form method="post"
+                                                              th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
+                                                            <input th:name="taskId" th:value="${task.id}" type="hidden"/>
+                                                            <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
+                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
                                                         </form>
-
                                                         </a>
                                                     </div>
                                                 </div>
@@ -360,7 +323,6 @@
                     </div>
                 </div>
                 <br>
-
             </article>
         </div>
         <script>
@@ -368,19 +330,21 @@
             const expandButton = document.getElementById('expandButton');
 
             // Add a click event listener to the expand button
-            expandButton.addEventListener('click', function() {
+            expandButton.addEventListener('click', function () {
                 // Get all the details elements
                 const detailsElements = document.querySelectorAll('details');
 
                 // Loop through each details element
-                detailsElements.forEach(function(detailsElement) {
+                detailsElements.forEach(function (detailsElement) {
                     // Toggle the open state of each details element
                     detailsElement.open = !detailsElement.open;
                 });
             });
         </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     </main>
 </div>
 </body>

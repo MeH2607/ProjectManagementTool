@@ -12,19 +12,6 @@ body {
 .row {
     align-content: center;
 }
-/*
-.status-column {
-    background-color: rgba(252, 251, 251, 0.81);
-    width: 400px;
-    margin-top: 20px;
-    margin-right: 20px;
-    margin-left: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
- */
 
 .container {
     max-width: 100%; /* Change this value to adjust the width */
@@ -52,42 +39,6 @@ section {
     margin-bottom: 0;
 }
 
-.task-done {
-    background-color: rgb(170, 255, 148);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.task-doing {
-    background-color: rgb(255, 240, 153);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.task-not-started {
-    background-color: #ffb088;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.task-title {
-    margin-left: 10px;
-}
-
-.task-details {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f7f7f7;
-    line-height: 1;
-}
-
-.task-description {
-    color: #555;
-    font-style: italic;
-    font-size: 0.9em;
-    margin-left: 15px;
-}
-
 .detail-text {
     font-size: 0.8em;
     margin-left: 15px;
@@ -96,6 +47,7 @@ section {
 .task-title {
     font-size: 1.2em;
 }
+
 .background {
     background-color: rgb(17, 32, 51);
     background-position: center;
