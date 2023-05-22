@@ -46,28 +46,7 @@
 
 
 
-        <!-- deadline toast -->
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-            <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <strong class="me-auto">Pending deadlines</strong>
-                    <small class="me-auto" th:text="${deadLineList.size()} + 'deadlines approaching'"></small>
 
-                </div>
-                <div class="toast-body" >Deadline approaching for tasks:
-                    <li th:each="taskDeadline : ${deadLineList}">
-                        <a th:text="${taskDeadline.name}"></a>
-                    </li>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            $(document).ready(function() {
-                // Show the toast on page load
-                $('.toast').toast('show');
-            });
-        </script>
 
 
 
