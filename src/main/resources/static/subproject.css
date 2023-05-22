@@ -113,3 +113,10 @@ section {
     line-height: 0.7;
     border-radius: 5px;
 }
+
+input[type="checkbox"]:checked + .toast {
+    display: block;
+}
+.toast {
+    display: none;
+}

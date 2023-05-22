@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class PmtController {
     public PmtController(PMTService pmtService) {
         this.pmtService = pmtService;
     }
+
     private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("user") != null;
     }
@@ -33,9 +36,9 @@ public class PmtController {
         model.addAttribute("projects", projects);
         model.addAttribute("subprojects", subprojects);
 
-        model.addAttribute("user",new User());
+        model.addAttribute("user", new User());
 
-        List<String>roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
+        List<String> roles = new ArrayList<>(List.of("Projektleder", "Programmør", "Webudvikler", "Backend udvikler", "Frontend udvikler"));
         model.addAttribute("roles", roles);
 
         return "Homepage";
@@ -254,6 +257,15 @@ public class PmtController {
         String returnUrl = request.getRequestURI();
         model.addAttribute("returnUrl", returnUrl);
         System.out.println("print from subproject" + returnUrl);
+
+        List<Task> deadLineList = new ArrayList<>();
+        for (Task taskDeadline : list) {
+            //Checker om der er 10 dage mellem dags dato og deadline og at en task ikke er sat til done
+            if (!taskDeadline.getStatus().equals("DONE") && ChronoUnit.DAYS.between(LocalDate.now(), taskDeadline.getDeadline()) < 10) {
+                deadLineList.add(taskDeadline);
+            }
+        model.addAttribute("deadLineList", deadLineList);
+        }
 
         return isLoggedIn(session) ? "subproject" : "login";
     }
