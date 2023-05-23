@@ -41,7 +41,7 @@ public class PmtController {
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("user", new User());
         model.addAttribute("roles", roles);
-        return "Homepage";
+        return "homepage";
     }
 
     //Shows the login page
