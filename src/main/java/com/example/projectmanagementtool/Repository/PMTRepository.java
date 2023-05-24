@@ -8,10 +8,18 @@ import com.example.projectmanagementtool.Repository.Util.ConnectionManager;
 import com.example.projectmanagementtool.Service.pmtException;
 import org.springframework.stereotype.Repository;
 
+import java.math.RoundingMode;
 import java.sql.*;
+import java.text.DecimalFormatSymbols;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 
 @Repository("PMTRepository")
 public class PMTRepository {
@@ -225,6 +233,28 @@ public class PMTRepository {
             rs = ps.executeQuery();
             while (rs.next()) {
                 project.setAllocatedTime(rs.getInt("totalAllocatedTime"));
+                project.setTimeRemaining(project.getAllocatedTime() - project.getTimeSpent());
+                project.setAllocatedTimeInWorkdays(project.getAllocatedTime() / 8);
+
+                LocalDate currentDate = LocalDate.now();
+                LocalDate deadline = project.getDeadline();
+                int daysUntilDeadline = 0;
+                while (currentDate.isBefore(deadline)) {
+                    if (currentDate.getDayOfWeek() != DayOfWeek.SATURDAY && currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                        daysUntilDeadline++;
+                    }
+                    currentDate = currentDate.plusDays(1);
+                }
+                project.setDaysUntilDeadline(daysUntilDeadline);
+
+                double hoursPerDay = project.getTimeRemaining() / project.getDaysUntilDeadline();
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+                symbols.setDecimalSeparator(',');
+                DecimalFormat df = new DecimalFormat("#.##", symbols);
+                df.setRoundingMode(RoundingMode.HALF_UP);
+                String formattedHoursPerDay = df.format(hoursPerDay);
+                project.setHoursPerDayUntilDeadline(Double.parseDouble(formattedHoursPerDay.replace(',', '.')));
+
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
@@ -250,6 +280,27 @@ public class PMTRepository {
             rs = ps.executeQuery();
             while (rs.next()) {
                 subproject.setAllocatedTime(rs.getInt("totalAllocatedTime"));
+                subproject.setTimeRemaining(subproject.getAllocatedTime() - subproject.getTimeSpent());
+                subproject.setAllocatedTimeInWorkdays(subproject.getAllocatedTime() / 8);
+
+                LocalDate currentDate = LocalDate.now();
+                LocalDate deadline = subproject.getDeadline();
+                int daysUntilDeadline = 0;
+                while (currentDate.isBefore(deadline)) {
+                    if (currentDate.getDayOfWeek() != DayOfWeek.SATURDAY && currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                        daysUntilDeadline++;
+                    }
+                    currentDate = currentDate.plusDays(1);
+                }
+                subproject.setDaysUntilDeadline(daysUntilDeadline);
+
+                double hoursPerDay = subproject.getTimeRemaining() / subproject.getDaysUntilDeadline();
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+                symbols.setDecimalSeparator(',');
+                DecimalFormat df = new DecimalFormat("#.##", symbols);
+                df.setRoundingMode(RoundingMode.HALF_UP);
+                String formattedHoursPerDay = df.format(hoursPerDay);
+                subproject.setHoursPerDayUntilDeadline(Double.parseDouble(formattedHoursPerDay.replace(',', '.')));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);

@@ -13,6 +13,10 @@ public class Subproject implements Component {
     private int timeSpent;
     private LocalDate deadline;
     private int projectID;
+    private double timeRemaining;
+    private int daysUntilDeadline;
+    private double allocatedTimeInWorkdays;
+    private double hoursPerDayUntilDeadline;
 
     public Subproject(int id, String name, String description, User owner, String deadline, int subprojectID) {
         this.id = id;
@@ -94,6 +98,38 @@ public class Subproject implements Component {
 
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
+    }
+
+    public double getTimeRemaining() {
+        return timeRemaining;
+    }
+
+    public void setTimeRemaining(double timeRemaining) {
+        this.timeRemaining = timeRemaining;
+    }
+
+    public int getDaysUntilDeadline() {
+        return daysUntilDeadline;
+    }
+
+    public void setDaysUntilDeadline(int daysUntilDeadline) {
+        this.daysUntilDeadline = daysUntilDeadline;
+    }
+
+    public double getAllocatedTimeInWorkdays() {
+        return allocatedTimeInWorkdays;
+    }
+
+    public void setAllocatedTimeInWorkdays(double allocatedTimeInWorkdays) {
+        this.allocatedTimeInWorkdays = allocatedTimeInWorkdays;
+    }
+
+    public double getHoursPerDayUntilDeadline() {
+        return hoursPerDayUntilDeadline;
+    }
+
+    public void setHoursPerDayUntilDeadline(double hoursPerDayUntilDeadline) {
+        this.hoursPerDayUntilDeadline = hoursPerDayUntilDeadline;
     }
 
     @Override

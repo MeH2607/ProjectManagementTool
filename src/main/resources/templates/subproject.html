@@ -49,15 +49,18 @@
         <!-- View of all tasks in the subproject -->
         <div class="grid">
             <article>
-                <header style="background: rgb(227,226,226); text-align: center ">
-                    <h2 th:text="'Subproject: ' + ${subproject.name}"></h2>
-                    <progress th:max="${subproject.allocatedTime}" th:value="${subproject.timeSpent}"></progress>
+                <header style="background: rgb(227, 226, 226); text-align: center; height: 120px;">
+                    <h3 th:text="${subproject.name}"></h3>
+                </header>
+                <header style="background: rgb(243,243,243); text-align: center; height: 70px;">
+                    <span th:text="'Progress: '+ ${subproject.timeSpent} +' / '+ ${subproject.allocatedTime} + ' hours'"></span>
+                    <td><progress th:max="${subproject.allocatedTime}" th:value="${subproject.timeSpent}" style="height: 20px"></progress></td>
                 </header>
                 <div>
                     <p class="card-text" th:text="${subproject.description}"></p><br>
                 </div>
                 <!-- Button trigger modal -->
-                <a class="btn btn-primary" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
+                <a class="btn btn-primary btn-sm" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
                    style="float:right" type="button">
                     Create a new task
                 </a>
@@ -66,12 +69,16 @@
                 <table class="table table-striped" style="width: 70%">
                     <tbody>
                     <tr>
-                        <td>Project Manager:</td>
+                        <td>Owner:</td>
                         <td><span th:text="${subproject.owner.name}"></span></td>
                     </tr>
                     <tr>
-                        <td>Allocated time:</td>
-                        <td><span th:text="${subproject.timeSpent} + ' / '+ ${subproject.allocatedTime}"></span></td>
+                        <td>Remaining workload </td>
+                        <td><span th:text="${subproject.allocatedTimeInWorkdays} + ' days'"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Estimated daily workload until deadline:</td>
+                        <td><span th:text="${subproject.hoursPerDayUntilDeadline} + ' hours/day'"></span></td>
                     </tr>
                     <tr>
                         <td>Deadline:</td>
@@ -80,7 +87,7 @@
                     <tr>
                         <td>Tasks nearing deadline</td>
                         <td>
-                            <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary"
+                            <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary btn-sm"
                                     data-bs-target="#collapseExample" data-bs-toggle="collapse"
                                     style="width: 350px; height: 50px;" type="button">
                                 <p th:text="${deadLineList.size()} + ' deadlines approaching'"></p>
@@ -148,7 +155,7 @@
                 <!-- Kanban board -->
                 <div class="container">
                     <div class="row">
-                        <button class="btn btn-primary" id="expandButton">Expand All</button>
+                        <button class="btn btn-primary btn-sm" id="expandButton">Expand All</button>
 
                         <!-- TO DO -->
                         <div class="col">

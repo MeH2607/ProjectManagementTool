@@ -46,7 +46,7 @@
 
         <!-- View of all subprojects for specific project -->
         <h1 style="text-align: center; color: white;"><a> All subprojects for [[${project.name}]] </a></h1>
-        <b class="btn btn-primary" data-bs-target="#staticBackdrop2" data-bs-toggle="modal" style="float: right"
+        <b class="btn btn-primary btn-sm" data-bs-target="#staticBackdrop2" data-bs-toggle="modal" style="float: right"
            type="button">Create a new subproject
         </b>
 
@@ -57,7 +57,7 @@
                 <option th:each="criteria : ${sortCriterias}" th:text="${criteria}" th:value="${criteria}"></option>
             </select>
             <br>
-            <button class="btn btn-primary" style="width: 20%;  margin-top: 5px" type="submit">Sort</button>
+            <button class="btn btn-primary btn-sm" style="width: 20%;  margin-top: 5px" type="submit">Sort</button>
         </form>
 
         <!-- Modal for creating a new subproject -->
@@ -98,8 +98,8 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button class="btn btn-success" type="submit">Create subproject</button>
-                                <button class="btn btn-danger" data-bs-dismiss="modal" type="button">Cancel</button>
+                                <button class="btn btn-success btn-sm" type="submit">Create subproject</button>
+                                <button class="btn btn-danger btn-sm" data-bs-dismiss="modal" type="button">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -108,14 +108,21 @@
         </div>
 
         <!-- View of all subprojects -->
+
         <div class="grid">
             <article th:each="subproject : ${subprojects}">
-                <header style="background: rgb(227, 226, 226); text-align: center; height: 150px;">
+                <header style="background: rgb(227, 226, 226); text-align: center; height: 120px;">
                     <h3 th:text="${subproject.name}"></h3>
-                    <progress th:max="${subproject.allocatedTime}" th:value="${subproject.timeSpent}"></progress>
                 </header>
-                <div style="height: 200px;">
-                    <p class="card-text" th:text="${subproject.description}"></p><br>
+                <header style="background: rgb(243,243,243); text-align: center; height: 70px;">
+                    <span th:text="'Progress: '+ ${subproject.timeSpent} +' / '+ ${subproject.allocatedTime} + ' hours'"></span>
+                    <td><progress th:max="${subproject.allocatedTime}" th:value="${subproject.timeSpent}" style="height: 20px"></progress></td>
+                </header>
+                <header style="background: rgb(255,255,255); height: 100px;">
+                    <p class="card-text" th:text="${subproject.description}"></p>
+                </header>
+
+                <div style="height: 140px;">
                     <table class="table table-striped">
                         <tbody>
                         <tr>
@@ -123,8 +130,12 @@
                             <td><span th:text="${subproject.owner.name}"></span></td>
                         </tr>
                         <tr>
-                            <td>Allocated time (hours):</td>
-                            <td><span th:text="${subproject.timeSpent} +' / '+ ${subproject.allocatedTime}"></span></td>
+                            <td>Remaining workload </td>
+                            <td><span th:text="${subproject.allocatedTimeInWorkdays} + ' days'"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Estimated daily workload until deadline:</td>
+                            <td><span th:text="${subproject.hoursPerDayUntilDeadline} + ' hours/day'"></span></td>
                         </tr>
                         <tr>
                             <td>Deadline:</td>
@@ -132,13 +143,14 @@
                         </tr>
                         </tbody>
                     </table>
-                    <br>
                 </div>
                 <footer>
                     <a class="btn btn-link btn-block btn-sm" th:href="@{'/subproject/' + ${subproject.id}}">Show full details</a>
                 </footer>
             </article>
         </div>
+
+
     </main>
 </div>
 <script crossorigin="anonymous"
