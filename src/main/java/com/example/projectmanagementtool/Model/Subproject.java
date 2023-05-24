@@ -44,13 +44,6 @@ public class Subproject implements Component {
         this.projectID = projectID;
     }
 
-    // getProjectMembers should iterate the subprojects tasks by each call
-    public List<User> getSubprojectMembers() {
-        List<User> subprojectMembers = new ArrayList<>();
-        // TODO iterate all tasks in this subproject and add the members to the list before returning it
-        return subprojectMembers;
-    }
-
     @Override
     public String getName() {
         return name;

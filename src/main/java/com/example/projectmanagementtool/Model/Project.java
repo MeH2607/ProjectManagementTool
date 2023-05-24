@@ -11,13 +11,9 @@ public class Project implements Component {
     private int allocatedTime;
     private User owner;
     private LocalDate deadline;
-    private int ownerID; //Bruges til at få et id fra owner når man vælger en owner fra html formen,
-    // da Thymeleaf har svært ved at arbejde
     private int timeSpent;
-    private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
     public Project() {
-        this.subprojectList = new ArrayList<Subproject>();
         this.timeSpent = 0;
     }
 
@@ -28,7 +24,6 @@ public class Project implements Component {
         this.allocatedTime = allocatedTime;
         this.owner = owner;
         this.deadline = LocalDate.parse(deadline);
-        this.subprojectList = new ArrayList<Subproject>();
         this.timeSpent = 0;
     }
 
@@ -39,7 +34,6 @@ public class Project implements Component {
         this.allocatedTime = allocatedTime;
         this.owner = new User();
         this.deadline = LocalDate.parse(deadline);
-        this.subprojectList = new ArrayList<Subproject>();
     }
 
     public Project(int id, String name, String description, int allocatedTime, String deadline, User owner) {
@@ -50,32 +44,6 @@ public class Project implements Component {
         this.owner = new User();
         this.deadline = LocalDate.parse(deadline);
         this.owner = owner;
-        this.subprojectList = new ArrayList<Subproject>();
-    }
-
-    public void addSubproject(Subproject newSubproject) {
-        subprojectList.add(newSubproject);
-    }
-
-    public List<Subproject> getSubprojectList() {
-        return subprojectList;
-    }
-
-    public void setSubprojectList(List<Subproject> subprojectList) {
-        this.subprojectList = subprojectList;
-    }
-
-    public List<User> getProjectMembers() {
-        // Finds 'projectmembers' by iterating all members in all subprojects
-        List<User> projectMembers = new ArrayList<User>();
-        // Itererating subprojects
-        for (Subproject subproject : subprojectList) {
-            // Itererating all users in all subprojects and adding to projectmembers
-            for (User user : subproject.getSubprojectMembers()) {
-                projectMembers.add(user);
-            }
-        }
-        return projectMembers;
     }
 
     @Override
@@ -123,14 +91,6 @@ public class Project implements Component {
         this.deadline = deadline;
     }
 
-    public int getOwnerID() {
-        return ownerID;
-    }
-
-    public void setOwnerID(int ownerID) {
-        this.ownerID = ownerID;
-    }
-
     public int getId() {
         return id;
     }
@@ -149,6 +109,6 @@ public class Project implements Component {
 
     @Override
     public String toString() {
-        return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' + ", owner=" + owner + ", deadline=" + deadline + ", subprojectList=" + subprojectList + '}';
+        return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' + ", owner=" + owner + ", deadline=" + deadline;
     }
 }

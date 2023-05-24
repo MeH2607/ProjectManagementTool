@@ -149,7 +149,6 @@ public class PMTRepository {
 
 
     public void createProject(Project project, int ownerID) {
-        project.setSubprojectList(new ArrayList<>());
         try {
             Connection conn = ConnectionManager.getConnection();
             String SQL = "Insert into projects(name,Description,AllocatedTime,OwnerID,Deadline) values (?,?,?,?,?)";
@@ -174,7 +173,7 @@ public class PMTRepository {
             ps.setString(2, subproject.getDescription());
             ps.setInt(3, 0);
             ps.setInt(4, ownerID);
-            ps.setString(5, subproject.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //TODO double check this method
+            ps.setString(5, subproject.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             ps.setInt(6, subproject.getProjectID());
             ps.executeUpdate();
         } catch (SQLException e) {
