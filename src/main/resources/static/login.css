@@ -10,7 +10,7 @@ body {
     line-height: 1;
     background-color: rgb(17, 32, 51);
     background-position: center;
-    background-size: cover;
+    background-size: auto;
 }
 
 .container {
@@ -33,3 +33,10 @@ article {
     line-height: 0.7;
     border-radius: 5px;
 }
+
+.background {
+    background-color: rgb(17, 32, 51);
+    background-position: center;
+    background-size: cover;
+}
+

@@ -14,6 +14,10 @@ public class Project implements Component {
     private int ownerID; //Bruges til at få et id fra owner når man vælger en owner fra html formen,
     // da Thymeleaf har svært ved at arbejde
     private int timeSpent;
+    private double timeRemaining;
+    private int daysUntilDeadline;
+    private double allocatedTimeInWorkdays;
+    private double hoursPerDayUntilDeadline;
     private List<Subproject> subprojectList; // The project contains all its subprojects in this list
 
     public Project() {
@@ -87,6 +91,30 @@ public class Project implements Component {
         this.name = name;
     }
 
+    public double getTimeRemaining() {
+        return timeRemaining;
+    }
+
+    public void setTimeRemaining(int timeRemaining) {
+        this.timeRemaining = timeRemaining;
+    }
+
+    public int getDaysUntilDeadline() {
+        return daysUntilDeadline;
+    }
+
+    public void setDaysUntilDeadline(int daysUntilDeadline) {
+        this.daysUntilDeadline = daysUntilDeadline;
+    }
+
+    public double getAllocatedTimeInWorkdays() {
+        return allocatedTimeInWorkdays;
+    }
+
+    public void setAllocatedTimeInWorkdays(int allocatedTimeInWorkdays) {
+        this.allocatedTimeInWorkdays = allocatedTimeInWorkdays;
+    }
+
     @Override
     public String getDescription() {
         return description;
@@ -145,6 +173,13 @@ public class Project implements Component {
 
     public void setTimeSpent(int timeSpent) {
         this.timeSpent = timeSpent;
+    }
+
+    public double getHoursPerDayUntilDeadline() {
+        return hoursPerDayUntilDeadline;
+    }
+    public void setHoursPerDayUntilDeadline(double hoursPerDayUntilDeadline) {
+        this.hoursPerDayUntilDeadline = hoursPerDayUntilDeadline;
     }
 
     @Override

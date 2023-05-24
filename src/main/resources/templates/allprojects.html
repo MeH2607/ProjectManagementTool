@@ -45,7 +45,7 @@
 
         <!-- Headline, sorting and create new project -->
         <h1 style="text-align: center; color: white;"><a> All projects </a></h1>
-        <b class="btn btn-primary" data-bs-target="#staticBackdrop" data-bs-toggle="modal" style="float: right"
+        <b class="btn btn-primary btn-sm" data-bs-target="#staticBackdrop" data-bs-toggle="modal" style="float: right"
            type="button">Create a new project
         </b>
         <form action="/allprojects" method="get" th:object="${criteria}">
@@ -54,7 +54,7 @@
                 <option th:each="criteria : ${sortCriterias}" th:text="${criteria}" th:value="${criteria}"></option>
             </select>
             <br>
-            <button class="btn btn-primary" style="width: 20%;  margin-top: 5px" type="submit">Sort</button>
+            <button class="btn btn-primary btn-sm" style="width: 20%;  margin-top: 5px" type="submit">Sort</button>
         </form>
 
         <!--Modal for creating a new project-->
@@ -106,13 +106,18 @@
         <!-- View of all projects -->
         <div class="grid">
             <article th:each="project : ${projects}">
-                <header style="background: rgb(227, 226, 226); text-align: center; height: 150px;">
+                <header style="background: rgb(227, 226, 226); text-align: center; height: 120px;">
                     <h3 th:text="${project.name}"></h3>
-                    <progress th:max="${project.allocatedTime}" th:value="${project.timeSpent}"></progress>
-
                 </header>
-                <div style="height: 200px;">
-                    <p class="card-text" th:text="${project.description}"></p><br>
+                <header style="background: rgb(243,243,243); text-align: center; height: 70px;">
+                    <span th:text="'Progress: '+ ${project.timeSpent} +' / '+ ${project.allocatedTime} + ' hours'"></span>
+                    <td><progress th:max="${project.allocatedTime}" th:value="${project.timeSpent}" style="height: 20px"></progress></td>
+                </header>
+                <header style="background: rgb(255,255,255); height: 100px;">
+                    <p class="card-text" th:text="${project.description}"></p>
+                </header>
+
+                <div style="height: 140px;">
                     <table class="table table-striped">
                         <tbody>
                         <tr>
@@ -120,8 +125,12 @@
                             <td><span th:text="${project.owner.name}"></span></td>
                         </tr>
                         <tr>
-                            <td>Allocated time (hours):</td>
-                            <td><span th:text="${project.timeSpent} +' / '+ ${project.allocatedTime}"></span></td>
+                            <td>Remaining workload </td>
+                            <td><span th:text="${project.allocatedTimeInWorkdays} + ' days'"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Estimated daily workload until deadline:</td>
+                            <td><span th:text="${project.hoursPerDayUntilDeadline} + ' hours/day'"></span></td>
                         </tr>
                         <tr>
                             <td>Deadline:</td>
@@ -129,11 +138,9 @@
                         </tr>
                         </tbody>
                     </table>
-                    <br>
                 </div>
                 <footer>
-                    <a class="btn btn-link btn-block btn-sm" th:href="@{'/project/' + ${project.id}}">Show full
-                        details</a>
+                    <a class="btn btn-link btn-block btn-sm" th:href="@{'/project/' + ${project.id}}">Show full details</a>
                 </footer>
             </article>
         </div>

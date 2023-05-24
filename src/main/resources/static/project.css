@@ -48,11 +48,13 @@ section {
     font-size: 1.2em;
 }
 
+
 .background {
     background-color: rgb(17, 32, 51);
     background-position: center;
     background-size: cover;
 }
+
 
 .breadcrumb {
     background-color: rgba(255, 255, 255, 0.89);

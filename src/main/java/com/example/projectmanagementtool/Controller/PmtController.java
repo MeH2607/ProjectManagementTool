@@ -74,17 +74,20 @@ public class PmtController {
 
     //Shows a view with all projects, and the option to create a new project. You can also sort the projects by name, owner or deadline.
     @GetMapping("allprojects")
-    public String allProjects(@RequestParam(required = false) String criteria, Model model, HttpSession session) {
+    public String allProjects(@RequestParam(required = false) String criteria, Model model, HttpSession session, HttpServletRequest request) {
         List<Project> projects = (criteria != null) ? pmtService.getAllProjectsByCriteria(criteria) : pmtService.getAllProjectsByCriteria("name");
         List<Subproject> subprojects = pmtService.getAllSubProjectsByCriteria("name");
         List<String> sortCriterias = new ArrayList<>(List.of("Name", "Owner", "Deadline"));
+        String returnUrl = request.getRequestURI();
         List<User> allUsers = pmtService.getAllUsers();
+
 
         model.addAttribute("projects", projects);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("sortCriterias", sortCriterias);
         model.addAttribute("criteria", criteria);
         model.addAttribute("all_users", allUsers);
+        model.addAttribute("returnUrl", returnUrl);
         return isLoggedIn(session) ? "allprojects" : "login";
     }
 
@@ -171,7 +174,7 @@ public class PmtController {
         List<Task> deadLineList = new ArrayList<>();
         for (Task taskDeadline : allTasks) {
             //Checker om der er 10 dage mellem dags dato og deadline og at en task ikke er sat til done
-            if (!taskDeadline.getStatus().equals("DONE") && ChronoUnit.DAYS.between(LocalDate.now(), taskDeadline.getDeadline()) < 10) {
+            if (!taskDeadline.getStatus().equals("Done") && ChronoUnit.DAYS.between(LocalDate.now(), taskDeadline.getDeadline()) < 10 && taskDeadline.getSubprojectID()==subprojectID) {
                 deadLineList.add(taskDeadline);
             }
             model.addAttribute("deadLineList", deadLineList);
