@@ -18,10 +18,10 @@
         <!-- Navbar -->
         <nav class="breadcrumb">
             <ol>
-                <li class="breadcrumb-item"><a class="link-dark" href="/">Home</a></li>
-                <li><a class="link-dark" href="/allprojects">All projects</a></li>
+                <li class="breadcrumb-item"><a class="link-dark" href="/">Startside</a></li>
+                <li><a class="link-dark" href="/allprojects">Alle projekter</a></li>
                 <li dir="ltr" role="list">
-                    <a aria-haspopup="listbox" class="link-dark" href="#">Select project</a>
+                    <a aria-haspopup="listbox" class="link-dark" href="#">Vælg projekt</a>
                     <ul role="listbox">
                         <li th:each="project : ${projects}">
                             <a th:href="@{/project/{projectID}(projectID=${project.id})}" th:text="${project.name}"></a>
@@ -29,7 +29,7 @@
                     </ul>
                 </li>
                 <li dir="ltr" role="list">
-                    <a aria-haspopup="listbox" class="link-dark" href="#">Select subproject</a>
+                    <a aria-haspopup="listbox" class="link-dark" href="#">Vælg underprojekt</a>
                     <ul role="listbox">
                         <li th:each="subproject : ${subprojects}">
                             <a th:href="@{/subproject/{subproject}(subproject=${subproject.id})}"
@@ -39,26 +39,26 @@
                 </li>
             </ol>
             <ol style="float: right; margin-right: 10px">
-                <li class="breadcrumb-item"><a class="link-dark" href="/profile" style="background-color:#a6d6fd; height: 35px">Your profile</a>
+                <li class="breadcrumb-item"><a class="link-dark" href="/profile" style="background-color:#a6d6fd; height: 35px">Din profil</a>
                 </li>
-                <li class="breadcrumb-item"><a class="link-dark" href="/logout">Logout</a></li>
+                <li class="breadcrumb-item"><a class="link-dark" href="/logout">Log ud</a></li>
 
             </ol>
         </nav>
 
         <!-- Page title -->
-        <h1 style="text-align: center; color: white;"><a> Your Profile </a></h1>
+        <h1 style="text-align: center; color: white;"><a> Din profil </a></h1>
 
         <!-- Kanban board and user infpo -->
         <div class="grid">
             <article>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" style="width: 150px">Username:</span>
+                    <span class="input-group-text" style="width: 150px">Brugernavn:</span>
                     <span class="input-group-text" th:text="${user.name}"></span>
                 </div>
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text" style="width: 150px">Role:</span>
+                    <span class="input-group-text" style="width: 150px">Rolle:</span>
                     <span class="input-group-text" th:text="${user.role}"></span>
                 </div>
                 <div class="container">
@@ -76,12 +76,12 @@
                                             <summary class="task-title" th:text="${task.name}"></summary>
                                             <p class="task-description" th:text="${task.description}"></p>
                                             <ul class="task-details">
-                                                <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                                <p><span class="detail-text" th:text="${'Allokeret tid ' + task.allocatedTime}"></span></p>
                                                 <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
                                                 <p>
                                                     <span class="detail-text" th:each="subpoject : ${subprojects}"
                                                          th:if="${subpoject.id == task.subprojectID}"
-                                                         th:text="${'Subproject: ' + subpoject.name}">
+                                                         th:text="${'Underprojekt: ' + subpoject.name}">
                                                     </span>
                                                 </p>
                                             </ul>
@@ -93,7 +93,7 @@
                                                           th:action="@{${'subproject/' + task.subprojectID + '/move_task_to_archived'}}" th:object="${task}">
                                                         <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                         <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                        <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive
+                                                        <button class="btn btn-outline-dark btn-sm" style="width: 100px; background-color: white; margin-top: 5px" type="submit">Arkiver</button>
                                                         </button>
                                                     </form>
 
@@ -104,15 +104,13 @@
                                                         when the form is submitted -->
                                                         <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                         <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                        <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Doing</button>
+                                                        <button class="btn btn-outline-dark btn-sm" style="width: 100px; background-color: white; margin-top: 5px" type="submit">Doing</button>
                                                     </form>
                                                     </a>
                                                 </div>
                                             </div>
                                             <footer>
-                                                <a class="btn btn-link btn-block btn-sm"
-                                                   th:href="@{'/subproject/' + ${task.subprojectID}}">Go to subproject
-                                                </a>
+                                                <a class="btn btn-outline-dark btn-block btn-sm" style="background-color: white" th:href="@{'/subproject/' + ${task.subprojectID}}">Gå til underprojekt</a>
                                             </footer>
                                         </details>
                                     </section>
@@ -135,11 +133,11 @@
                                                 <summary class="task-title" th:text="${task.name}"></summary>
                                                 <p class="task-description" th:text="${task.description}"></p>
                                                 <ul class="task-details">
-                                                    <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Allokeret tid: ' + task.allocatedTime}"></span></p>
                                                     <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
                                                     <p><span class="detail-text" th:each="subpoject : ${subprojects}"
                                                              th:if="${subpoject.id == task.subprojectID}"
-                                                             th:text="${'Subproject: ' + subpoject.name}"></span>
+                                                             th:text="${'Underprojekt: ' + subpoject.name}"></span>
                                                     </p>
                                                 </ul>
 
@@ -151,7 +149,7 @@
                                                               th:action="@{${'subproject/' + task.subprojectID + '/moveTaskToTodo'}}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Todo</button>
+                                                            <button class="btn btn-outline-dark btn-sm" style="width: 100px; background-color: white; margin-top: 5px" type="submit">Todo</button>
                                                         </form>
 
                                                         <!-- ARCHIVE TASK. -->
@@ -159,7 +157,7 @@
                                                               th:action="@{${'subproject/' + task.subprojectID + '/move_task_to_archived'}}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
+                                                            <button class="btn btn-outline-dark btn-sm" style="width: 100px; background-color: white; margin-top: 5px" type="submit">Arkiver</button>
                                                         </form>
 
                                                         <!-- Move to Done -->
@@ -167,16 +165,14 @@
                                                               th:action="@{${'subproject/' + task.subprojectID + '/moveTaskToDone'}}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Done</button>
+                                                            <button class="btn btn-outline-dark btn-sm" style="width: 100px; background-color: white; margin-top: 5px" type="submit">Done</button>
                                                         </form>
 
                                                     </div>
                                                 </div>
 
                                                 <footer>
-                                                    <a class="btn btn-link btn-block btn-sm"
-                                                       th:href="@{'/subproject/' + ${task.subprojectID}}">Go to subproject
-                                                    </a>
+                                                    <a class="btn btn-outline-dark btn-block btn-sm" style="background-color: white;" th:href="@{'/subproject/' + ${task.subprojectID}}">Gå til underprojekt</a>
                                                 </footer>
                                             </details>
                                         </section>
@@ -199,11 +195,11 @@
                                                 <summary class="task-title" th:text="${task.name}"></summary>
                                                 <p class="task-description" th:text="${task.description}"></p>
                                                 <ul class="task-details">
-                                                    <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Allokeret tid: ' + task.allocatedTime}"></span></p>
                                                     <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
                                                     <p><span class="detail-text" th:each="subpoject : ${subprojects}"
                                                              th:if="${subpoject.id == task.subprojectID}"
-                                                             th:text="${'Subproject: ' + subpoject.name}"></span>
+                                                             th:text="${'Underprojekt: ' + subpoject.name}"></span>
                                                     </p>
                                                 </ul>
 
@@ -214,7 +210,7 @@
                                                         <form method="post" th:action="@{${'subproject/' + task.subprojectID + '/moveTaskToDoing'}}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Doing</button>
+                                                            <button class="btn btn-outline-dark btn-sm" style="width: 100px; background-color: white; margin-top: 5px" type="submit">Doing</button>
                                                         </form>
 
                                                         <!-- ARCHIVE TASK. -->
@@ -222,14 +218,12 @@
                                                         <form method="post" th:action="@{${'subproject/' + task.subprojectID + '/move_task_to_archived'}}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
+                                                            <button class="btn btn-outline-dark btn-sm" style="width: 100px; background-color: white; margin-top: 5px" type="submit">Arkiver</button>
                                                         </form>
-                                                        </a>
                                                     </div>
                                                 </div>
                                                 <footer>
-                                                    <a class="btn btn-link btn-block btn-sm"
-                                                       th:href="@{'/subproject/' + ${task.subprojectID}}">Go to subproject</a>
+                                                    <a class="btn btn-outline-dark btn-block btn-sm" style="background-color: white;" th:href="@{'/subproject/' + ${task.subprojectID}}">Gå til underprojekt</a>
                                                 </footer>
                                             </details>
                                         </section>

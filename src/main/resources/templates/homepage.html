@@ -17,10 +17,10 @@
     <header class="container">
         <nav class="breadcrumb">
             <ol>
-                <li><a class="link-dark" href="/" style="background-color:#a6d6fd; height: 35px">Home</a></li>
-                <li><a class="link-dark" href="/allprojects">All projects</a></li>
+                <li><a class="link-dark" href="/" style="background-color:#a6d6fd; height: 35px">Startside</a></li>
+                <li><a class="link-dark" href="/allprojects">Alle projekter</a></li>
                 <li dir="ltr" role="list">
-                    <a aria-haspopup="listbox" class="link-dark" href="#">Select project</a>
+                    <a aria-haspopup="listbox" class="link-dark" href="#">Vælg projekt</a>
                     <ul role="listbox">
                         <li th:each="project : ${projects}">
                             <a th:href="@{/project/{projectID}(projectID=${project.id})}" th:text="${project.name}"></a>
@@ -28,7 +28,7 @@
                     </ul>
                 </li>
                 <li dir="ltr" role="list">
-                    <a aria-haspopup="listbox" class="link-dark" href="#">Select subproject</a>
+                    <a aria-haspopup="listbox" class="link-dark" href="#">Vælg underprojekt</a>
                     <ul role="listbox">
                         <li th:each="subproject : ${subprojects}">
                             <a th:href="@{/subproject/{subproject}(subproject=${subproject.id})}"
@@ -38,15 +38,15 @@
                 </li>
             </ol>
             <ol style="float: right; margin-right: 10px">
-                <li class="breadcrumb-item"><a class="link-dark" href="/profile">Your profile</a></li>
-                <li class="breadcrumb-item"><a class="link-dark" href="/logout">Logout</a></li>
+                <li class="breadcrumb-item"><a class="link-dark" href="/profile">Din profil</a></li>
+                <li class="breadcrumb-item"><a class="link-dark" href="/logout">Log ud</a></li>
             </ol>
         </nav>
 
         <!-- Headline-->
         <hgroup style="padding-top: 20px">
-            <h1>Welcome to ProjectManagementTool</h1>
-            <h2>An easy to use tool to manage your projects</h2>
+            <h1>Velkommen til ProjectManagementTool</h1>
+            <h2>Et brugervenligt værktøj til at styre dine projekter</h2>
         </hgroup>
     </header>
 </div>
@@ -55,10 +55,10 @@
         <section>
             <hgroup>
                 <b class="btn btn-primary" data-bs-target="#staticBackdrop4" data-bs-toggle="modal" style="float: right"
-                   type="button">Create a new User
+                   type="button"> Opret ny bruger
                 </b>
-                <h2>Exam project May 2023 </h2>
-                <h3>By Paul, Mohamed og Asger </h3>
+                <h2>Eksamensprojekt Maj 2023 </h2>
+                <h3>Af Paul, Mohamed og Asger </h3>
             </hgroup>
 
             <!-- User Creation Modal -->
@@ -69,10 +69,10 @@
                     <div class="modal-content">
 
                         <div class="modal-body">
-                            <h1 align="center">Create new user</h1>
+                            <h1 align="center">Opret ny bruger</h1>
                             <form action="createUser" method="post" th:object="${user}">
                                 <div>
-                                    <label>Name</label>
+                                    <label>Navn</label>
                                     <input name="name" required type="text">
                                 </div>
                                 <div>
@@ -80,17 +80,17 @@
                                     <input name="email" required type="text">
                                 </div>
                                 <div>
-                                    <label>Password</label>
+                                    <label>Adgangskode</label>
                                     <input name="password" required type="password">
                                 </div>
                                 <div>
-                                    <label>User role</label>
+                                    <label>Rolle</label>
                                     <select id="role" th:field="*{role}">
                                         <option th:each="role : ${roles}" th:text="${role}" th:value="${role}">
                                     </select>
-                                    <button class="btn btn-success" type="submit">Create project</button>
+                                    <button class="btn btn-success" type="submit">Opret bruger</button>
                                     <button class="btn btn-danger" data-bs-dismiss="modal" type="button">
-                                        Cancel
+                                        Annuller
                                     </button>
                                 </div>
                             </form>

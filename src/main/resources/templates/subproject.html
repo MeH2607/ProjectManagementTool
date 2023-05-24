@@ -20,8 +20,8 @@
         <!-- Navbar -->
         <nav class="breadcrumb">
             <ol>
-                <li class="breadcrumb-item"><a class="link-dark" href="/">Home</a></li>
-                <li><a class="link-dark" href="/allprojects">All projects</a></li>
+                <li class="breadcrumb-item"><a class="link-dark" href="/">Startside</a></li>
+                <li><a class="link-dark" href="/allprojects">Alle projekter</a></li>
                 <li dir="ltr" role="list">
                     <a aria-haspopup="listbox" class="link-dark" href="#">[[${project.name}]]</a>
                     <ul role="listbox">
@@ -41,8 +41,8 @@
                 </li>
             </ol>
             <ol style="float: right; margin-right: 10px">
-                <li class="breadcrumb-item"><a class="link-dark" href="/profile">Your profile</a></li>
-                <li class="breadcrumb-item"><a class="link-dark" href="/logout">Logout</a></li>
+                <li class="breadcrumb-item"><a class="link-dark" href="/profile">Din profil </a></li>
+                <li class="breadcrumb-item"><a class="link-dark" href="/logout">Log ud</a></li>
             </ol>
         </nav>
 
@@ -53,7 +53,7 @@
                     <h3 th:text="${subproject.name}"></h3>
                 </header>
                 <header style="background: rgb(243,243,243); text-align: center; height: 70px;">
-                    <span th:text="'Progress: '+ ${subproject.timeSpent} +' / '+ ${subproject.allocatedTime} + ' hours'"></span>
+                    <span th:text="'Status: '+ ${subproject.timeSpent} +' / '+ ${subproject.allocatedTime} + ' timer'"></span>
                     <td><progress th:max="${subproject.allocatedTime}" th:value="${subproject.timeSpent}" style="height: 20px"></progress></td>
                 </header>
                 <div>
@@ -69,28 +69,28 @@
                 <table class="table table-striped" style="width: 70%">
                     <tbody>
                     <tr>
-                        <td>Owner:</td>
+                        <td>Projektleder:</td>
                         <td><span th:text="${subproject.owner.name}"></span></td>
                     </tr>
                     <tr>
-                        <td>Remaining workload </td>
-                        <td><span th:text="${subproject.allocatedTimeInWorkdays} + ' days'"></span></td>
+                        <td>Resterende fulde arbejdsdage: </td>
+                        <td><span th:text="${subproject.allocatedTimeInWorkdays} + ' dage'"></span></td>
                     </tr>
                     <tr>
-                        <td>Estimated daily workload until deadline:</td>
-                        <td><span th:text="${subproject.hoursPerDayUntilDeadline} + ' hours/day'"></span></td>
+                        <td>Estimeret daglig arbejdstid indtil deadline:</td>
+                        <td><span th:text="${subproject.hoursPerDayUntilDeadline} + ' timer/dag'"></span></td>
                     </tr>
                     <tr>
                         <td>Deadline:</td>
                         <td><span th:text="${subproject.deadline}"></span></td>
                     </tr>
                     <tr>
-                        <td>Tasks nearing deadline</td>
+                        <td>Opgaver tæt på deadline:</td>
                         <td>
                             <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary btn-sm"
                                     data-bs-target="#collapseExample" data-bs-toggle="collapse"
                                     style="width: 350px; height: 50px;" type="button">
-                                <p th:text="${deadLineList.size()} + ' deadlines approaching'"></p>
+                                <p th:text="${deadLineList.size()} + ' deadlines indenfor 10 dage'"></p>
                             </button>
                             <div class="collapse" id="collapseExample">
                                 <div class="card card-body" style="width: 350px;">
@@ -110,27 +110,27 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create a new task</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tilføj en ny opgave</h1>
                             </div>
                             <div class="modal-body">
                                 <form method="post" style="text-align: center;"
                                       th:action="@{${subproject.id} + '/create_task'}" th:object="${task}">
                                     <div style="color: white">
                                         <div>
-                                            <input name="name" placeholder="Name" required style="width: 100%;" type="text">
+                                            <input name="name" placeholder="Navn" required style="width: 100%;" type="text">
                                         </div>
                                         <div>
-                                            <input name="description" placeholder="Description" required style="width: 100%;" type="text">
+                                            <input name="description" placeholder="Beskrivelse" required style="width: 100%;" type="text">
                                         </div>
                                         <div>
-                                            <input name="allocatedTime" placeholder="AllocatedTime" required style="width: 100%;" type="number">
+                                            <input name="allocatedTime" placeholder="Allokeret tid" required style="width: 100%;" type="number">
                                         </div>
                                         <div>
-                                            <input name="deadline" placeholder="deadline" required style="width: 100%;" type="date">
+                                            <input name="deadline" placeholder="Deadline" required style="width: 100%;" type="date">
                                         </div>
                                         <div>
                                             <select name="ownerID" required>
-                                                <option disabled selected value="">Select Assignee</option>
+                                                <option disabled selected value="">Vælg ansvarlig</option>
                                                 <option th:each="user : ${all_users}" th:text="${user.name}" th:value="${user.id}">
                                                     <input th:name="ownerID" th:value="${user.id}" type="hidden"/>
                                                 </option>
@@ -141,8 +141,8 @@
                                             <input name="subprojectID" required style="width: 100%;" th:value="${subproject.id}" type="hidden">
                                         </div>
                                         <div class="modal-footer">
-                                            <button class="btn btn-success" type="submit">Create task</button>
-                                            <button class="btn btn-danger" data-bs-dismiss="modal" type="button">Cancel</button>
+                                            <button class="btn btn-success" type="submit">Opret opgave</button>
+                                            <button class="btn btn-danger" data-bs-dismiss="modal" type="button">Annuller</button>
                                         </div>
                                     </div>
                                 </form>
@@ -155,7 +155,7 @@
                 <!-- Kanban board -->
                 <div class="container">
                     <div class="row">
-                        <button class="btn btn-primary btn-sm" id="expandButton">Expand All</button>
+                        <button class="btn btn-primary btn-sm" id="expandButton">Udvid alle opaver</button>
 
                         <!-- TO DO -->
                         <div class="col">
@@ -171,9 +171,9 @@
                                             <summary class="task-title" th:text="${task.name}"></summary>
                                             <p class="task-description" th:text="${task.description}"></p>
                                             <ul class="task-details">
-                                                <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                                <p><span class="detail-text" th:text="${'Allokeret tid: ' + task.allocatedTime}"></span></p>
                                                 <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
-                                                <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
+                                                <p><span class="detail-text" th:text="${'Ansvarlig: ' + task.owner.name}"></span></p>
                                             </ul>
 
                                             <!-- Move tasks -->
@@ -185,7 +185,7 @@
                                                           th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
                                                         <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                         <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                        <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
+                                                        <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Arkiver</button>
                                                     </form>
 
 
@@ -230,9 +230,9 @@
                                                 <summary class="task-title" th:text="${task.name}"></summary>
                                                 <p class="task-description" th:text="${task.description}"></p>
                                                 <ul class="task-details">
-                                                    <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Allokeret tid: ' + task.allocatedTime}"></span></p>
                                                     <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
-                                                    <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Ansvarlig: ' + task.owner.name}"></span></p>
                                                 </ul>
 
                                                 <!-- move -->
@@ -254,7 +254,7 @@
                                                               th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
+                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Arkiver</button>
                                                         </form>
 
                                                         <!-- Move to Done -->
@@ -291,9 +291,9 @@
                                                 <summary class="task-title" th:text="${task.name}"></summary>
                                                 <p class="task-description" th:text="${task.description}"></p>
                                                 <ul class="task-details">
-                                                    <p><span class="detail-text" th:text="${'Allocated time: ' + task.allocatedTime}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Allokeret tid: ' + task.allocatedTime}"></span></p>
                                                     <p><span class="detail-text" th:text="${'Deadline: ' + task.deadline}"></span></p>
-                                                    <p><span class="detail-text" th:text="${'Assigned: ' + task.owner.name}"></span></p>
+                                                    <p><span class="detail-text" th:text="${'Ansvarlig: ' + task.owner.name}"></span></p>
                                                 </ul>
 
                                                 <!-- Move to Doing -->
@@ -316,7 +316,7 @@
                                                               th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Archive</button>
+                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Arkiver</button>
                                                         </form>
                                                         </a>
                                                     </div>
