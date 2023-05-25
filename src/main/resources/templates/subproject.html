@@ -60,8 +60,7 @@
                     <p class="card-text" th:text="${subproject.description}"></p><br>
                 </div>
                 <!-- Button trigger modal -->
-                <a class="btn btn-primary btn-sm" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
-                   style="float:right" type="button">
+                <a class="btn btn-outline-dark" style="background-color: white; margin-top: 5px; float:right" data-bs-target="#staticBackdrop" data-bs-toggle="modal" type="button">
                     Tilføj en ny opgave
                 </a>
 
@@ -155,7 +154,7 @@
                 <!-- Kanban board -->
                 <div class="container">
                     <div class="row">
-                        <button class="btn btn-primary btn-sm" id="expandButton">Udvid alle opaver</button>
+                        <button class="btn btn-outline-dark" style="background-color: white;" id="expandButton">Udvid alle opaver</button>
 
                         <!-- TO DO -->
                         <div class="col">
@@ -185,7 +184,8 @@
                                                           th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
                                                         <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                         <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                        <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Arkiver</button>
+
+                                                        <button class="btn btn-outline-dark" style="background-color: white;width: 100px" type="submit">Arkiver</button>
                                                     </form>
 
 
@@ -200,7 +200,7 @@
                                                         <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                         <input th:name="returnUrl" th:value="${returnUrl}"
                                                                type="hidden"/>
-                                                        <button class="btn btn-primary btn-sm" style="width: 100px"
+                                                        <button class="btn btn-outline-dark" style="background-color: white; width: 100px"
                                                                 type="submit">
                                                             Doing
                                                         </button>
@@ -245,7 +245,7 @@
                                                               th:action="@{${subprojectID} + '/moveTaskToTodo'}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Todo</button>
+                                                            <button class="btn btn-outline-dark" style="background-color: white; width: 100px" type="submit">Todo</button>
                                                         </form>
 
                                                         <!-- ARCHIVE TASK. -->
@@ -254,7 +254,8 @@
                                                               th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Arkiver</button>
+                                                            <button class="btn btn-outline-dark" style="background-color: white; width: 100px"
+                                                                    type="submit">Arkiver</button>
                                                         </form>
 
                                                         <!-- Move to Done -->
@@ -262,7 +263,8 @@
                                                               th:action="@{${subprojectID} + '/moveTaskToDone'}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Done</button>
+                                                            <button class="btn btn-outline-dark" style="background-color: white; width: 100px"
+                                                                    type="submit">Done</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -307,7 +309,8 @@
                                                             when the form is submitted -->
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Doing</button>
+                                                            <button class="btn btn-outline-dark" style="background-color: white; width: 100px"
+                                                                    type="submit">Doing</button>
                                                         </form>
 
                                                         <!-- ARCHIVE TASK. -->
@@ -316,7 +319,8 @@
                                                               th:action="@{${subprojectID} + '/move_task_to_archived'}" th:object="${task}">
                                                             <input th:name="taskId" th:value="${task.id}" type="hidden"/>
                                                             <input th:name="returnUrl" th:value="${returnUrl}" type="hidden"/>
-                                                            <button class="btn btn-primary btn-sm" style="width: 100px" type="submit">Arkiver</button>
+                                                            <button class="btn btn-outline-dark" style="background-color: white; width: 100px"
+                                                                    type="submit">Arkiver</button>
                                                         </form>
                                                         </a>
                                                     </div>
