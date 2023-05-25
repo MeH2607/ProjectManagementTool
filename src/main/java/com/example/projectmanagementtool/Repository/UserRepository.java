@@ -23,7 +23,7 @@ public class UserRepository {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 String name = rs.getString("Name");
                 String email = rs.getString("Email");
                 String password = rs.getString("Password");

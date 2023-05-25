@@ -56,7 +56,9 @@ public class PMTRepository {
         try {
             Connection conn = ConnectionManager.getConnection();
             // "users.name as owner" lader os sortere efter projekt owners navn
-            String SQL = "SELECT subprojects.*, users.name as owner FROM pmt_db.subprojects join users on users.id = subprojects.OwnerID  where ProjectID = ? order by " + criteria;
+            String SQL = "SELECT subprojects.*, users.name as owner " +
+                "FROM pmt_db.subprojects join users on users.id = subprojects.OwnerID  " +
+                    "where ProjectID = ? order by " + criteria;
             PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setInt(1, projectSearchID);
             ResultSet rs = ps.executeQuery();
