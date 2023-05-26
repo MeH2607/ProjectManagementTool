@@ -1,6 +1,7 @@
 
 import com.example.projectmanagementtool.Model.Task;
 import com.example.projectmanagementtool.Model.User;
+import com.example.projectmanagementtool.ProjectManagementToolApplication;
 import com.example.projectmanagementtool.Repository.PMTRepository;
 import com.example.projectmanagementtool.Service.pmtException;
 import org.junit.jupiter.api.Test;
@@ -12,11 +13,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = ProjectManagementToolApplication.class)
 @ActiveProfiles("test")
 public class PMTRepositoryTest {
 
-    private PMTRepository pmtRepository = new PMTRepository();
+    @Autowired
+    private PMTRepository pmtRepository;
 
     @Test
     public void addTaskToDBTest() throws pmtException {
