@@ -34,3 +34,12 @@ For en hurtig gennemgang:
 - Repository håndterer forretningslogikken og kommunikation med databasen.
 - Model pakken indeholder vores objekt klasser.
 
+
+<h2>Teknologier</h2>
+Gør det bekendt med de teknologier vi bruger til at udvikle systemet.
+I rapporten er der en gennemgang af de teknologier vi bruger. Her er en kort opsummering.
+- Systemets logik kodes i Java, Databasen skrives i MySQL og frontend skrives i HTML.
+- HTML styles med CSS, Bootstrap og Pico.
+- Thymeleaf skabelonen behander data i frontend.
+- Spring boot håndterer HTTP endpoints.
+- JDBC api'en håndterer Database kald i repository.
