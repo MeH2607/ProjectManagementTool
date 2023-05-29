@@ -102,7 +102,6 @@ public class PMTRepository {
 
     // Retrieves a specific subproject from DB, from a subprojectID
     public Subproject getSubproject(int subprojectID) {
-        System.out.println(subprojectID);
         Subproject subproject = new Subproject();
         try {
             Connection conn = ConnectionManager.getConnection();
@@ -236,7 +235,7 @@ public class PMTRepository {
             while (rs.next()) {
                 project.setAllocatedTime(rs.getInt("totalAllocatedTime"));
                 project.setTimeRemaining(project.getAllocatedTime() - project.getTimeSpent());
-                project.setAllocatedTimeInWorkdays(project.getAllocatedTime() / 8);
+                project.setAllocatedTimeInWorkdays(project.getTimeRemaining() / 8);
 
                 LocalDate currentDate = LocalDate.now();
                 LocalDate deadline = project.getDeadline();
@@ -250,9 +249,10 @@ public class PMTRepository {
                 project.setDaysUntilDeadline(daysUntilDeadline);
 
                 double hoursPerDay = project.getTimeRemaining() / project.getDaysUntilDeadline();
+
                 DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
                 symbols.setDecimalSeparator(',');
-                DecimalFormat df = new DecimalFormat("#.##", symbols);
+                DecimalFormat df = new DecimalFormat("#.#", symbols);
                 df.setRoundingMode(RoundingMode.HALF_UP);
                 String formattedHoursPerDay = df.format(hoursPerDay);
                 project.setHoursPerDayUntilDeadline(Double.parseDouble(formattedHoursPerDay.replace(',', '.')));
@@ -283,7 +283,7 @@ public class PMTRepository {
             while (rs.next()) {
                 subproject.setAllocatedTime(rs.getInt("totalAllocatedTime"));
                 subproject.setTimeRemaining(subproject.getAllocatedTime() - subproject.getTimeSpent());
-                subproject.setAllocatedTimeInWorkdays(subproject.getAllocatedTime() / 8);
+                subproject.setAllocatedTimeInWorkdays(subproject.getTimeRemaining() / 8);
 
                 LocalDate currentDate = LocalDate.now();
                 LocalDate deadline = subproject.getDeadline();
@@ -299,9 +299,10 @@ public class PMTRepository {
                 double hoursPerDay = subproject.getTimeRemaining() / subproject.getDaysUntilDeadline();
                 DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
                 symbols.setDecimalSeparator(',');
-                DecimalFormat df = new DecimalFormat("#.##", symbols);
+                DecimalFormat df = new DecimalFormat("#.#", symbols);
                 df.setRoundingMode(RoundingMode.HALF_UP);
                 String formattedHoursPerDay = df.format(hoursPerDay);
+
                 subproject.setHoursPerDayUntilDeadline(Double.parseDouble(formattedHoursPerDay.replace(',', '.')));
             }
         } catch (SQLException e) {

@@ -91,7 +91,7 @@ public class PmtController {
         return isLoggedIn(session) ? "allprojects" : "login";
     }
 
-    //Shows a view with all subprojects belonging to specific project
+    //Shows a view with all subprojects belonging< to specific project
     //You can create a new subproject. You can also sort the subprojects by name, owner or deadline.
     @GetMapping("project/{projectID}")
     public String subProjectOverview(@PathVariable int projectID, @RequestParam(required = false) String criteria, Model model, HttpSession session, HttpServletRequest request) {

@@ -80,7 +80,7 @@ public class Project implements Component {
         return allocatedTimeInWorkdays;
     }
 
-    public void setAllocatedTimeInWorkdays(int allocatedTimeInWorkdays) {
+    public void setAllocatedTimeInWorkdays(double allocatedTimeInWorkdays) {
         this.allocatedTimeInWorkdays = allocatedTimeInWorkdays;
     }
 
