@@ -43,3 +43,19 @@ I rapporten er der en gennemgang af de teknologier vi bruger. Her er en kort ops
 - Thymeleaf skabelonen behander data i frontend.
 - Spring boot håndterer HTTP endpoints.
 - JDBC api'en håndterer Database kald i repository.
+
+<h2>Arbejdsstruktur</h2>
+Teamet arbejder i Scrum. 
+Vi holder et Scrum møde hver dag, hvor vi går igennem hvad vi har lavet siden sidste møde, hvilke udfordringer vi har stødt ind på og hvad vi vil arbejde med til næste møde.
+Mohamed aggerer som Scrum master, og møder kan fortages både i person eller online.
+
+<h3>Scrum board</h3>
+Vi bruger Github Project til at oprette et scrumboard. 
+Scrumboardet er d
+
+<h3>Branching</h3>
+Vi arbejder ud for branching strategien Github Flow Branching. 
+Med denne strategi opretter vi branches for hver ny feature eller arbejdsopgave man har sat sig til at arbejde på.
+Når man er klar til at merge sit arbejde ind til main branchen, så mødes man med teamet og overser processen. 
+Ved merge konflikter går man igenne konflikterne sammen for at sikre at der ikke går ændringer tabt.
+Rapporten indeholder en detaljeret gennemgang af hvordan vi anvender Github Flow Branching strategien.
