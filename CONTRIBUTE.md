@@ -53,7 +53,7 @@ Mohamed aggerer som Scrum master, og møder kan fortages både i person eller on
 Vi bruger Github Project til at oprette et scrumboard. 
 Scrumboardet er delt op i et Backlog hvor alle opgaver og user stories ligger.
 Til PO mødet hver anden uge bliver det næste sprint besluttet og opgaver for næste sprint bliver flyttet til ToDo.
-
+Til de daglige scrum mødet bliver boardet kiggen igennem og opdateret. Når man påtager sig en user story eller en opgave kan man få den tildelt i Github projects, så alle kan se hvem der er ansvarlig for den.
 
 <h3>Branching</h3>
 Vi arbejder ud for branching strategien Github Flow Branching. 
