@@ -14,6 +14,7 @@ I repositoriet kan man finde SQL skabelonen og test data. Kør querysne lokalt p
 
 For at oprette et produktionsmiljø skal du oprette en application.properties. Den skal pege på din lokale MySQL database sådan her:
 
-spring.datasource.url=jdbc: mysql://localhost:3306/*datbase navn*
+'''spring.datasource.url=jdbc: mysql://localhost:3306/*datbase navn*
 spring.datasource.username=*Workbench brugernavn*
 spring.datasource.password=*Workbench kode*
+'''
