@@ -46,6 +46,10 @@
             </ol>
         </nav>
 
+        <a class="btn btn-primary" style="float: left; margin-right: 5px" th:href="@{/project/{projectID}(projectID=${project.id})}" th:text="'Tilbage til: ' + ${project.name}"></a>
+
+        <br style="clear:both">
+
         <!-- View of all tasks in the subproject -->
         <div class="grid">
             <article>

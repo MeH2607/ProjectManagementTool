@@ -43,6 +43,8 @@
                 <li class="breadcrumb-item"><a class="link-dark" href="/logout">Log ud</a></li>
             </ol>
         </nav>
+        <a th:href="@{/allprojects}" class="btn btn-primary" style="float: left; margin-right: 5px">Tilbage til Alle projekter</a>
+        <br style="clear:both">
 
         <!-- View of all subprojects for specific project -->
         <h1 style="text-align: center; color: white;"><a> Alle underprojekter for: [[${project.name}]] </a></h1>
@@ -50,15 +52,18 @@
            type="button">Opret nyt underprojekt
         </b>
 
-        <!-- Sorting of subprojects -->
-        <form method="get" th:action="@{/project/{projectID}(projectID=${project.id})} " th:object="${criteria}">
-            <select name="criteria" style="width: 20%; background-color: white;">
-                <option disabled selected value="">Sorter efter:</option>
-                <option th:each="criteria : ${sortCriterias}" th:text="${criteria}" th:value="${criteria}"></option>
-            </select>
-            <br>
-            <button class="btn btn-primary btn-sm" style="width: 20%;  margin-top: 5px" type="submit">Sorter</button>
-        </form>
+
+
+            <!-- Sorting of subprojects -->
+            <form method="get" th:action="@{/project/{projectID}(projectID=${project.id})} " th:object="${criteria}">
+                <select name="criteria" style="width: 20%; background-color: white;">
+                    <option disabled selected value="">Sorter efter:</option>
+                    <option th:each="criteria : ${sortCriterias}" th:text="${criteria}" th:value="${criteria}"></option>
+                </select>
+                <br>
+                <button class="btn btn-primary btn-sm" style="width: 20%;  margin-top: 5px" type="submit">Sorter</button>
+            </form>
+
 
         <!-- Modal for creating a new subproject -->
         <div aria-hidden="true" aria-labelledby="staticBackdropLabel" class="modal fade" data-bs-backdrop="static"
