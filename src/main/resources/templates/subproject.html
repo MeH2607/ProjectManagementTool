@@ -170,6 +170,7 @@
                                     <section id="accordions" style="width: 100%">
                                         <details closed
                                                  th:class="${(task.status == 'Done') ? 'task-done' : ((task.status == 'Doing') ? 'task-doing' : 'task-not-started')}">
+
                                             <summary class="task-title" th:text="${task.name}"></summary>
                                             <p class="task-description" th:text="${task.description}"></p>
                                             <ul class="task-details">
