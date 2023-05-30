@@ -10,8 +10,6 @@ import java.sql.SQLException;
 @Component
 public class ConnectionManager {
     private static Connection conn;
-    // @Value kan ikke benyttes til at initialisere statiske attributter
-    // benyt setters i stedet
     private static String URL;
     private static String USER;
     private static String PASSWORD;

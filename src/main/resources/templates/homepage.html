@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Homepage</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
@@ -77,11 +77,13 @@
                                 </div>
                                 <div>
                                     <label>Email</label>
-                                    <input name="email" required type="text">
+                                    <input name="email" required type="text"
+                                           th:pattern="'[^@\s]+@[^@\s]+\.[^@\s]+$'"
+                                           placeholder="test@mailˇ.com">
                                 </div>
                                 <div>
                                     <label>Adgangskode</label>
-                                    <input name="password" required type="password">
+                                    <input name="password" required type="password" placeholder="*******************">
                                 </div>
                                 <div>
                                     <label>Rolle</label>
