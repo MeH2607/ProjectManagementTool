@@ -30,3 +30,4 @@ Ved at trykke på "Vis alle detaljer" vil man se alle underprojekter der er tilk
 ![u](https://github.com/MeH2607/ProjectManagementTool/assets/113069009/64487e77-b84f-44db-a35e-f3de544bd3ae)
 
 
+Oversigten over alle underprojekter forbundet til et projekt er den samme som for alle projekter. Når man vælger et bestemt underprojekt, så får man en oversigt over alle opgaver for underprojektet og deres status.
