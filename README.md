@@ -31,3 +31,7 @@ Ved at trykke på "Vis alle detaljer" vil man se alle underprojekter der er tilk
 
 
 Oversigten over alle underprojekter forbundet til et projekt er den samme som for alle projekter. Når man vælger et bestemt underprojekt, så får man en oversigt over alle opgaver for underprojektet og deres status.
+![image](https://github.com/MeH2607/ProjectManagementTool/assets/113069009/786b2b6c-c764-4f9b-8087-610e3f0fd1c3)
+
+Hvis du vælger en bestemt opgave, kan du få flere detaljer om den.
+![image](https://github.com/MeH2607/ProjectManagementTool/assets/113069009/e955f016-df25-453f-bbc4-9105dad44983)
