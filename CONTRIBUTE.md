@@ -10,7 +10,9 @@ Kildekoden for Project Management Tool findes i Github i dette repository: https
 Klon dette repository og sørg for at forbinde din Github til IntelliJ for at kunne pull og push direkte fra Intellij.
 
 <h2>Produktions miljø</h2>
-Når man arbejder på systemet vil man arbejde på en test server, som er defineret i application.properties. 
+Når man arbejder på systemet vil man arbejde på en test server, som er defineret i application-test.properties. 
+
+Når du pusher til main vil koden automatisk blive testet. Hvis en test fejler under push vil main ikke blive deployet af render, så hjemmesiden vil ikke bryde ned. Men sørg for at få testet koden inden der merges ind til main.
 
 <h2>Kode struktur</h2>
 Gør dig bekendt med systemets pakkestruktur. Systemets følger MVC arkitekturen som er visualiseret i dette diagram:
