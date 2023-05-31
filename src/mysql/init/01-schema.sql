@@ -18,7 +18,6 @@ CREATE TABLE Projects
     Description    VARCHAR(255),
     AllocatedTime  INT,
     OwnerID        INT,
-    ProjectMembers VARCHAR(255),
     Deadline       DATE,
     FOREIGN KEY (OwnerID) REFERENCES Users (ID)
 );
@@ -30,7 +29,6 @@ CREATE TABLE SubProjects
     Description       TEXT,
     AllocatedTime     INT,
     OwnerID           INT,
-    SubProjectMembers VARCHAR(255),
     Deadline          DATE,
     ProjectID         INT,
     FOREIGN KEY (ProjectID) REFERENCES Projects (ID),

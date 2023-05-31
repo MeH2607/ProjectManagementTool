@@ -16,20 +16,20 @@ VALUES
 ("Isabella Martin", "isabella.martin@example.com", "password1234", "Developer");
 
 -- Add Projects
-INSERT INTO Projects (Name, Description, AllocatedTime, OwnerID, ProjectMembers, Deadline)
-VALUES ("Marketing Campaign", "Creating a marketing campaign for a new product", 80, 1, "1,2,3,4,5", "2023-11-30"),
-("Mobile Game Development", "Creating a multiplayer mobile game", 120, 6, "6,7,8,9,10", "2023-09-30"),
-("Web Application Development", "Developing a web application for project management", 100, 1, "2,3,4,7,10", "2023-12-31");
+INSERT INTO Projects (Name, Description, AllocatedTime, OwnerID, Deadline)
+VALUES ("Marketing Campaign", "Creating a marketing campaign for a new product", 80, 1, "2023-11-30"),
+("Mobile Game Development", "Creating a multiplayer mobile game", 120, 6, "2023-09-30"),
+("Web Application Development", "Developing a web application for project management", 100, 1, "2023-12-31");
 
 -- Add Subprojects
-INSERT INTO SubProjects (Name, Description, AllocatedTime, OwnerID, SubProjectMembers, Deadline, ProjectID)
-VALUES ("Product Research", "Conducting research to determine the product to be marketed", 20, 1, "1,2,3", "2023-07-31", 1),
-("Game Design", "Designing the game mechanics and interface", 30, 6, "6,7,8", "2023-06-30", 2),
-("Backend Development", "Setting up the server and database for the web app", 40, 7, "7,3,4", "2023-09-30", 3),
-("Social Media Marketing", "Creating and implementing a social media marketing strategy", 20, 1, "1,4,5", "2023-11-15", 1),
-("Frontend Development", "Building the user interface and client-side functionality for the web app", 50, 10, "2,3,4,7", "2023-12-15", 3),
-("Game Testing", "Performing QA tests on the mobile game", 20, 9, "9,10", "2023-09-15", 2),
-("Web App Testing", "Conducting comprehensive QA testing of the web app's functionality and user experience", 30, 3, "2,7,10", "2023-12-15", 3);
+INSERT INTO SubProjects (Name, Description, AllocatedTime, OwnerID, Deadline, ProjectID)
+VALUES ("Product Research", "Conducting research to determine the product to be marketed", 20, 1, "2023-07-31", 1),
+("Game Design", "Designing the game mechanics and interface", 30, 6, "2023-06-30", 2),
+("Backend Development", "Setting up the server and database for the web app", 40, 7, "2023-09-30", 3),
+("Social Media Marketing", "Creating and implementing a social media marketing strategy", 20, 1, "2023-11-15", 1),
+("Frontend Development", "Building the user interface and client-side functionality for the web app", 50, 10, "2023-12-15", 3),
+("Game Testing", "Performing QA tests on the mobile game", 20, 9, "2023-09-15", 2),
+("Web App Testing", "Conducting comprehensive QA testing of the web app's functionality and user experience", 30, 3, "2023-12-15", 3);
 
 INSERT INTO Tasks (Name, Description, AllocatedTime, OwnerID, Deadline, SubprojectID, Status)
 VALUES
