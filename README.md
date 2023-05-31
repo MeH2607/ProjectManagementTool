@@ -35,3 +35,9 @@ Oversigten over alle underprojekter forbundet til et projekt er den samme som fo
 
 Hvis du vælger en bestemt opgave, kan du få flere detaljer om den.
 ![image](https://github.com/MeH2607/ProjectManagementTool/assets/113069009/e955f016-df25-453f-bbc4-9105dad44983)
+
+Her kan du se detaljer om hvem der er ansvarlig for opgaven, deadlinen og hvor meget tid der er sat af til opgaven. 
+Du kan opdatere status på projektet med knapperne nederst. En opgaave i ToDo kan opdateres til doing, en i Doing kan opdateres til både ToDo og Done, og en i Done kan flyttes til Doing. Man kan også arkivere en opgave i tilfælde af at man har lavet en opgave ved en fejl eller opgaven ikke er relevant mere.
+![image](https://github.com/MeH2607/ProjectManagementTool/assets/113069009/d1ac9aa6-185d-4d47-af9c-638bf0c7d29d)
+
+
