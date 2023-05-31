@@ -29,6 +29,14 @@ public class PmtController {
     private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("user") != null;
     }
+    private boolean isUserAdmin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user != null && "Administrator".equals(user.getRole())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     //Shows the homepage with the navbar. No login required.
     @GetMapping("")
